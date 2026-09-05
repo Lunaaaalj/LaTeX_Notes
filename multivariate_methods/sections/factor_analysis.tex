@@ -1,0 +1,225 @@
+\section{Factor analysis}
+\label{sec:factor_analysis}
+
+\subsection{The orthogonal factor model}
+\label{subsec:orthogonal_factor_model}
+
+Let the random vector $\vb{X}$ with $p$ components have mean $\mub$ and
+covariance matrix $\mat{S}$ (equivalently $\Si$). The factor model postulates
+that the observed variables are linearly dependent on $m$ unobservable random
+variables
+\[
+  F_1,F_2,\dots,F_m \qquad (m<p),
+\]
+called \textbf{common factors}, and on $p$ additional sources of variation
+\[
+  \ep_1,\ep_2,\dots,\ep_p,
+\]
+called \textbf{errors} or \textbf{specific factors}. For $p$ variables one looks
+for $m$ factors (with $m<p$) that explain a high percentage of the variation and
+that have some meaning in the problem at hand. The model reads
+
+\begin{equation}
+  \label{eq:factor_model_rows}
+  \small
+  \begin{aligned}
+    X_1-\mu_1 &= \ell_{11}F_1+\ell_{12}F_2+\dots+\ell_{1m}F_m+\ep_1,\\
+    X_2-\mu_2 &= \ell_{21}F_1+\ell_{22}F_2+\dots+\ell_{2m}F_m+\ep_2,\\
+              &\;\;\vdots\\
+    X_p-\mu_p &= \ell_{p1}F_1+\ell_{p2}F_2+\dots+\ell_{pm}F_m+\ep_p,
+  \end{aligned}
+\end{equation}
+
+or, in matrix notation,
+\begin{equation}
+  \label{eq:factor_model_matrix}
+  \underset{(p\times 1)}{\vb{X}-\mub}
+  =\underset{(p\times m)}{\mat{L}}\;\underset{(m\times 1)}{\vb{F}}
+  +\underset{(p\times 1)}{\epsb}.
+\end{equation}
+
+The coefficient $\ell_{ij}$ is the \textbf{loading} of the $i$-th variable on
+the $j$-th factor, so $\mat{L}$ is the matrix of factor loadings. The $p$
+deviations $X_i-\mu_i$ are expressed in terms of $p+m$ random variables
+$F_1,\dots,F_m,\ep_1,\dots,\ep_p$, which are unobservable. In summary:
+
+\begin{description}[leftmargin=2.6em,style=nextline,font=\normalfont]
+  \item[$\mu_i$] mean of variable $i$.
+  \item[$\ep_i$] $i$-th specific factor.
+  \item[$F_j$] $j$-th common factor.
+  \item[$\ell_{ij}$] loading of the $i$-th variable on the $j$-th factor.
+\end{description}
+
+\subsection{Covariance relationships implied by the model}
+\label{subsec:factor_covariance_structure}
+
+The orthogonal factor model with $m$ common factors,
+\begin{equation}
+  \label{eq:factor_model_full}
+  \underset{(p\times 1)}{\vb{X}}
+  =\underset{(p\times 1)}{\mub}
+  +\underset{(p\times m)}{\mat{L}}\;\underset{(m\times 1)}{\vb{F}}
+  +\underset{(p\times 1)}{\epsb},
+\end{equation}
+assumes that $\vb{F}$ and $\epsb$ are independent, with
+\begin{align}
+  \E(\vb{F})&=\vb{0}, &
+  \Cov(\vb{F})&=\E\sqty{\vb{F}\vb{F}^\tp}=\I_m,
+  \label{eq:factor_moments_F}\\
+  \E(\epsb)&=\vb{0}, &
+  \Cov(\epsb)&=\E\sqty{\epsb\epsb^\tp}=\Psib,
+  \label{eq:factor_moments_eps}
+\end{align}
+where $\Psib$ is the diagonal matrix
+\begin{equation}
+  \label{eq:psi_matrix}
+  \Psib=
+  \begin{pmatrix}
+    \psi_1 & 0 & \cdots & 0\\
+    0 & \psi_2 & \cdots & 0\\
+    \vdots & \vdots & \ddots & \vdots\\
+    0 & 0 & \cdots & \psi_p
+  \end{pmatrix},
+\end{equation}
+and the factors are uncorrelated with the errors,
+\begin{equation}
+  \label{eq:factor_moments_cross}
+  \Cov(\epsb,\vb{F})=\E\sqty{\epsb\vb{F}^\tp}
+  =\underset{(p\times m)}{\mat{0}}.
+\end{equation}
+
+\selectlanguage{spanish}
+\subsection{Planteamiento y consecuencias}
+\label{subsec:planteamiento_factorial}
+
+El an\'alisis factorial es una t\'ecnica estad\'istica usada para identificar
+patrones ocultos o estructuras latentes detr\'as de grandes conjuntos de
+variables observadas. Busca reducir la complejidad agrupando variables
+relacionadas en un menor n\'umero de factores subyacentes m\'as f\'aciles de
+interpretar.
+
+El contexto es una relaci\'on de la forma
+\begin{equation}
+  \label{eq:modelo_factorial_es}
+  \vb{X}=\mub+\mat{L}\vb{F}+\epsb,
+\end{equation}
+donde $\vb{X}$ es un vector aleatorio de $p$ variables; $\mub$ un vector
+constante de dimensi\'on $p$; $\mat{L}$ una matriz constante $p\times m$, la
+``matriz de cargas factoriales''; $\vb{F}\sim\normal(\vb{0},\I_m)$ el vector de
+$m$ factores latentes, con media $\vb{0}$ y matriz de covarianzas identidad; y
+$\epsb\sim\normal(\vb{0},\Psib)$ el vector de errores \'unicos, con
+distribuci\'on normal multivariante de vector de medias $\vb{0}$ y matriz de
+covarianzas diagonal $\Psib=\diag\set{\si_1^2,\dots,\si_p^2}$.
+
+Se asume que los factores $\vb{F}$ y los errores $\epsb$ son independientes,
+$\Cov(\vb{F},\epsb)=\mat{0}$. Como consecuencia se tiene
+\begin{multline}
+  \label{eq:esperanza_X_es}
+  \E(\vb{X})=\E\qty{\mub+\mat{L}\vb{F}+\epsb}\\
+  =\E(\mub)+\mat{L}\,\E(\vb{F})+\E(\epsb)=\mub,
+\end{multline}
+y para la varianza
+
+\begin{equation}
+  \label{eq:varianza_X_es}
+  \small
+  \begin{aligned}
+    \Var(\vb{X})
+      &=\Var\qty{\mat{L}\vb{F}+\epsb}\\
+      &=\E\sqty{\qty{\mat{L}\vb{F}+\epsb}
+                \qty{\mat{L}\vb{F}+\epsb}^\tp}\\
+      &=\E\sqty{\mat{L}\vb{F}\vb{F}^\tp\mat{L}^\tp}
+        +\E\sqty{\epsb\epsb^\tp}\\
+      &\quad+\E\sqty{\mat{L}\vb{F}\epsb^\tp}
+        +\E\sqty{\epsb\vb{F}^\tp\mat{L}^\tp}\\
+      &=\mat{L}\,\E\sqty{\vb{F}\vb{F}^\tp}\mat{L}^\tp
+        +\E\sqty{\epsb\epsb^\tp}\\
+      &\quad+\mat{L}\,\E\sqty{\vb{F}\epsb^\tp}
+        +\E\sqty{\epsb\vb{F}^\tp}\mat{L}^\tp\\
+      &=\mat{L}\I_m\mat{L}^\tp+\Psib
+        +\mat{L}\mat{0}+\mat{0}\mat{L}^\tp\\
+      &=\mat{L}\mat{L}^\tp+\Psib.
+  \end{aligned}
+\end{equation}
+
+Como $\vb{X}$ es combinaci\'on lineal de normales, se sigue que
+\begin{equation}
+  \label{eq:distribucion_X_es}
+  \vb{X}\sim\normal\qty{\mub,\;\mat{L}\mat{L}^\tp+\Psib}.
+\end{equation}
+
+\subsection{Descomposici\'on de la varianza}
+\label{subsec:descomposicion_varianza}
+
+La descomposici\'on $\Var(\vb{X})=\mat{L}\mat{L}^\tp+\Psib$ muestra que la
+varianza total de las variables observadas puede repartirse en dos componentes:
+\begin{itemize}
+  \item \textbf{Varianza com\'un} $\qty{\mat{L}\mat{L}^\tp}$: explicada por los
+        factores comunes $\vb{F}$; capta la variabilidad compartida atribuible
+        a la estructura latente.
+  \item \textbf{Varianza \'unica} $\qty{\Psib}$: espec\'ifica de cada variable
+        observada.
+\end{itemize}
+
+La varianza de cada variable observada $X_i$ se expresa como
+\begin{equation}
+  \label{eq:comunalidad}
+  \Var(X_i)=\sum_{j=1}^{m}\ell_{ij}^2+\si_i^2,
+\end{equation}
+donde
+\begin{equation}
+  \label{eq:h2}
+  h_i^2=\sum_{j=1}^{m}\ell_{ij}^2
+\end{equation}
+es la \textbf{comunalidad} de $X_i$ (la parte explicable por los factores
+comunes) y $\si_i^2$ la \textbf{varianza \'unica}.
+
+\subsection{Estimaci\'on de puntuaciones factoriales}
+\label{subsec:puntuaciones_factoriales}
+
+Supongamos $\vb{X}=\mub+\mat{L}\vb{F}+\epsb$. La distribuci\'on conjunta de
+$\vb{X}$ y $\vb{F}$ es
+
+\begin{equation}
+  \label{eq:conjunta_XF}
+  \small
+  \begin{bmatrix}\vb{X}\\ \vb{F}\end{bmatrix}
+  \sim\normal\qty{
+    \begin{bmatrix}\mub\\ \vb{0}\end{bmatrix},\;
+    \begin{bmatrix}
+      \mat{L}\mat{L}^\tp+\Psib & \mat{L}\\
+      \mat{L}^\tp & \I_m
+    \end{bmatrix}}.
+\end{equation}
+
+N\'otese en particular que
+\begin{equation}
+  \label{eq:cov_XF}
+  \begin{aligned}
+    \Cov(\vb{X},\vb{F})
+      &=\E\sqty{(\vb{X}-\mub)(\vb{F}-\vb{0})^\tp}\\
+      &=\E\sqty{\qty{\mat{L}\vb{F}+\epsb}\vb{F}^\tp}\\
+      &=\mat{L}\,\E\sqty{\vb{F}\vb{F}^\tp}+\E\sqty{\epsb\vb{F}^\tp}\\
+      &=\mat{L}\I_m+\mat{0}=\mat{L}.
+  \end{aligned}
+\end{equation}
+
+Usando las propiedades de la normal multivariante, se obtiene la distribuci\'on
+condicional de $\vb{F}$ dado $\vb{X}$:
+
+\begin{multline}
+  \label{eq:condicional_F}
+  \sqty{\vb{F}\such\vb{X}=\vb{x}}\sim
+  \normal\Big(
+    \mat{L}^\tp\qty{\mat{L}\mat{L}^\tp+\Psib}\inv(\vb{x}-\mub),\\
+    \I_m-\mat{L}^\tp\qty{\mat{L}\mat{L}^\tp+\Psib}\inv\mat{L}\Big).
+\end{multline}
+
+La media de esta distribuci\'on se conoce como la \textbf{puntuaci\'on
+factorial} para $\vb{X}=\vb{x}$:
+\begin{equation}
+  \label{eq:puntuacion_factorial}
+  \hat{\vb{F}}
+  =\mat{L}^\tp\qty{\mat{L}\mat{L}^\tp+\Psib}\inv(\vb{x}-\mub).
+\end{equation}
+\selectlanguage{english}

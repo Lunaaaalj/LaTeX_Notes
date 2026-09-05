@@ -1,0 +1,369 @@
+\section{Principal components}
+\label{sec:pca}
+
+\subsection{Setup: linear combinations of the observed variables}
+\label{subsec:pca_setup}
+
+Let the random vector $\vb{X}^\tp=(X_1,X_2,\dots,X_p)$ have covariance matrix
+$\Si$ with eigenvalues $\la_1\ge\la_2\ge\dots\ge\la_p\ge 0$. Consider the linear
+combinations
+
+\begin{equation}
+  \label{eq:pca_linear_combinations}
+  \small
+  \begin{aligned}
+    Y_1 &= \vb{a}_1^\tp\vb{X} = a_{11}X_1 + a_{12}X_2 + \dots + a_{1p}X_p,\\
+    Y_2 &= \vb{a}_2^\tp\vb{X} = a_{21}X_1 + a_{22}X_2 + \dots + a_{2p}X_p,\\
+        &\;\;\vdots\\
+    Y_p &= \vb{a}_p^\tp\vb{X} = a_{p1}X_1 + a_{p2}X_2 + \dots + a_{pp}X_p.
+  \end{aligned}
+\end{equation}
+
+Using the bilinearity of the covariance operator we obtain
+\begin{align}
+  \Var(Y_i)     &= \vb{a}_i^\tp\Si\,\vb{a}_i,
+  \label{eq:var_Yi}\\
+  \Cov(Y_i,Y_k) &= \vb{a}_i^\tp\Si\,\vb{a}_k,
+  \label{eq:cov_YiYk}
+\end{align}
+for $i,k=1,2,\dots,p$.
+
+\begin{definition}[Principal components]
+  The \textbf{principal components} are those uncorrelated linear combinations
+  $Y_1,Y_2,\dots,Y_p$ of \eqref{eq:pca_linear_combinations} whose variances
+  \eqref{eq:var_Yi} are as large as possible.
+\end{definition}
+
+The first linear combination is the one of maximum variance, i.e.\ the one
+maximizing $\Var(Y_1)=\vb{a}_1^\tp\Si\vb{a}_1$. Since this variance can be made
+arbitrarily large by rescaling $\vb{a}_1$, the indeterminacy is eliminated by
+restricting attention to coefficient vectors of unit length:
+\begin{equation}
+  \label{eq:first_pc_problem}
+  \begin{gathered}
+    \text{first principal component}=\vb{a}_1^\tp\vb{X}\\
+    \text{that maximizes }\;\Var(\vb{a}_1^\tp\vb{X})
+    \;\text{ s.t. }\;\vb{a}_1^\tp\vb{a}_1=1.
+  \end{gathered}
+\end{equation}
+
+In general, the $i$-th principal component is the combination
+$\vb{a}_i^\tp\vb{X}$ that maximizes $\Var(\vb{a}_i^\tp\vb{X})$ subject to
+$\vb{a}_i^\tp\vb{a}_i=1$ and
+$\Cov(\vb{a}_i^\tp\vb{X},\vb{a}_k^\tp\vb{X})=0$ for all $k<i$.
+
+\subsection{The maximization lemma and the solution}
+\label{subsec:pca_maximization}
+
+The constrained problem \eqref{eq:first_pc_problem} is solved by the
+maximization of a Rayleigh quotient.
+
+\begin{lemma}[Maximization of a quadratic form]
+  Let $\mat{B}=\Si$ be positive definite with eigenvalue--eigenvector pairs
+  $(\la_1,\vb{e}_1),\dots,(\la_p,\vb{e}_p)$ and $\la_1\ge\dots\ge\la_p\ge0$.
+  Then
+  \begin{equation}
+    \label{eq:rayleigh}
+    \max_{\vb{a}\neq\vb{0}}
+      \frac{\vb{a}^\tp\Si\vb{a}}{\vb{a}^\tp\vb{a}}=\la_1,
+  \end{equation}
+  attained at $\vb{a}=\vb{e}_1$, and, restricting to the orthogonal complement
+  of the leading eigenvectors,
+  \begin{equation}
+    \label{eq:rayleigh_k}
+    \max_{\substack{\vb{a}\,\perp\,\vb{e}_1,\dots,\vb{e}_k}}
+      \frac{\vb{a}^\tp\Si\vb{a}}{\vb{a}^\tp\vb{a}}=\la_{k+1},
+  \end{equation}
+  attained at $\vb{a}=\vb{e}_{k+1}$, for $k=1,2,\dots,p-1$.
+\end{lemma}
+
+\begin{proof}
+  Since the eigenvectors are normalized, $\vb{e}_1^\tp\vb{e}_1=1$, and
+  evaluating the quotient \eqref{eq:rayleigh} at $\vb{a}=\vb{e}_1$ gives
+  \[
+    \max_{\vb{a}\neq\vb{0}}
+      \frac{\vb{a}^\tp\Si\vb{a}}{\vb{a}^\tp\vb{a}}
+    =\la_1
+    =\frac{\vb{e}_1^\tp\Si\vb{e}_1}{\vb{e}_1^\tp\vb{e}_1}
+    =\vb{e}_1^\tp\Si\vb{e}_1
+    =\Var(Y_1).
+  \]
+  Similarly, for the choice $\vb{a}=\vb{e}_{k+1}$, which satisfies
+  $\vb{e}_{k+1}^\tp\vb{e}_i=0$ for $i=1,2,\dots,k$ and $k=1,2,\dots,p-1$,
+  \[
+    \frac{\vb{e}_{k+1}^\tp\Si\vb{e}_{k+1}}
+         {\vb{e}_{k+1}^\tp\vb{e}_{k+1}}
+    =\vb{e}_{k+1}^\tp\Si\vb{e}_{k+1}=\Var(Y_{k+1}),
+  \]
+  and since $\Si\vb{e}_{k+1}=\la_{k+1}\vb{e}_{k+1}$,
+  \[
+    \vb{e}_{k+1}^\tp(\Si\vb{e}_{k+1})
+    =\la_{k+1}\,\vb{e}_{k+1}^\tp\vb{e}_{k+1}=\la_{k+1},
+  \]
+  so that $\Var(Y_{k+1})=\la_{k+1}$.
+\end{proof}
+
+\begin{theorem}[Principal components of $\Si$]
+  \label{thm:pca_main}
+  Let $\Si$ be the covariance matrix associated with the random vector
+  $\vb{X}^\tp=(X_1,X_2,\dots,X_p)$, and let $\Si$ have the
+  eigenvalue--eigenvector pairs
+  $(\la_1,\vb{e}_1),(\la_2,\vb{e}_2),\dots,(\la_p,\vb{e}_p)$ with
+  $\la_1\ge\la_2\ge\dots\ge\la_p\ge 0$. Then the $i$-th principal component is
+  given by
+  \begin{multline}
+    \label{eq:pc_definition}
+    Y_i=\vb{e}_i^\tp\vb{X}\\
+    =e_{i1}X_1+e_{i2}X_2+\dots+e_{ip}X_p,
+  \end{multline}
+  for $i=1,2,\dots,p$, and with these choices
+  \begin{align}
+    \Var(Y_i)     &=\vb{e}_i^\tp\Si\,\vb{e}_i=\la_i,
+    \label{eq:pc_var}\\
+    \Cov(Y_i,Y_k) &=\vb{e}_i^\tp\Si\,\vb{e}_k=0,\quad i\neq k.
+    \label{eq:pc_cov}
+  \end{align}
+\end{theorem}
+
+\begin{remark}
+  If some $\la_i$ are equal, the choices of the corresponding coefficient
+  vectors $\vb{e}_i$ --- and hence of $Y_i$ --- are not unique.
+\end{remark}
+
+\subsection{Uncorrelatedness of the components}
+\label{subsec:pca_uncorrelated}
+
+It remains to show that the components are uncorrelated, that is, that
+$\vb{e}_i\perp\vb{e}_k \imp \vb{e}_i^\tp\vb{e}_k=0$ for $i\neq k$ gives
+$\Cov(Y_i,Y_k)=0$.
+
+The eigenvectors of $\Si$ are orthogonal if all the eigenvalues
+$\la_1,\la_2,\dots,\la_p$ are distinct. If they are not all distinct, the
+eigenvectors corresponding to common eigenvalues may be \emph{chosen} to be
+orthogonal. Therefore, for any two eigenvectors $\vb{e}_i$ and $\vb{e}_k$ we
+have $\vb{e}_i^\tp\vb{e}_k=0$ for $i\neq k$, and since
+$\Si\vb{e}_k=\la_k\vb{e}_k$, premultiplying by $\vb{e}_i^\tp$ gives
+\begin{equation}
+  \label{eq:cov_zero}
+  \Cov(Y_i,Y_k)=\vb{e}_i^\tp\Si\,\vb{e}_k
+  =\vb{e}_i^\tp\la_k\vb{e}_k
+  =\la_k\,\vb{e}_i^\tp\vb{e}_k=0,
+\end{equation}
+for all $i\neq k$.
+
+\subsection{Total population variance}
+\label{subsec:total_variance}
+
+\begin{theorem}[Decomposition of the total variance]
+  \label{thm:total_variance}
+  Let $\vb{X}^\tp=(X_1,X_2,\dots,X_p)$ have covariance matrix $\Si$ with pairs
+  $(\la_1,\vb{e}_1),\dots,(\la_p,\vb{e}_p)$, where
+  $\la_1\ge\la_2\ge\dots\ge\la_p\ge0$, and let
+  $Y_1=\vb{e}_1^\tp\vb{X},\dots,Y_p=\vb{e}_p^\tp\vb{X}$ be the principal
+  components. Then
+  \begin{multline}
+    \label{eq:total_variance}
+    \si_{11}+\si_{22}+\dots+\si_{pp}=\sum_{i=1}^{p}\Var(X_i)\\
+    =\la_1+\la_2+\dots+\la_p=\sum_{i=1}^{p}\Var(Y_i).
+  \end{multline}
+\end{theorem}
+
+\begin{proof}
+  From the definition of the trace,
+  $\si_{11}+\si_{22}+\dots+\si_{pp}=\tr(\Si)$. With $\mat{A}=\Si$ we may write
+  the spectral decomposition
+  \[
+    \Si=\mat{P}\La\mat{P}^\tp,
+  \]
+  where $\La$ is the diagonal matrix of eigenvalues and
+  $\mat{P}=(\vb{e}_1,\vb{e}_2,\dots,\vb{e}_p)$ is orthogonal, so that
+  $\mat{P}^\tp\mat{P}=\mat{P}\mat{P}^\tp=\I$. Then, by the cyclic property of
+  the trace,
+  \[
+    \tr(\Si)=\tr(\La\mat{P}^\tp\mat{P})=\tr(\La)
+    =\la_1+\la_2+\dots+\la_p.
+  \]
+  Thus
+  \[
+    \sum_{i=1}^{p}\Var(X_i)=\tr(\Si)=\tr(\La)=\sum_{i=1}^{p}\Var(Y_i),
+  \]
+  because $\Var(Y_i)=\la_i$ by Theorem~\ref{thm:pca_main}.
+\end{proof}
+
+Consequently the \textbf{total population variance} is
+\begin{equation}
+  \label{eq:total_pop_variance}
+  \si_{11}+\si_{22}+\dots+\si_{pp}=\la_1+\la_2+\dots+\la_p,
+\end{equation}
+and the proportion of it accounted for by the $k$-th component is
+\begin{equation}
+  \label{eq:proportion_variance}
+  \qty{\begin{array}{c}
+    \text{proportion of total}\\
+    \text{variance due to the}\\
+    \text{$k$-th component}
+  \end{array}}
+  =\frac{\la_k}{\la_1+\la_2+\dots+\la_p},
+\end{equation}
+for $k=1,2,\dots,p$.
+
+\subsection{Interpretation of the loadings}
+\label{subsec:loadings}
+
+Consider each component of $\vb{e}_i=(e_{i1},e_{i2},\dots,e_{ip})$. The
+magnitude of $e_{ik}$ measures the importance of the $k$-th variable to the
+$i$-th principal component; in particular $e_{ik}$ is proportional to the
+correlation coefficient between $Y_i$ and $X_k$,
+\[
+  e_{ik}\;\propto\;\Corr(Y_i,X_k).
+\]
+
+\begin{proposition}[Correlation of components and variables]
+  \label{prop:corr_pc_var}
+  If $Y_1=\vb{e}_1^\tp\vb{X},\dots,Y_p=\vb{e}_p^\tp\vb{X}$ are the principal
+  components obtained from $\Si$, then
+  \begin{equation}
+    \label{eq:corr_pc_var}
+    \rho_{Y_i,X_k}=\frac{e_{ik}\sqrt{\la_i}}{\sqrt{\si_{kk}}},
+    \qquad i,k=1,\dots,p.
+  \end{equation}
+\end{proposition}
+
+\subsection{Principal components from standardized variables}
+\label{subsec:standardized}
+
+The standardized variables are
+\begin{equation}
+  \label{eq:standardized_vars}
+  Z_1=\frac{X_1-\mu_1}{\sqrt{\si_{11}}},\;\dots,\;
+  Z_p=\frac{X_p-\mu_p}{\sqrt{\si_{pp}}}.
+\end{equation}
+In matrix notation, where $\mat{V}^{1/2}$ is the diagonal standard deviation
+matrix,
+\begin{equation}
+  \label{eq:standardized_matrix}
+  \vb{Z}=\qty{\mat{V}^{1/2}}\inv(\vb{X}-\mub),
+  \qquad \E(\vb{Z})=\vb{0},
+\end{equation}
+and
+\begin{equation}
+  \label{eq:cov_Z_is_rho}
+  \Cov(\vb{Z})=\qty{\mat{V}^{1/2}}\inv\Si\qty{\mat{V}^{1/2}}\inv=\rhob .
+\end{equation}
+The principal components may therefore be obtained from the eigenvectors of the
+\emph{correlation matrix} $\rhob$ of $\vb{X}$. All the previous results apply,
+with some simplification given that the variance of each $Z_i$ is unity.
+
+\begin{theorem}[Components of the standardized variables]
+  \label{thm:pca_standardized}
+  The $i$-th principal component of the standardized variables
+  $\vb{Z}^\tp=(Z_1,Z_2,\dots,Z_p)$ with $\Cov(\vb{Z})=\rhob$ is given by
+  \begin{equation}
+    \label{eq:pc_standardized}
+    Y_i=\vb{e}_i^\tp\vb{Z}
+       =\vb{e}_i^\tp\qty{\mat{V}^{1/2}}\inv(\vb{X}-\mub),
+  \end{equation}
+  where $(\la_1,\vb{e}_1),\dots,(\la_p,\vb{e}_p)$ are the
+  eigenvalue--eigenvector pairs of $\rhob$ with
+  $\la_1\ge\la_2\ge\dots\ge\la_p\ge0$. Moreover
+  \begin{align}
+    \sum_{i=1}^{p}\Var(Y_i)&=\sum_{i=1}^{p}\Var(Z_i)=p,
+    \label{eq:standardized_total_variance}\\
+    \rho_{Y_i,Z_k}&=e_{ik}\sqrt{\la_i}.
+    \label{eq:corr_standardized}
+  \end{align}
+\end{theorem}
+
+We see from \eqref{eq:standardized_total_variance} that the total standardized
+population variance is simply $p$, the sum of the diagonal elements of the
+matrix $\rhob$. Working with $\vb{Z}$ in place of $\vb{X}$, we find the
+proportion of total variance explained by the $k$-th principal component of
+$\vb{Z}$ to be
+\begin{equation}
+  \label{eq:proportion_standardized}
+  \qty{\begin{array}{c}
+    \text{proportion of standardized}\\
+    \text{variance due to the}\\
+    \text{$k$-th component}
+  \end{array}}
+  =\frac{\la_k}{p},
+\end{equation}
+for $k=1,2,\dots,p$, where the $\la_k$ are now the eigenvalues of $\rhob$.
+
+\selectlanguage{spanish}
+\subsection{An\'alisis de componentes principales}
+\label{subsec:acp_espanol}
+
+Sea $\Si$ la matriz de covarianzas del conjunto de datos. La varianza total se
+da por la traza
+\begin{equation}
+  \label{eq:varianza_total_es}
+  \text{varianza total}=\tr\Si=\sum_{i=1}^{p}\Si_{ii},
+\end{equation}
+donde $\Si_{ii}$ son las varianzas individuales de cada variable.
+
+Usando la descomposici\'on en valores y vectores propios (SVD) de $\Si$, existen
+matrices $\mat{Q}$ y $\La$ tales que
+\begin{equation}
+  \label{eq:svd_es}
+  \Si=\mat{Q}\La\mat{Q}^\tp,
+\end{equation}
+con $\La$ diagonal con valores propios $\la_1,\dots,\la_p$. La varianza total
+puede escribirse como
+\begin{multline}
+  \label{eq:traza_es}
+  \text{varianza total}=\tr\Si=\tr\qty{\mat{Q}\La\mat{Q}^\tp}\\
+  =\tr\La=\la_1+\la_2+\dots+\la_p.
+\end{multline}
+
+Las columnas de $\mat{Q}$ son las direcciones de las componentes principales;
+los valores de $\La$ indican cu\'anta varianza explica cada componente. Estas
+componentes definen un nuevo sistema de coordenadas: cada punto se representa
+por sus puntuaciones de componentes, relacionadas con las variables originales
+por
+\begin{equation}
+  \label{eq:reconstruccion_es}
+  \vb{X}=\mat{Q}(\mathrm{PC})+\bar{\vb{x}},
+\end{equation}
+donde $\vb{X}$ es el vector de coordenadas originales, $\mathrm{PC}$ el de
+puntuaciones y $\bar{\vb{x}}$ el vector de medias.
+
+\subsection{Resumen del proceso de PCA}
+\label{subsec:resumen_pca}
+
+Se resume seg\'un estos pasos:
+\begin{enumerate}
+  \item \textbf{Estandarizar los datos.}
+  \item \textbf{Calcular la matriz de covarianzas.}
+    \begin{itemize}
+      \item La matriz calcula c\'omo var\'ian conjuntamente las variables.
+      \item Su tama\~no es $p\times p$, donde $p$ es el n\'umero de variables.
+    \end{itemize}
+  \item \textbf{Obtener la descomposici\'on en valores y vectores propios
+        (SVD).}
+    \begin{itemize}
+      \item Los \emph{eigenvalues} miden la varianza explicada por cada
+            componente.
+      \item Los \emph{eigenvectors} son las direcciones (combinaciones
+            lineales) de las componentes.
+    \end{itemize}
+  \item \textbf{Ordenar las componentes.}
+    \begin{itemize}
+      \item Ordenar valores propios de mayor a menor.
+      \item El vector correspondiente al mayor valor propio es la primera
+            componente.
+    \end{itemize}
+  \item \textbf{Decidir cu\'antas componentes conservar.}
+    \begin{itemize}
+      \item Criterio de Kaiser: conservar valores propios $>1$.
+      \item Gr\'afico \emph{scree}: buscar el ``codo''.
+      \item Varianza acumulada.
+    \end{itemize}
+  \item \textbf{Obtener puntuaciones:} proyectar los datos centrados sobre las
+        componentes seleccionadas,
+        \begin{equation}
+          \label{eq:puntuaciones_es}
+          \mathrm{PC}=\mat{Q}^\tp\qty{\vb{X}-\bar{\vb{x}}}.
+        \end{equation}
+\end{enumerate}
+\selectlanguage{english}

@@ -1,0 +1,437 @@
+\section{Discriminant analysis}
+\label{sec:discriminant_analysis}
+
+\subsection{The Gaussian discriminant model}
+\label{subsec:gaussian_discriminant_model}
+
+Suppose the population is partitioned into $K$ distinct classes by a categorical
+variable $G\in\set{1,2,\dots,K}$, and let
+\[
+  \vb{X}^\tp=(X_1,X_2,\dots,X_p)
+\]
+be a continuous random vector of $p$ observed variables. The
+\textbf{Gaussian discriminant model} (GDM) assumes that, within each class,
+$\vb{X}$ follows a multivariate normal distribution,
+\begin{equation}
+  \label{eq:gdm_conditional}
+  \vb{X}\such(G=i)\sim\normal(\mub_i,\Si),
+  \qquad i=1,\dots,K,
+\end{equation}
+where the mean vector $\mub_i$ depends on the class but the covariance matrix
+$\Si$ is \emph{the same} for every group. This last assumption is called
+\textbf{homoscedasticity}, and it is what makes the resulting rule linear.
+
+\begin{definition}[Classification function]
+  A \textbf{classification function} is a map $g$ that assigns to each observed
+  value $\vb{X}=\vb{x}$ a class $G=i$, i.e.\ $g(\vb{x})=i$.
+\end{definition}
+
+\subsection{The Bayes classifier}
+\label{subsec:bayes_classifier}
+
+The goal is to find a $g$ minimizing the \textbf{misclassification rate}
+\begin{equation}
+  \label{eq:risk}
+  R(g)=\E\sqty{\mathbf{1}_{\set{g(\vb{X})\neq G}}}
+      =\mathbb{P}\qty{g(\vb{X})\neq G},
+\end{equation}
+where the indicator takes the value
+\begin{equation}
+  \label{eq:indicator}
+  \mathbf{1}_{\set{g(\vb{x})\neq G}}=
+  \begin{cases}
+    1, & \text{incorrect classification},\\
+    0, & \text{correct classification}.
+  \end{cases}
+\end{equation}
+
+The risk \eqref{eq:risk} is minimized by the \textbf{Bayes classifier}, which
+assigns $\vb{x}$ to the class with the largest posterior probability:
+\begin{equation}
+  \label{eq:bayes_classifier}
+  \tilde{g}(\vb{x})=\arg\max_{i}\;
+    \mathbb{P}\qty{G=i\such\vb{X}=\vb{x}},
+\end{equation}
+where $\mathbb{P}(G=i\such\vb{X}=\vb{x})$ is the probability that an individual
+belongs to class $i$ given that its observed characteristics are
+$\vb{X}=\vb{x}$. It remains to make \eqref{eq:bayes_classifier} explicit under
+the GDM.
+
+\subsection{Explicit form of the classifier under the GDM}
+\label{subsec:linear_discriminant_functions}
+
+Introduce the \textbf{prior probabilities} of each class,
+\begin{equation}
+  \label{eq:priors}
+  \pi_i=\mathbb{P}(G=i),
+  \qquad \sum_{i=1}^{K}\pi_i=1,
+\end{equation}
+and recall that under \eqref{eq:gdm_conditional} the class-conditional density
+of $\vb{X}$ is
+\begin{equation}
+  \label{eq:class_density}
+  f_i(\vb{x})=\frac{1}{(2\pi)^{p/2}\abs{\Si}^{1/2}}
+  \exp\qty{-\tfrac{1}{2}(\vb{x}-\mub_i)^\tp\Si\inv(\vb{x}-\mub_i)}.
+\end{equation}
+
+By Bayes' theorem the posterior probability is
+\begin{equation}
+  \label{eq:posterior}
+  \mathbb{P}\qty{G=i\such\vb{X}=\vb{x}}
+  =\frac{\pi_i f_i(\vb{x})}{\sum_{j=1}^{K}\pi_j f_j(\vb{x})}.
+\end{equation}
+Since the denominator of \eqref{eq:posterior} is the same for every class, it
+does not affect the $\arg\max$, so
+\begin{equation}
+  \label{eq:posterior_prop}
+  \mathbb{P}\qty{G=i\such\vb{X}=\vb{x}}\;\propto\;\pi_i f_i(\vb{x}),
+\end{equation}
+and it suffices to concentrate on $\pi_i f_i(\vb{x})$. Taking logarithms (a
+monotone transformation, so the $\arg\max$ is unchanged),
+
+\begin{equation}
+  \label{eq:log_posterior}
+  \small
+  \begin{aligned}
+    \log\qty{\pi_i f_i(\vb{x})}
+      &=\log\pi_i+\log f_i(\vb{x})\\
+      &=\log\pi_i-\frac{p}{2}\log(2\pi)-\frac{1}{2}\log\abs{\Si}\\
+      &\quad-\frac{1}{2}(\vb{x}-\mub_i)^\tp\Si\inv(\vb{x}-\mub_i)\\
+      &=\underbrace{\log\pi_i-\frac{p}{2}\log(2\pi)
+        -\frac{1}{2}\log\abs{\Si}
+        -\frac{1}{2}\vb{x}^\tp\Si\inv\vb{x}}_{\text{terms common to all classes}}\\
+      &\quad+\mub_i^\tp\Si\inv\vb{x}
+        -\frac{1}{2}\mub_i^\tp\Si\inv\mub_i .
+  \end{aligned}
+\end{equation}
+
+\begin{remark}
+  The quadratic term $-\tfrac12\vb{x}^\tp\Si\inv\vb{x}$ survives the expansion
+  of $(\vb{x}-\mub_i)^\tp\Si\inv(\vb{x}-\mub_i)$ but does \emph{not} depend on
+  $i$ precisely because $\Si$ is common to all groups. This is where
+  homoscedasticity is used, and it is why the rule is linear in $\vb{x}$; if
+  each class had its own $\Si_i$ the term would remain and one would obtain
+  \emph{quadratic} discriminant analysis instead.
+\end{remark}
+
+Discarding the class-independent terms of \eqref{eq:log_posterior} leads to the
+following definition.
+
+\begin{definition}[Linear discriminant functions]
+  \label{def:linear_discriminant}
+  For each class $i=1,\dots,K$,
+  \begin{equation}
+    \label{eq:delta_i}
+    \delta_i(\vb{x})=\mub_i^\tp\Si\inv\vb{x}
+      -\frac{1}{2}\mub_i^\tp\Si\inv\mub_i+\log\pi_i .
+  \end{equation}
+\end{definition}
+
+Their pairwise differences are
+\begin{equation}
+  \label{eq:delta_ij}
+  \begin{aligned}
+    \De_{ij}(\vb{x})
+      &=\log\qty{\pi_i f_i(\vb{x})}-\log\qty{\pi_j f_j(\vb{x})}\\
+      &=\delta_i(\vb{x})-\delta_j(\vb{x}),
+  \end{aligned}
+\end{equation}
+which are affine functions of $\vb{x}$; the set $\set{\De_{ij}(\vb{x})=0}$ is
+therefore a hyperplane, the decision boundary between classes $i$ and $j$.
+Finally, the Bayes classifier \eqref{eq:bayes_classifier} takes the explicit
+form
+\begin{equation}
+  \label{eq:lda_classifier}
+  \tilde{g}(\vb{x})=\arg\max_{i}\;\delta_i(\vb{x}).
+\end{equation}
+
+\subsection{Canonical variables and the decomposition of variance}
+\label{subsec:canonical_variables}
+
+Discriminant analysis also allows one to define \textbf{canonical variables}:
+linear combinations that retain the information needed to separate the classes
+while reducing the dimension. The total mean is
+\begin{equation}
+  \label{eq:total_mean}
+  \mub=\E(\vb{X})=\sum_{i=1}^{K}\pi_i\mub_i,
+\end{equation}
+and one introduces three dispersion matrices.
+
+\begin{definition}[Dispersion matrices]
+  \label{def:dispersion_matrices}
+  The \textbf{total} dispersion matrix is
+  \begin{equation}
+    \label{eq:ST}
+    \mat{S}_T=\E\sqty{(\vb{X}-\mub)(\vb{X}-\mub)^\tp}=\Var(\vb{X}),
+  \end{equation}
+  the \textbf{within-groups} dispersion matrix is
+  \begin{equation}
+    \label{eq:SW}
+    \mat{S}_W=\E_G\sqty{\Var\qty{\vb{X}\such G}}
+      =\sum_{i=1}^{K}\pi_i\Si=\Si,
+  \end{equation}
+  and the \textbf{between-groups} dispersion matrix is
+  \begin{equation}
+    \label{eq:SB}
+    \mat{S}_B=\Var_G\sqty{\E\qty{\vb{X}\such G}}
+      =\sum_{i=1}^{K}\pi_i(\mub_i-\mub)(\mub_i-\mub)^\tp,
+  \end{equation}
+  where $\E_G$ denotes expectation with respect to $G$ and
+  $\Var(\vb{X}\such G)$ the conditional variance of $\vb{X}$ given $G$.
+\end{definition}
+
+Note that \eqref{eq:SW} collapses to $\Si$ itself, again by homoscedasticity.
+The law of total variance then gives the \textbf{decomposition of variance}
+\begin{equation}
+  \label{eq:variance_decomposition}
+  \mat{S}_T=\mat{S}_W+\mat{S}_B .
+\end{equation}
+
+Let now $\vb{a}=(a_1,a_2,\dots,a_p)$ be a $1\times p$ matrix and consider the
+random variable $Y=\vb{a}\vb{X}$, a linear combination of the original
+variables $X_1,X_2,\dots,X_p$. Its total variance is
+\begin{equation}
+  \label{eq:var_Y_total}
+  \Var(Y)=\vb{a}\,\mat{S}_T\,\vb{a}^\tp,
+\end{equation}
+while its variance within the groups is
+\begin{equation}
+  \label{eq:var_Y_within}
+  \E_G\sqty{\Var\qty{Y\such G}}
+    =\vb{a}\,\mat{S}_W\,\vb{a}^\tp=\vb{a}\,\Si\,\vb{a}^\tp .
+\end{equation}
+
+To construct canonical variables one maximizes the \textbf{Rayleigh quotient}
+\begin{equation}
+  \label{eq:rayleigh_lda}
+  J(\vb{a})=\frac{\vb{a}\,\mat{S}_B\,\vb{a}^\tp}
+                 {\vb{a}\,\mat{S}_W\,\vb{a}^\tp},
+\end{equation}
+i.e.\ one seeks the direction along which the between-group spread is largest
+relative to the within-group spread.
+
+\subsection{Fisher's criterion}
+\label{subsec:fisher_criterion}
+
+Fisher's criterion states that the canonical variables must satisfy:
+\begin{itemize}
+  \item $Y_1=\vb{a}_1\vb{X}$ maximizes $J(\vb{a})$, that is,
+        \begin{equation}
+          \label{eq:fisher_first}
+          \vb{a}_1=\arg\max_{\vb{a}} J(\vb{a});
+        \end{equation}
+  \item $Y_j=\vb{a}_j\vb{X}$ maximizes $J(\vb{a})$ subject to being unrelated
+        to the previously obtained variables,
+        \begin{equation}
+          \label{eq:fisher_jth}
+          \vb{a}_j=\arg\max_{\vb{a}} J(\vb{a})
+          \quad\text{s.t.}\quad
+          \Cov\qty{Y_i,Y_j\such G}=0,\; i<j .
+        \end{equation}
+\end{itemize}
+
+The maximum number of canonical variables is $\min(p,K-1)$, since by
+\eqref{eq:SB} the matrix $\mat{S}_B$ is a sum of $K$ rank-one terms whose
+centred means satisfy one linear relation, so
+\begin{equation}
+  \label{eq:rank_SB}
+  r=\rank(\mat{S}_B)\le\min(p,K-1).
+\end{equation}
+
+One verifies that the differences $\De_{ij}(\vb{x})=\delta_i(\vb{x})-\delta_j(\vb{x})$
+of \eqref{eq:delta_ij} depend on $\vb{x}$ only through the $r$ canonical
+variables; the same holds for the Bayes classifier \eqref{eq:lda_classifier}.
+Hence classification can be carried out in the reduced space of dimension
+$r\le\min(p,K-1)$ without any loss of discriminating information.
+
+\subsection{Estimating the model from labelled data}
+\label{subsec:lda_estimation}
+
+Everything above is stated at the population level, in terms of the unknown
+parameters $\mub_i$, $\Si$ and $\pi_i$. In practice they must be estimated from a
+labelled sample
+\begin{equation}
+  \label{eq:labelled_sample}
+  \set{(\vb{x}_n,g_n)}_{n=1}^{m},
+\end{equation}
+where $\vb{x}_n$ is the vector of observed characteristics of the $n$-th
+individual and $g_n\in\set{1,\dots,K}$ its known class. Write
+\begin{equation}
+  \label{eq:class_counts}
+  m_i=\#\set{n\such g_n=i},
+  \qquad \sum_{i=1}^{K}m_i=m,
+\end{equation}
+for the number of observations falling in class $i$. The class means are
+estimated by their sample counterparts,
+\begin{equation}
+  \label{eq:mean_hat}
+  \hat{\mub}_i=\frac{1}{m_i}\sum_{n\,:\,g_n=i}\vb{x}_n .
+\end{equation}
+
+For the common covariance matrix $\Si$ there are two competing approaches: the
+\textbf{FE} estimator, which uses the unbiased pooled sum of squares, and the
+one based on \textbf{maximum likelihood} (MLE).
+
+\begin{definition}[Pooled covariance estimators]
+  \label{def:pooled_covariance}
+  \begin{equation}
+    \label{eq:sigma_fe}
+    \small
+    \hat{\Si}_{\text{FE}}=\frac{1}{m-K}\sum_{i=1}^{K}\;\sum_{n\,:\,g_n=i}
+      (\vb{x}_n-\hat{\mub}_i)(\vb{x}_n-\hat{\mub}_i)^\tp,
+  \end{equation}
+  \begin{equation}
+    \label{eq:sigma_mle}
+    \small
+    \hat{\Si}_{\text{MLE}}=\frac{1}{m}\sum_{i=1}^{K}\;\sum_{n\,:\,g_n=i}
+      (\vb{x}_n-\hat{\mub}_i)(\vb{x}_n-\hat{\mub}_i)^\tp .
+  \end{equation}
+\end{definition}
+
+The two differ only in the normalising constant, so they are proportional:
+\begin{equation}
+  \label{eq:sigma_fe_mle}
+  \hat{\Si}_{\text{FE}}=\frac{m}{m-K}\,\hat{\Si}_{\text{MLE}} .
+\end{equation}
+
+\begin{remark}
+  Estimating one mean vector per class consumes $K$ degrees of freedom, so
+  \eqref{eq:sigma_fe} divides by $m-K$ and is unbiased for $\Si$, whereas
+  \eqref{eq:sigma_mle} divides by $m$ and underestimates the dispersion. By
+  \eqref{eq:sigma_fe_mle} the correction factor $m/(m-K)\to 1$ as $m$ grows, so
+  the choice only matters when the sample size is close to the number of
+  classes.
+\end{remark}
+
+Finally the prior probabilities \eqref{eq:priors} are estimated by the observed
+class frequencies,
+\begin{equation}
+  \label{eq:priors_hat}
+  \hat{\pi}_i=\frac{m_i}{m},
+\end{equation}
+unless reliable external knowledge fixes them at other values. Substituting
+$\hat{\mub}_i$, $\hat{\Si}$ and $\hat{\pi}_i$ into \eqref{eq:delta_i} gives the
+sample discriminant functions, and the classification rule
+\eqref{eq:lda_classifier} is applied with them.
+
+\begin{remark}
+  Both approaches are implemented in \textsf{R} through the function
+  \texttt{lda()} of the package \texttt{MASS}.
+\end{remark}
+
+\subsection{Checking the assumptions}
+\label{subsec:lda_assumptions}
+
+The GDM rests on the two hypotheses of \eqref{eq:gdm_conditional}, and both
+should be checked before the rule is used.
+
+\begin{itemize}
+  \item \textbf{Within-class multivariate normality.} The observations of each
+        class must follow a multivariate normal distribution. This can be
+        assessed with formal tests such as those of \emph{Mardia},
+        \emph{Henze--Zirkler} or \emph{Royston}, and graphically with a
+        multivariate Q--Q plot or with pairwise scatter plots.
+  \item \textbf{Homoscedasticity.} The equality of the covariance matrices
+        across classes is evaluated with \emph{Box's $M$} test, available in
+        \textsf{R} as \texttt{boxM()} in the package \texttt{biotools}.
+        Scatter plots are again a useful complement to the formal test.
+\end{itemize}
+
+If homoscedasticity is rejected, the quadratic term of \eqref{eq:log_posterior}
+no longer cancels and one is led to quadratic discriminant analysis instead.
+
+\subsection{Variable selection}
+\label{subsec:lda_variable_selection}
+
+Discarding predictors that carry no discriminating information simplifies the
+model, removes noise and makes the result easier to interpret. Let $\mu_{ij}$
+denote the $j$-th component of $\mub_i$, that is, the mean of the predictor
+$X_j$ in class $i$. The variable $X_j$ is worth keeping only if that mean varies
+across the classes, which is exactly the hypothesis tested by a one-way ANOVA of
+$X_j$ on the categorical variable $G$:
+\begin{equation}
+  \label{eq:anova_hypotheses}
+  \begin{aligned}
+    H_0&:\ \mu_{1j}=\mu_{2j}=\dots=\mu_{Kj},\\
+    H_1&:\ \text{at least one of the means differs.}
+  \end{aligned}
+\end{equation}
+
+Fix a significance level $\al$. For each variable $X_j$, $j=1,\dots,p$:
+\begin{enumerate}
+  \item perform a one-way ANOVA of $X_j$ on $G$;
+  \item obtain the corresponding $p$-value $p_j$;
+  \item if $p_j\le\al$, retain $X_j$;
+  \item if $p_j>\al$, discard $X_j$.
+\end{enumerate}
+
+\selectlanguage{spanish}
+\subsection{Resumen del proceso}
+\label{subsec:resumen_discriminante}
+
+El an\'alisis discriminante busca una regla que asigne cada individuo a una de
+$K$ clases a partir de sus $p$ caracter\'isticas observadas. El modelo
+discriminante gaussiano supone normalidad dentro de cada clase y
+\emph{homocedasticidad}, $\vb{X}\such(G=i)\sim\normal(\mub_i,\Si)$ con $\Si$
+com\'un a todos los grupos.
+
+\begin{enumerate}
+  \item Se fija el objetivo: minimizar la tasa de error de clasificaci\'on
+        $R(g)=\mathbb{P}\qty{g(\vb{X})\neq G}$. El \'optimo es el clasificador
+        de Bayes, que asigna $\vb{x}$ a la clase de mayor probabilidad a
+        posteriori.
+  \item Se introducen las probabilidades a priori $\pi_i=\mathbb{P}(G=i)$ y se
+        aplica el teorema de Bayes; el denominador es com\'un a todas las
+        clases, de modo que basta comparar $\pi_i f_i(\vb{x})$.
+  \item Al tomar logaritmos, los t\'erminos
+        $-\tfrac{p}{2}\log(2\pi)$, $-\tfrac12\log\abs{\Si}$ y
+        $-\tfrac12\vb{x}^\tp\Si\inv\vb{x}$ aparecen en todas las clases y se
+        descartan. Lo que queda son las \textbf{funciones discriminantes
+        lineales} $\delta_i(\vb{x})$ de \eqref{eq:delta_i}, y el clasificador es
+        $\tilde{g}(\vb{x})=\arg\max_i\delta_i(\vb{x})$.
+  \item Para reducir dimensi\'on se descompone la varianza,
+        $\mat{S}_T=\mat{S}_W+\mat{S}_B$, y se maximiza el cociente de Rayleigh
+        $J(\vb{a})=\vb{a}\mat{S}_B\vb{a}^\tp/\vb{a}\mat{S}_W\vb{a}^\tp$.
+  \item El criterio de Fisher genera as\'i a lo m\'as $\min(p,K-1)$ variables
+        can\'onicas, incorreladas dentro de los grupos, que contienen toda la
+        informaci\'on discriminante.
+\end{enumerate}
+
+\subsection{Elecci\'on del estimador de $\Si$}
+\label{subsec:eleccion_estimador}
+
+Los estimadores \eqref{eq:sigma_fe} y \eqref{eq:sigma_mle} s\'olo difieren en la
+constante de normalizaci\'on, pero esa diferencia se vuelve relevante seg\'un el
+contexto:
+
+\begin{center}
+  \footnotesize
+  \begin{tabular}{@{}p{4.5cm}cc@{}}
+    \hline
+    \textbf{Contexto} & \textbf{FE} & \textbf{MLE}\\
+    \hline
+    Tama\~no de muestra muy peque\~no      & \checkmark & \\
+    Priors muy desbalanceados              & \checkmark & \\
+    Confianza alta en los valores de los priors & \checkmark & \\
+    Clases balanceadas                     &            & \checkmark\\
+    Clases bien separadas                  &            & \checkmark\\
+    Alta dimensionalidad                   & \checkmark & \\
+    Muestras muy grandes                   & \checkmark & \checkmark\\
+    \hline
+  \end{tabular}
+\end{center}
+
+\subsection{El flujo del modelo LDA}
+\label{subsec:flujo_lda}
+
+\begin{enumerate}
+  \item Partici\'on de los datos en entrenamiento y prueba.
+  \item Verificaci\'on de los supuestos (normalidad multivariada y
+        homocedasticidad).
+  \item Selecci\'on de variables mediante ANOVA.
+  \item Construcci\'on del modelo.
+  \item Validaci\'on cruzada.
+  \item Ajuste del modelo final.
+  \item Evaluaci\'on final sobre los datos de prueba.
+\end{enumerate}
+\selectlanguage{english}

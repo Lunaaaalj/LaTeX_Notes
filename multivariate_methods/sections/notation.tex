@@ -1,0 +1,29 @@
+\section{Notation and conventions}
+\label{sec:notation}
+
+These notes are bilingual: the derivations are written in English and the
+procedural summaries (\emph{resumen del proceso}, \emph{planteamiento}) are kept
+in Spanish, as in the original handwritten notes.
+
+Throughout, $\vb{X}^\tp=(X_1,X_2,\dots,X_p)$ is a random vector of $p$ observed
+variables with mean vector $\mub=\E(\vb{X})$ and covariance matrix
+\[
+  \Si=\Cov(\vb{X})=\E\sqty{(\vb{X}-\mub)(\vb{X}-\mub)^\tp},
+\]
+with diagonal entries $\Si_{ii}=\si_{ii}=\Var(X_i)$.
+
+\begin{itemize}
+  \item $\la_1\ge\la_2\ge\dots\ge\la_p\ge 0$ are the eigenvalues of $\Si$
+        (it is symmetric positive semidefinite, so they are real and nonnegative),
+        with associated orthonormal eigenvectors $\vb{e}_1,\dots,\vb{e}_p$, i.e.
+        $\vb{e}_i^\tp\vb{e}_k=\delta_{ik}$.
+  \item $\rhob$ denotes the correlation matrix and $\vb{Z}$ the vector of
+        standardized variables.
+  \item Transposition is written $\vb{a}^\tp$; in the original notes this appears
+        both as $\vb{a}'$ and as $\mat{Q}^{T}$, and both mean the same thing here.
+  \item $m$ always denotes the number of common factors in
+        Section~\ref{sec:factor_analysis}, with $m<p$.
+  \item $G$ denotes the categorical class label and $K$ the number of classes in
+        Section~\ref{sec:discriminant_analysis}; the handwritten notes use both
+        $N$ and $K$ for this count, and here it is always $K$.
+\end{itemize}

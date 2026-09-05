@@ -1,0 +1,76 @@
+# ---------------------------------------------------------------
+# LaTeX build artifacts
+# ---------------------------------------------------------------
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.lol
+
+# latexmk
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex(busy)
+
+# SyncTeX / pdftex extras
+*.xdv
+*.dvi
+
+# Bibliography (not used yet, harmless to keep)
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Index / glossary
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+
+# TikZ / PGF externalization (both documents load tikz)
+*.auxlock
+*.dpth
+*.md5
+*.figlist
+*.makefile
+*-figure*.pdf
+
+# Misc
+*.nav
+*.snm
+*.vrb
+*.brf
+*.pre
+
+# ---------------------------------------------------------------
+# Compiled output
+# ---------------------------------------------------------------
+# Generated PDFs are rebuilt from source with `latexmk -pdf`.
+# Delete these four lines if you would rather commit the readable
+# PDFs so they can be opened without a TeX installation.
+multivariate_methods/multivariate_methods.pdf
+math_self_study/self_study.pdf
+mathematical_methods/AMMF.pdf
+mathematical_methods/preview.pdf
+
+# Reference material under resources/ is a source asset, not output.
+!**/resources/*.pdf
+
+# Stray root-level compile attempt (see CLAUDE.md)
+texput.log
+
+# ---------------------------------------------------------------
+# Editor / OS
+# ---------------------------------------------------------------
+.DS_Store
+.claude/settings.local.json
+**/.claude/settings.local.json

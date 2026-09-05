@@ -1,0 +1,210 @@
+\documentclass[10pt,twocolumn,a4paper]{article}
+
+% --- Encoding / bilingual notes (EN primary, ES sections) ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,english]{babel}
+
+% --- Minimal margins for density ---
+\usepackage[margin=0.7cm, top=1.2cm, bottom=1.2cm, columnsep=0.8cm]{geometry}
+
+% --- Math ---
+\usepackage{amsmath, amssymb, mathtools, amsthm}
+\numberwithin{equation}{subsection}
+
+% --- Dense spacing ---
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
+% --- Compact sections ---
+\titleformat{\section}{\normalsize\bfseries}{\thesection.}{0.4em}{}
+\titleformat{\subsection}{\small\bfseries}{\thesubsection.}{0.4em}{}
+\titleformat{\subsubsection}{\small\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\section}{0pt}{6pt}{2pt}
+\titlespacing*{\subsection}{0pt}{4pt}{1pt}
+\titlespacing*{\subsubsection}{0pt}{3pt}{1pt}
+
+% --- Compact lists ---
+\setlist{nosep, leftmargin=1.2em}
+
+% --- Compact TOC ---
+\usepackage{tocloft}
+\setlength{\cftbeforesecskip}{1pt}
+\setlength{\cftbeforesubsecskip}{0pt}
+\renewcommand{\cftsecfont}{\small}
+\renewcommand{\cftsubsecfont}{\footnotesize}
+\renewcommand{\cftsecpagefont}{\small}
+\renewcommand{\cftsubsecpagefont}{\footnotesize}
+
+
+% --- Hyperref (loaded late to avoid conflicts) ---
+\usepackage[hidelinks]{hyperref}
+
+
+% --- float ---
+\usepackage{float}
+
+% --- tikz ---
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+
+% --- Header ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\footnotesize\leftmark}
+\fancyhead[R]{\footnotesize\thepage}
+\setlength{\headheight}{14pt}
+
+% ============================================================
+% CUSTOM MACROS
+% ============================================================
+
+% --- Shorthand: Greek letters ---
+\newcommand{\al}{\alpha}
+\newcommand{\be}{\beta}
+\newcommand{\ga}{\gamma}
+\newcommand{\Ga}{\Gamma}
+\newcommand{\de}{\delta}
+\newcommand{\De}{\Delta}
+\newcommand{\ep}{\varepsilon}
+\newcommand{\ze}{\zeta}
+\newcommand{\la}{\lambda}
+\newcommand{\La}{\Lambda}
+\newcommand{\si}{\sigma}
+\newcommand{\Si}{\Sigma}
+\newcommand{\om}{\omega}
+\newcommand{\Om}{\Omega}
+\newcommand{\ka}{\kappa}
+\newcommand{\vph}{\varphi}
+\newcommand{\vphi}{\varphi}
+
+% --- Shorthand: Calculus & analysis ---
+\newcommand{\dd}{\,\mathrm{d}}              % upright differential: \dd x
+\newcommand{\dv}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}   % \dv{y}{x}
+\newcommand{\ddv}[2]{\frac{\mathrm{d}^2#1}{\mathrm{d}#2^2}} % \ddv{y}{x}
+\newcommand{\pdv}[2]{\frac{\partial #1}{\partial #2}}      % \pdv{f}{x}
+\newcommand{\pddv}[2]{\frac{\partial^2 #1}{\partial #2^2}} % \pddv{f}{x}
+\newcommand{\inte}[4]{\int_{#1}^{#2} #3 \dd #4}           % \inte{a}{b}{f(x)}{x}
+
+% --- Shorthand: Linear algebra ---
+\newcommand{\vb}[1]{\mathbf{#1}}            % bold vector
+\newcommand{\vh}[1]{\hat{\mathbf{#1}}}      % unit vector
+\newcommand{\mat}[1]{\mathbf{#1}}           % matrix
+\newcommand{\tr}{\operatorname{tr}}          % trace
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\spn}{\operatorname{span}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}  % inner product
+\newcommand{\norm}[1]{\lVert #1 \rVert}         % norm
+\newcommand{\abs}[1]{\lvert #1 \rvert}          % absolute value
+\newcommand{\tp}{\mathsf{T}}                    % transpose: A^\tp
+\newcommand{\inv}{^{-1}}                       % inverse: \Si\inv
+\newcommand{\I}{\mat{I}}                       % identity matrix
+
+% --- Shorthand: probability & statistics ---
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Corr}{\operatorname{Corr}}
+\newcommand{\normal}{\mathcal{N}}
+
+% --- Shorthand: bold Greek (vectors/matrices of parameters) ---
+\newcommand{\mub}{\boldsymbol{\mu}}
+\newcommand{\epsb}{\boldsymbol{\varepsilon}}
+\newcommand{\Psib}{\boldsymbol{\Psi}}
+\newcommand{\rhob}{\boldsymbol{\rho}}
+
+% --- Shorthand: Sets & logic ---
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\such}{\mid}                    % set builder: \{x \such x>0\}
+\newcommand{\imp}{\Rightarrow}
+
+% --- Shorthand: Operators & misc ---
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\dive}{div}
+\DeclareMathOperator{\curl}{curl}
+\DeclareMathOperator{\Lap}{\nabla^2}
+\newcommand{\eval}[1]{\left. #1 \right|}    % evaluation bar
+\newcommand{\qty}[1]{\left( #1 \right)}     % auto-sized parens
+\newcommand{\sqty}[1]{\left[ #1 \right]}    % auto-sized brackets
+\newcommand{\set}[1]{\left\{ #1 \right\}}   % auto-sized braces
+
+% ============================================================
+% ENVIRONMENTS: Theorem-like (plain, no boxes, no color)
+% ============================================================
+\newcounter{thm}[section]
+\renewcommand{\thethm}{\thesection.\arabic{thm}}
+
+\newenvironment{theorem}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Theorem~\thethm\ifx\\#1\\\else\ (#1)\fi.}\itshape\quad
+}{\par\medskip}
+
+\newenvironment{lemma}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Lemma~\thethm\ifx\\#1\\\else\ (#1)\fi.}\itshape\quad
+}{\par\medskip}
+
+\newenvironment{corollary}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Corollary~\thethm\ifx\\#1\\\else\ (#1)\fi.}\itshape\quad
+}{\par\medskip}
+
+\newenvironment{proposition}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Proposition~\thethm\ifx\\#1\\\else\ (#1)\fi.}\itshape\quad
+}{\par\medskip}
+
+\newenvironment{definition}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Definition~\thethm\ifx\\#1\\\else\ (#1)\fi.}\quad
+}{\par\medskip}
+
+\newenvironment{example}[1][]{%
+  \refstepcounter{thm}\par\medskip\noindent
+  \textbf{Example~\thethm\ifx\\#1\\\else\ (#1)\fi.}\quad
+}{\par\medskip}
+
+\newenvironment{remark}[1][]{%
+  \par\medskip\noindent
+  \textit{Remark\ifx\\#1\\\else\ (#1)\fi.}\quad
+}{\par\medskip}
+
+\renewenvironment{proof}[1][Proof]{%
+  \par\medskip\noindent
+  \textit{#1.}\quad
+}{\hfill$\square$\par\medskip}
+
+% ============================================================
+\begin{document}
+
+\twocolumn[{%
+  \begin{center}
+    {\large\bfseries Multivariate Methods}\\[2pt]
+    {\small M\'etodos multivariados \quad|\quad Lecture notes}\\[2pt]
+    {\small Angel Luna \quad | \quad Last compilation: \today}
+  \end{center}
+  \vspace{-4pt}
+  \tableofcontents
+  \vspace{4pt}
+  \hrule
+  \vspace{6pt}
+}]
+
+\input{sections/notation.tex}
+\input{sections/principal_components.tex}
+\input{sections/factor_analysis.tex}
+\input{sections/discriminant_analysis.tex}
+
+\end{document}
