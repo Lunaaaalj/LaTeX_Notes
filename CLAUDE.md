@@ -40,22 +40,25 @@ explicitly un-ignored because it is a source asset, not output.
 |---|---|---|
 | `multivariate_methods/` | `multivariate_methods.tex` | dense two-column `article`, five `sections/*.tex` |
 | `math_self_study/` | `self_study.tex` | dense two-column `article`, three `sections/*.tex` |
-| `mathematical_methods/` | `AMMF.tex` | `report` + boxed theorems |
+| `mathematical_methods/` | `AMMF.tex` | dense two-column `article`, **Spanish**, twelve `sections/*.tex` |
 | `cryptography/` | *(none yet)* | preamble fragment + reference PDF only |
 
 `cryptography/` and `mathematical_methods/` both contain a file named
 `differential_geometry.tex`. Despite the name it is **not a chapter** — it is a
 byte-identical *preamble fragment* (no `\documentclass`, no `\begin{document}`)
-that `AMMF.tex` `\input`s before `\begin{document}`. `cryptography/` has no main
-file at all, so it currently does not build; creating one means writing an
-`AMMF.tex`-style wrapper around that fragment.
+of the boxed-theorem family. `mathematical_methods/differential_geometry.tex` is
+now **orphaned**: `AMMF.tex` was rewritten onto the dense two-column family and
+no longer `\input`s it. It is kept only because `cryptography/` — which has no
+main file at all and therefore does not build — would need such a wrapper around
+its own copy.
 
 `mathematical_methods/preview.*` are the artifacts of a partial-compile preview
 run, not a separate document.
 
 ## The two preamble families
 
-**Dense two-column family** (`multivariate_methods`, `math_self_study`) — 10pt,
+**Dense two-column family** (`multivariate_methods`, `math_self_study`,
+`mathematical_methods`) — 10pt,
 `twocolumn`, `a4paper`, tight `geometry`, `titlesec`/`enumitem`/`tocloft` for
 compact headings and lists, `fancyhdr` running head, `\numberwithin{equation}{subsection}`.
 Theorem-likes are **hand-rolled** with `\newenvironment` over a single shared
@@ -71,7 +74,32 @@ boxes, no color. All take an optional name argument:
 Available: `theorem`, `lemma`, `corollary`, `proposition`, `definition`,
 `example`, `remark` (unnumbered), `proof`.
 
-**Boxed-theorem family** (`mathematical_methods`, `cryptography`) — `report`
+`mathematical_methods/AMMF.tex` is the **Spanish variant** of this family and
+differs in four ways that matter when copying content in or out:
+
+- environment names are Spanish — `teorema`, `lema`, `corolario`,
+  `proposicion`, `definicion`, `ejemplo`, `observacion` (unnumbered),
+  `demostracion` (auto `\square`) — and `amsthm` is *not* loaded, so
+  `demostracion` is a plain `\newenvironment`, not a `\renewenvironment`;
+- babel is `[english,spanish,es-noshorthands,es-nodecimaldot,es-nolists]`. All
+  three modifiers are load-bearing: without them `"` becomes active, `,` turns
+  into a decimal comma **inside math mode**, and babel fights `enumitem` over
+  list spacing;
+- accented characters are written as escapes (`\'a`, `\~n`) as elsewhere in the
+  repo, even though `inputenc` is UTF-8;
+- `\tableofcontents` sits *outside* the `\twocolumn[...]` block. That optional
+  argument is a single unbreakable one-column box, and this document's TOC is
+  too long to fit on one page — leaving it inside makes it overflow silently
+  onto the running text. Do not move it back.
+
+Extra macros here that the other two lack: `\Ext{n}` (the space of `n`-forms
+`\bigwedge^n L`), `\rot`, `\Real`, `\Imag`, `\Argu`, `\braket` (inner product
+of functions), `\lito` (Landau little-o), `\dnv` (n-th derivative), `\Ee`,
+`\dg`. It does *not* define `\E`, `\Var`, `\normal` or the bold-Greek
+statistics macros of `multivariate_methods`.
+
+**Boxed-theorem family** (`cryptography`, and the orphaned
+`mathematical_methods/differential_geometry.tex`) — `report`
 class, `thmtools` + `mdframed` (`framemethod=TikZ`) with named styles
 (`thmgreenbox`, `thmredbox`, `thmbluebox`, `thmblueline`, `thmproofbox`,
 `thmexplanationbox`), definitions numbered within chapter and everything else
