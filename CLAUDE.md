@@ -38,7 +38,7 @@ explicitly un-ignored because it is a source asset, not output.
 
 | Directory | Main file | Class / style |
 |---|---|---|
-| `multivariate_methods/` | `multivariate_methods.tex` | dense two-column `article`, four `sections/*.tex` |
+| `multivariate_methods/` | `multivariate_methods.tex` | dense two-column `article`, five `sections/*.tex` |
 | `math_self_study/` | `self_study.tex` | dense two-column `article`, three `sections/*.tex` |
 | `mathematical_methods/` | `AMMF.tex` | `report` + boxed theorems |
 | `cryptography/` | *(none yet)* | preamble fragment + reference PDF only |
