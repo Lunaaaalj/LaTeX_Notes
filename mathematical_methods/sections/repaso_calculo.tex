@@ -1,0 +1,271 @@
+\section{Repaso de c\'alculo en una dimensi\'on}
+\label{sec:repaso_calculo}
+
+\subsection{Funciones}
+\label{subsec:funciones}
+
+\begin{definicion}[Rango]
+  \label{def:rango}
+  El \textbf{rango} de una funci\'on $f:X\rightarrow Y$, con
+  $X,Y\subset\R$, es el conjunto de los elementos de $Y$ que son valores que
+  toma $f$:
+  \begin{equation}
+    \label{eq:rango}
+    \mathrm{Ran}(f)=\set{y\in Y\such y=f(x)\ \text{para alg\'un}\ x\in X}.
+  \end{equation}
+\end{definicion}
+
+\begin{definicion}[Sobreyectiva]
+  \label{def:sobreyectiva}
+  $f:X\rightarrow Y$ es \textbf{sobre} o \textbf{sobreyectiva} si cada elemento
+  de $Y$ es imagen de alg\'un $x\in X$, esto es, si $\mathrm{Ran}(f)=Y$.
+\end{definicion}
+
+\begin{definicion}[Inyectiva]
+  \label{def:inyectiva}
+  $f:X\rightarrow Y$ es \textbf{uno a uno} o \textbf{inyectiva} si dos
+  elementos distintos de $X$ tienen im\'agenes distintas en $Y$; es decir, si
+  para cualesquiera $x_1,x_2\in X$ con $x_1\neq x_2$ se cumple
+  $f(x_1)\neq f(x_2)$.
+\end{definicion}
+
+\subsection{L\'imites}
+\label{subsec:limites_1d}
+
+\begin{definicion}[L\'imite]
+  \label{def:limite_1d}
+  La funci\'on $f$ tiende al \textbf{l\'imite} $\ell$ en $x_0$ si
+  $\forall\ep>0$ existe $\de_\ep>0$ tal que para todo $x$ con
+  $0<\abs{x-x_0}<\de_\ep$ se cumple $\abs{f(x)-\ell}<\ep$. Simb\'olicamente,
+  \begin{equation}
+    \label{eq:limite_1d}
+    \lim_{x\rightarrow x_0}f(x)=\ell .
+  \end{equation}
+\end{definicion}
+
+\begin{ejemplo}
+  \label{ej:limite_sandwich}
+  Calculemos
+  \begin{equation}
+    \label{eq:limite_ejemplo}
+    \lim_{x\rightarrow\infty}\frac{x+\sin^3x}{5x+6}=\frac{1}{5}.
+  \end{equation}
+  Como $-1\le\sin^3x\le 1$, la funci\'on queda encajonada,
+  \begin{equation}
+    \label{eq:sandwich}
+    \frac{x-1}{5x+6}\le f(x)\le\frac{x+1}{5x+6}.
+  \end{equation}
+  Tomando $\xii=1/x$,
+  \begin{equation}
+    \label{eq:cambio_variable}
+    \frac{x-1}{5x+6}
+      =\frac{1-\frac{1}{x}}{5+\frac{6}{x}}
+      =\frac{1-\xii}{5+6\xii},
+  \end{equation}
+  lo que transforma el l\'imite en $\lim_{\xii\rightarrow 0}$. Entonces
+  \begin{equation}
+    \label{eq:estimacion}
+    \abs{\frac{1-\xii}{5+6\xii}-\frac{1}{5}}
+      =\abs{\frac{-11\xii}{25+30\xii}}<\abs{\xii}<\de_\ep
+  \end{equation}
+  para $\xii$ suficientemente peque\~no, y basta tomar $\de_\ep=\ep$.
+\end{ejemplo}
+
+\subsection{Funciones continuas}
+\label{subsec:continuidad_1d}
+
+Para una funci\'on cualquiera no necesariamente se cumple
+$\lim_{x\rightarrow x_0}f(x)=f(x_0)$.
+
+\begin{definicion}[Continuidad]
+  \label{def:continuidad_1d}
+  $f$ es \textbf{continua} en $x_0$ si
+  \begin{equation}
+    \label{eq:continuidad_1d}
+    \lim_{x\rightarrow x_0}f(x)=f(x_0),
+  \end{equation}
+  y es continua en un dominio $D$ si esto vale para todo $x_0\in D$.
+\end{definicion}
+
+\begin{teorema}
+  \label{teo:algebra_continuas}
+  Si $f$ y $g$ son continuas en $x_0$, entonces:
+  \begin{enumerate}
+    \item $f+g$ es continua en $x_0$;
+    \item $fg$ es continua en $x_0$;
+    \item si $g(x_0)\neq 0$, entonces $1/g$ es continua en $x_0$.
+  \end{enumerate}
+\end{teorema}
+
+\begin{teorema}[Valor intermedio]
+  \label{teo:valor_intermedio}
+  Si $f$ es continua en $[a,b]$ y $f(a)<0<f(b)$, entonces existe alg\'un
+  $x_0\in[a,b]$ tal que $f(x_0)=0$.
+\end{teorema}
+
+\begin{teorema}[Acotamiento]
+  \label{teo:acotamiento}
+  Si $f$ es continua en $[a,b]$, entonces $f$ est\'a acotada superiormente en
+  $[a,b]$; es decir, existe $N\in\R$ tal que $f(x)\le N$ para todo
+  $x\in[a,b]$.
+\end{teorema}
+
+\begin{teorema}[Valor extremo]
+  \label{teo:valor_extremo}
+  Si $f$ es continua en $[a,b]$, entonces existe alg\'un $y\in[a,b]$ tal que
+  $f(y)\ge f(x)$ para todo $x\in[a,b]$.
+\end{teorema}
+
+\subsection{Derivaci\'on}
+\label{subsec:derivacion_1d}
+
+La pendiente de la recta secante que une los puntos de abscisas $x$ y $x+h$ es
+$\qty{f(x+h)-f(x)}/h$. La pendiente de la recta \emph{tangente} en
+$\qty{x,f(x)}$ se obtiene en el l\'imite.
+
+\begin{definicion}[Derivada]
+  \label{def:derivada_1d}
+  $f$ es \textbf{derivable} en $x_0$ si existe
+  \begin{equation}
+    \label{eq:derivada_1d}
+    \dv{}{x}f(x)=\lim_{h\rightarrow 0}\frac{f(x+h)-f(x)}{h}.
+  \end{equation}
+\end{definicion}
+
+\begin{teorema}
+  \label{teo:derivable_continua}
+  Si $f$ es derivable en $x_0$, entonces $f$ es continua en $x_0$.
+\end{teorema}
+
+\begin{demostracion}
+  Basta escribir la diferencia como el cociente incremental multiplicado por
+  $h$:
+  \begin{equation}
+    \label{eq:demo_continuidad}
+    \begin{aligned}
+      \lim_{h\rightarrow 0}\qty{f(x+h)-f(x)}
+        &=\lim_{h\rightarrow 0}\frac{f(x+h)-f(x)}{h}\,h\\
+        &=\qty{\dv{}{x}f(x)}\lim_{h\rightarrow 0}h=0 ,
+    \end{aligned}
+  \end{equation}
+  puesto que el primer factor existe y es finito por hip\'otesis. Por lo tanto
+  $\lim_{h\rightarrow 0}f(x+h)=f(x)$ en $x_0$.
+\end{demostracion}
+
+\subsubsection{Consecuencias}
+\label{subsubsec:reglas_derivacion}
+
+Sean $f$ y $g$ derivables en $x\in(a,b)$. Entonces
+\begin{align}
+  \label{eq:regla_suma}
+  \dv{}{x}(f+g)&=\dv{}{x}f+\dv{}{x}g,\\
+  \label{eq:regla_producto}
+  \dv{}{x}(fg)&=\qty{\dv{}{x}f}g+\qty{\dv{}{x}g}f,
+\end{align}
+y si $g(x_0)\neq 0$,
+\begin{equation}
+  \label{eq:regla_reciproco}
+  \dv{}{x}\qty{\frac{1}{g}}=-\qty{\dv{}{x}g}\frac{1}{g^2}.
+\end{equation}
+
+\begin{demostracion}[Demostraci\'on de \eqref{eq:regla_suma}]
+  \begin{equation}
+    \label{eq:demo_suma}
+    \begin{aligned}
+      \dv{}{x}(f+g)
+        &=\lim_{h\rightarrow 0}\frac{f(x+h)+g(x+h)-f(x)-g(x)}{h}\\
+        &=\lim_{h\rightarrow 0}\frac{f(x+h)-f(x)}{h}\\
+        &\quad+\lim_{h\rightarrow 0}\frac{g(x+h)-g(x)}{h}\\
+        &=\dv{}{x}f+\dv{}{x}g .
+    \end{aligned}
+  \end{equation}
+\end{demostracion}
+
+\begin{demostracion}[Demostraci\'on de \eqref{eq:regla_producto}]
+  Se suma y se resta el t\'ermino cruzado $f(x+h)g(x)$:
+  \begin{equation}
+    \label{eq:demo_producto}
+    \small
+    \begin{aligned}
+      \dv{}{x}(fg)
+        &=\lim_{h\rightarrow 0}\frac{f(x+h)g(x+h)-f(x)g(x)}{h}\\
+        &=\lim_{h\rightarrow 0}\frac{1}{h}
+          \big(f(x+h)g(x+h)-f(x+h)g(x)\\
+        &\qquad\qquad+f(x+h)g(x)-f(x)g(x)\big)\\
+        &=\lim_{h\rightarrow 0}f(x+h)\frac{g(x+h)-g(x)}{h}\\
+        &\quad+\lim_{h\rightarrow 0}\frac{f(x+h)-f(x)}{h}g(x)\\
+        &=f(x)\dv{}{x}g(x)+\qty{\dv{}{x}f(x)}g(x).
+    \end{aligned}
+  \end{equation}
+\end{demostracion}
+
+\begin{demostracion}[Demostraci\'on de \eqref{eq:regla_reciproco}]
+  \begin{equation}
+    \label{eq:demo_reciproco}
+    \begin{aligned}
+      \dv{}{x}\qty{\frac{1}{g}}
+        &=\lim_{h\rightarrow 0}\frac{1}{h}
+          \qty{\frac{1}{g(x+h)}-\frac{1}{g(x)}}\\
+        &=\lim_{h\rightarrow 0}\frac{g(x)-g(x+h)}{h\,g(x)g(x+h)}\\
+        &=-\lim_{h\rightarrow 0}\frac{g(x+h)-g(x)}{h}
+          \lim_{h\rightarrow 0}\frac{1}{g(x)g(x+h)}\\
+        &=-\qty{\dv{}{x}g(x)}\frac{1}{g(x)^2}.
+    \end{aligned}
+  \end{equation}
+\end{demostracion}
+
+\subsubsection{Regla de la cadena}
+\label{subsubsec:regla_cadena_1d}
+
+Si $f$ y $g$ son derivables en $x_0$ y $k(x)=(f\circ g)(x)=f(g(x))$, entonces
+\begin{equation}
+  \label{eq:regla_cadena_1d}
+  \dv{}{x}f(g(x))=\qty{\eval{\dv{f}{u}}_{u=g(x)}}\dv{}{x}g(x).
+\end{equation}
+
+\begin{ejemplo}[Derivada de $x^n$]
+  \label{ej:derivada_potencia}
+  Sea $f(x)=x^n$ con $n\in\N$. Por el binomio de Newton,
+  \begin{equation}
+    \label{eq:derivada_potencia}
+    \begin{aligned}
+      \dv{}{x}f(x)
+        &=\lim_{h\rightarrow 0}\frac{(x+h)^n-x^n}{h}\\
+        &=\lim_{h\rightarrow 0}\frac{1}{h}
+          \qty{x^n+nx^{n-1}h+\dots+h^n-x^n}\\
+        &=\lim_{h\rightarrow 0}\qty{nx^{n-1}+\mathcal{O}(h)}
+         =nx^{n-1}.
+    \end{aligned}
+  \end{equation}
+\end{ejemplo}
+
+\subsection{Teoremas del valor medio}
+\label{subsec:valor_medio}
+
+\begin{definicion}[Extremo local]
+  \label{def:extremo_local}
+  Sea $f$ una funci\'on y $A$ un conjunto contenido en su dominio. Un punto
+  $x\in A$ es un \textbf{m\'aximo} (o \textbf{m\'inimo}) \textbf{local} de $f$
+  sobre $A$ si existe $\de>0$ tal que $x$ es un m\'aximo (o m\'inimo) de $f$
+  sobre $A\cap\qty{x-\tfrac{\de}{2},\,x+\tfrac{\de}{2}}$.
+\end{definicion}
+
+\begin{teorema}[Rolle]
+  \label{teo:rolle}
+  Si $f$ es continua en $[a,b]$, derivable en $(a,b)$ y $f(a)=f(b)$, entonces
+  existe $x_0\in(a,b)$ tal que
+  \begin{equation}
+    \label{eq:rolle}
+    \eval{\dv{}{x}f(x)}_{x_0}=0 .
+  \end{equation}
+\end{teorema}
+
+\begin{teorema}[Valor medio]
+  \label{teo:valor_medio}
+  Si $f$ es continua en $[a,b]$ y derivable en $(a,b)$, entonces existe
+  $x_0\in(a,b)$ tal que
+  \begin{equation}
+    \label{eq:valor_medio}
+    \eval{\dv{}{x}f(x)}_{x_0}=\frac{f(b)-f(a)}{b-a}.
+  \end{equation}
+\end{teorema}

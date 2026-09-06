@@ -1,0 +1,358 @@
+\section{Series de potencias}
+\label{sec:series_potencia}
+
+\subsection{Sucesiones}
+\label{subsec:sucesiones}
+
+Consideremos una sucesi\'on de n\'umeros $\set{a_n}_{n=1}^{\infty}$. Decimos
+que $A$ es su l\'imite si $\forall\ep>0$ existe $n_0$ tal que
+$\abs{a_n-A}<\ep$ para todo $n\ge n_0$.
+
+\begin{definicion}[Convergencia]
+  \label{def:convergencia}
+  Una sucesi\'on con l\'imite finito se dice \textbf{convergente}; si no
+  converge es \textbf{divergente}.
+\end{definicion}
+
+\begin{definicion}[Sucesi\'on de Cauchy]
+  \label{def:cauchy}
+  Una sucesi\'on se llama \textbf{fundamental} o \textbf{de Cauchy} si
+  $\forall\ep>0$ existe $n_0$ tal que
+  \begin{equation}
+    \label{eq:cauchy}
+    \abs{a_n-a_m}<\ep
+    \qquad\forall n,m\ge n_0 .
+  \end{equation}
+\end{definicion}
+
+\begin{ejemplo}
+  \label{ej:sucesion_cauchy}
+  Sea $a_n=1-\dfrac{3}{n+2}$. Entonces
+  \begin{equation}
+    \label{eq:ejemplo_cauchy}
+    \begin{aligned}
+      \abs{a_n-a_m}
+        &=\abs{1-\frac{3}{n+2}-\qty{1-\frac{3}{m+2}}}\\
+        &=3\abs{\frac{n-m}{(n+2)(m+2)}}<\ep
+    \end{aligned}
+  \end{equation}
+  para $n,m$ suficientemente grandes, de modo que la sucesi\'on es de Cauchy.
+\end{ejemplo}
+
+\begin{observacion}
+  Las partes real e imaginaria de una sucesi\'on de Cauchy son sucesiones de
+  Cauchy.
+\end{observacion}
+
+\subsection{Series}
+\label{subsec:series}
+
+Sea la serie infinita
+\begin{equation}
+  \label{eq:serie}
+  S=a_0+a_1+a_2+\dots+a_n+\dots
+\end{equation}
+con $\set{a_n}$ los elementos de una sucesi\'on. Definimos las
+\textbf{sumas parciales} $S_n=a_0+a_1+\dots+a_n$ y con ellas una nueva
+sucesi\'on $\set{S_n}_{n=1}^{\infty}$.
+
+Una serie infinita \textbf{converge} si $\forall\ep>0$ existe $n_0$ tal que
+$\abs{S_p-S_n}<\ep$ para todos $n,p\ge n_0$; es decir, si la sucesi\'on de
+sumas parciales es de Cauchy. En ese caso podemos hablar del
+\textbf{residuo}:
+\begin{equation}
+  \label{eq:residuo}
+  S=S_n+R_n,
+  \qquad
+  R_n=\sum_{j=n+1}^{\infty}a_j .
+\end{equation}
+
+Comparando $S$ con la serie de valores absolutos
+\begin{equation}
+  \label{eq:serie_absoluta}
+  S_a=\abs{a_1}+\abs{a_2}+\dots+\abs{a_n}+\dots
+\end{equation}
+y usando la desigualdad triangular,
+\begin{equation}
+  \label{eq:desigualdad_triangular_serie}
+  \abs{a_n+a_{n+1}+\dots+a_p}
+    \le\abs{a_n}+\abs{a_{n+1}}+\dots+\abs{a_p},
+\end{equation}
+se ve que si $S_a$ converge entonces $S$ converge. En tal caso se dice que la
+serie es \textbf{absolutamente convergente}.
+
+\subsection{Convergencia uniforme}
+\label{subsec:convergencia_uniforme}
+
+Consideremos ahora una sucesi\'on de funciones definidas en un dominio $\Om$.
+Si $\set{f_n(z)}_{n=1}^{\infty}$ converge para todo $z\in\Om$, el l\'imite
+$f(z)$ es una funci\'on definida en $\Om$: dados $\ep>0$ y $z\in\Om$, existe
+$n_0$ tal que $\abs{f_n(z)-f(z)}<\ep$ para $n\ge n_0$. Pero ese $n_0$ depende
+en general de $z$.
+
+\begin{definicion}[Convergencia uniforme]
+  \label{def:convergencia_uniforme}
+  Una sucesi\'on $\set{f_n(z)}$ converge \textbf{uniformemente} a $f(z)$ en
+  $\Om$ si $\forall\ep>0$ existe un $n_0$ \emph{independiente de $z$} tal que
+  \begin{equation}
+    \label{eq:convergencia_uniforme}
+    \abs{f_n(z)-f_m(z)}<\ep
+    \qquad\forall n,m\ge n_0 .
+  \end{equation}
+\end{definicion}
+
+\begin{observacion}
+  La funci\'on l\'imite de una sucesi\'on uniformemente convergente de
+  funciones continuas es continua.
+\end{observacion}
+
+\subsection{Caso de estudio: la serie geom\'etrica}
+\label{subsec:serie_geometrica}
+
+Sea
+\begin{equation}
+  \label{eq:geometrica}
+  S=1+z+z^2+\dots+z^n+\dots,
+  \qquad
+  S_n=1+z+z^2+\dots+z^n .
+\end{equation}
+
+\begin{observacion}[El truco]
+  Multiplicando por $z$ y restando,
+  \begin{equation}
+    \label{eq:truco_geometrica}
+    \begin{aligned}
+      zS_n&=z+z^2+\dots+z^{n+1}\\
+      \imp S_n-zS_n&=1-z^{n+1}\\
+      \imp S_n&=\frac{1-z^{n+1}}{1-z},\qquad z\neq 1 .
+    \end{aligned}
+  \end{equation}
+\end{observacion}
+
+Entonces
+\begin{equation}
+  \label{eq:limite_geometrica}
+  S=\lim_{n\rightarrow\infty}S_n
+   =\lim_{n\rightarrow\infty}\frac{1-z^{n+1}}{1-z},
+\end{equation}
+y se distinguen dos casos:
+\begin{enumerate}
+  \item si $\abs{z}<1$, entonces $z^{n+1}\rightarrow 0$ y
+        $S=\dfrac{1}{1-z}$;
+  \item si $\abs{z}>1$, entonces $\abs{z^{n+1}}\rightarrow\infty$ y la serie
+        diverge.
+\end{enumerate}
+
+\begin{observacion}
+  Existe pues un valor $R$ tal que hay convergencia si $\abs{z}<R$. Esto se
+  generaliza a cualquier serie de potencias.
+\end{observacion}
+
+\subsection{Radio de convergencia}
+\label{subsec:radio_convergencia}
+
+\begin{teorema}[Radio de convergencia]
+  \label{teo:radio_convergencia}
+  Para cada serie de potencias existe un valor $R$, llamado \textbf{radio de
+  convergencia}, con las siguientes propiedades:
+  \begin{itemize}
+    \item la serie converge absolutamente para $\abs{z}<R$, y si
+          $0\le\rho<R$ la convergencia es uniforme para $\abs{z}\le\rho$;
+    \item si $\abs{z}>R$ los t\'erminos de la serie no tienen cota y la serie
+          diverge;
+    \item en $\abs{z}<R$ la suma de la serie es una funci\'on anal\'itica; su
+          derivada se obtiene diferenciando t\'ermino a t\'ermino y la serie
+          de las derivadas tiene el mismo radio de convergencia.
+  \end{itemize}
+  Adem\'as vale la \textbf{f\'ormula de Hadamard},
+  \begin{equation}
+    \label{eq:hadamard}
+    \frac{1}{R}=\limsup_{n\rightarrow\infty}\;\abs{a_n}^{1/n} .
+  \end{equation}
+\end{teorema}
+
+\subsection{Teorema de Taylor}
+\label{subsec:taylor_complejo}
+
+\begin{teorema}[Taylor]
+  \label{teo:taylor}
+  Si $f(z)$ es anal\'itica en $\Om$, entonces
+  \begin{equation}
+    \label{eq:taylor_complejo}
+    f(z)=\sum_{k=0}^{\infty}\frac{1}{k!}
+      \eval{\dnv{}{z}{k}f(z)}_{z=z_0}(z-z_0)^k .
+  \end{equation}
+\end{teorema}
+
+\subsection{Funciones anal\'iticas elementales}
+\label{subsec:funciones_analiticas}
+
+\subsubsection{Seno y coseno}
+\label{subsubsec:seno_coseno}
+
+Desarrollando $\sin z$ alrededor de $z=0$ con \eqref{eq:taylor_complejo},
+\begin{equation}
+  \label{eq:serie_seno}
+  \sin z=z-\frac{1}{3!}z^3+\frac{1}{5!}z^5-\dots
+    =\sum_{k=0}^{\infty}\frac{(-1)^k}{(2k+1)!}z^{2k+1},
+\end{equation}
+y derivando t\'ermino a t\'ermino, lo cual es l\'icito por el
+Teorema~\ref{teo:radio_convergencia},
+\begin{equation}
+  \label{eq:serie_coseno}
+  \cos z=\dv{}{z}\sin z
+    =\sum_{k=0}^{\infty}\frac{(-1)^k}{(2k)!}z^{2k} .
+\end{equation}
+
+\begin{observacion}[Radio de convergencia]
+  Para \eqref{eq:serie_seno} los coeficientes son
+  $a_k=(-1)^k/(2k+1)!$. Como $k^k<(2k+1)!$ para $k$ grande,
+  \begin{equation}
+    \label{eq:cota_factorial}
+    \frac{1}{(2k+1)!}<\frac{1}{k^k}
+    \imp
+    \qty{\frac{1}{(2k+1)!}}^{1/k}<\frac{1}{k},
+  \end{equation}
+  y como $\lim_{k\rightarrow\infty}1/k=0$, la f\'ormula de Hadamard
+  \eqref{eq:hadamard} da $1/R=0$: la serie de $\sin z$ tiene radio de
+  convergencia infinito.
+\end{observacion}
+
+\subsubsection{Relaci\'on con las funciones hiperb\'olicas}
+\label{subsubsec:hiperbolicas}
+
+Recordemos
+\begin{equation}
+  \label{eq:hiperbolicas}
+  \sinh\al=\frac{e^{\al}-e^{-\al}}{2},
+  \qquad
+  \cosh\al=\frac{e^{\al}+e^{-\al}}{2},
+\end{equation}
+que satisfacen $\dv{}{\al}\sinh\al=\cosh\al$ y
+$\dv{}{\al}\cosh\al=\sinh\al$. Desarrollando $\sinh$ alrededor de cero,
+\begin{equation}
+  \label{eq:serie_sinh}
+  \sinh\al=\sum_{k=0}^{\infty}\frac{\al^{2k+1}}{(2k+1)!} .
+\end{equation}
+Por otro lado, evaluando \eqref{eq:serie_seno} en $z=i\al$ y usando
+$i^{2k+1}=i(-1)^k$,
+\begin{equation}
+  \label{eq:seno_imaginario}
+  \sin(i\al)=\sum_{k=0}^{\infty}\frac{(-1)^k}{(2k+1)!}(i\al)^{2k+1}
+    =i\sum_{k=0}^{\infty}\frac{\al^{2k+1}}{(2k+1)!} ,
+\end{equation}
+de modo que, comparando con \eqref{eq:serie_sinh},
+\begin{equation}
+  \label{eq:seno_sinh}
+  \sin(i\al)=i\sinh\al .
+\end{equation}
+An\'alogamente,
+\begin{equation}
+  \label{eq:coseno_cosh}
+  \cos(i\al)=\sum_{k=0}^{\infty}\frac{\al^{2k}}{(2k)!}=\cosh\al .
+\end{equation}
+
+\subsubsection{La exponencial}
+\label{subsubsec:exponencial}
+
+Invirtiendo \eqref{eq:hiperbolicas} con $\al=iy$ se obtienen
+\begin{equation}
+  \label{eq:seno_coseno_exponencial}
+  \sin y=\frac{e^{iy}-e^{-iy}}{2i},
+  \qquad
+  \cos y=\frac{e^{iy}+e^{-iy}}{2},
+\end{equation}
+y sum\'andolas, la \textbf{f\'ormula de Euler}
+\begin{equation}
+  \label{eq:euler}
+  e^{iy}=\cos y+i\sin y .
+\end{equation}
+
+\begin{definicion}[Exponencial compleja]
+  \label{def:exponencial}
+  La funci\'on $e^z$ con $z\in\C$ es anal\'itica y vale su serie de Taylor,
+  \begin{equation}
+    \label{eq:serie_exponencial}
+    e^z=\sum_{k=0}^{\infty}\frac{1}{k!}z^k .
+  \end{equation}
+\end{definicion}
+
+Su radio de convergencia tambi\'en es infinito: como $k^{k/10}<k!$ para $k$
+suficientemente grande,
+\begin{equation}
+  \label{eq:radio_exponencial}
+  \qty{\frac{1}{k!}}^{1/k}<\qty{\frac{1}{k^{k/10}}}^{1/k}
+    =\frac{1}{k^{1/10}}\xrightarrow[k\rightarrow\infty]{}0 .
+\end{equation}
+
+Separando \eqref{eq:serie_exponencial} para $z=iy$ en las potencias pares e
+impares se recupera \eqref{eq:euler}:
+\begin{equation}
+  \label{eq:exponencial_euler}
+  \small
+  e^{iy}=\sum_{\ell=0}^{\infty}\frac{(-1)^\ell}{(2\ell)!}y^{2\ell}
+    +i\sum_{\ell=0}^{\infty}\frac{(-1)^\ell}{(2\ell+1)!}y^{2\ell+1}
+    =\cos y+i\sin y .
+\end{equation}
+
+En consecuencia, la representaci\'on polar \eqref{eq:polar_compleja} se
+escribe de forma compacta
+\begin{equation}
+  \label{eq:polar_exponencial}
+  z=\abs{z}\qty{\cos\vph+i\sin\vph}=\abs{z}e^{i\vph},
+  \qquad \vph=\Argu(z),
+\end{equation}
+y para $z=x+iy$,
+\begin{equation}
+  \label{eq:exponencial_cartesiana}
+  e^{z}=e^{x+iy}=e^{x}\qty{\cos y+i\sin y} .
+\end{equation}
+
+\begin{ejemplo}
+  \label{ej:polar_exponencial}
+  \begin{equation}
+    \label{eq:ejemplos_polar}
+    z_1=1+i=\sqrt{2}e^{i\pi/4},
+    \qquad
+    z_2=i=e^{i\pi/2} .
+  \end{equation}
+\end{ejemplo}
+
+\subsubsection{El logaritmo}
+\label{subsubsec:logaritmo}
+
+\begin{definicion}[Logaritmo complejo]
+  \label{def:logaritmo}
+  \begin{equation}
+    \label{eq:logaritmo}
+    \ln(z)=\ln\qty{\abs{z}e^{i\vph}}=\ln\abs{z}+i\vph,
+    \qquad \vph=\Argu(z).
+  \end{equation}
+\end{definicion}
+
+De \eqref{eq:logaritmo} se siguen las propiedades usuales. Para el producto,
+\begin{equation}
+  \label{eq:log_producto}
+  \begin{aligned}
+    \ln(z_1z_2)
+      &=\ln\qty{\abs{z_1z_2}e^{i(\vph_1+\vph_2)}}\\
+      &=\ln\abs{z_1}+i\vph_1+\ln\abs{z_2}+i\vph_2\\
+      &=\ln(z_1)+\ln(z_2),
+  \end{aligned}
+\end{equation}
+y para el cociente, con $z_2\neq 0$,
+\begin{equation}
+  \label{eq:log_cociente}
+  \begin{aligned}
+    \ln\qty{\frac{z_1}{z_2}}
+      &=\ln\qty{\frac{z_1\bar{z}_2}{\abs{z_2}^2}}
+       =\ln(z_1)+\ln\qty{\frac{\bar{z}_2}{\abs{z_2}^2}}\\
+      &=\ln(z_1)+\ln\qty{\frac{1}{\abs{z_2}}}-i\vph_2\\
+      &=\ln(z_1)-\ln(z_2).
+  \end{aligned}
+\end{equation}
+
+\begin{observacion}
+  Como el argumento est\'a definido salvo m\'ultiplos de $2\pi$, el logaritmo
+  complejo es multivaluado y $z=0$ vuelve a ser un punto rama.
+\end{observacion}

@@ -1,0 +1,304 @@
+\section{Espacios vectoriales}
+\label{sec:espacios_vectoriales}
+
+\subsection{Definiciones b\'asicas}
+\label{subsec:definiciones_ev}
+
+\begin{definicion}[Espacio vectorial]
+  \label{def:espacio_vectorial}
+  Un \textbf{espacio vectorial lineal} sobre un campo $\F$ ($\R$ o $\C$) es un
+  conjunto $V$ de objetos, denotados $\vb{a},\vb{b},\dots$ y llamados
+  \emph{vectores}, tal que a cada par $\vb{a},\vb{b}\in V$ le corresponde un
+  vector $\vb{a}+\vb{b}\in V$ que cumple las propiedades usuales de la suma
+  (conmutatividad, asociatividad, neutro e inverso) y a cada
+  $\al\in\F$, $\vb{a}\in V$ le corresponde $\al\vb{a}\in V$ compatible con
+  ellas.
+\end{definicion}
+
+\begin{definicion}[Base]
+  \label{def:base}
+  Una \textbf{base} de $V$ es un conjunto $B$ de elementos linealmente
+  independientes que generan $V$. Una base finita genera un espacio de
+  dimensi\'on finita y una infinita un espacio de dimensi\'on infinita.
+\end{definicion}
+
+Si $B=\set{\vb{a}_i}_{i=1}^{n}$ es un conjunto de elementos linealmente
+independientes, hablamos de un espacio de dimensi\'on $n$. La independencia
+lineal significa que
+\begin{equation}
+  \label{eq:independencia_lineal}
+  \sum_{i=1}^{n}\al_i\vh{e}_i=\vb{0}
+  \qquad\iff\qquad
+  \al_i=0\ \ \forall i .
+\end{equation}
+
+\begin{teorema}
+  \label{teo:dimension}
+  Todas las bases de un espacio de dimensi\'on finita tienen el mismo n\'umero
+  de vectores linealmente independientes.
+\end{teorema}
+
+\begin{ejemplo}[Espacios finitos]
+  \label{ej:espacios_finitos}
+  $\R^2$, $\R^3$ y en general $\R^n$ son espacios vectoriales de dimensi\'on
+  $2$, $3$ y $n$ respectivamente, con $n\in\Z^{+}\cup\set{0}$.
+\end{ejemplo}
+
+\begin{ejemplo}[Base infinita]
+  \label{ej:base_infinita}
+  Sea $V$ un espacio de funciones y $f\in V$ continua por pedazos y acotada. En
+  un punto interior del dominio donde $f$ est\'a bien definida podemos
+  aproximarla en una vecindad abierta de $x_0$ mediante su serie de Taylor,
+  \begin{equation}
+    \label{eq:taylor_1d}
+    f(x)=\sum_{n=0}^{\infty}\frac{1}{n!}
+      \eval{\dnv{f}{x}{n}}_{x_0}(x-x_0)^n ,
+  \end{equation}
+  es decir, por una aproximaci\'on polinomial. Para este curso una base de ese
+  espacio de funciones es
+  \begin{equation}
+    \label{eq:base_polinomial}
+    B=\set{x^n}_{n=0}^{\infty}.
+  \end{equation}
+\end{ejemplo}
+
+\subsection{Representaci\'on geom\'etrica}
+\label{subsec:representacion_geometrica}
+
+Sean $\vb{a},\vb{b}\in V$; entonces $\vb{c}=\vb{a}+\vb{b}\in V$. Dada una base
+$B=\set{\vh{e}_i}_{i=1}^{n}$ se tiene
+\begin{equation}
+  \label{eq:expansion_base}
+  \vb{a}=\sum_{i=1}^{n}a_i\vh{e}_i,
+  \qquad
+  \vb{b}=\sum_{i=1}^{n}b_i\vh{e}_i,
+\end{equation}
+de modo que la suma y el producto por escalar act\'uan componente a componente,
+\begin{equation}
+  \label{eq:suma_componentes}
+  \vb{a}+\vb{b}=\sum_{i=1}^{n}(a_i+b_i)\vh{e}_i,
+  \qquad
+  \al\vb{a}=\sum_{i=1}^{n}(\al a_i)\vh{e}_i ,
+\end{equation}
+y el vector se representa por su columna de coordenadas en esa base,
+\begin{equation}
+  \label{eq:columna_coordenadas}
+  \vb{a}=
+  \begin{bmatrix}
+    a_1\\a_2\\\vdots\\a_n
+  \end{bmatrix}_{e}.
+\end{equation}
+
+Para espacios de dimensi\'on infinita la idea es la misma. Si $f$ est\'a bien
+definida en un dominio $D$ y admite expansi\'on de Taylor, la base
+$B=\set{x^n}_{n=0}^{\infty}$ da \eqref{eq:taylor_1d}. Pero existen otras bases
+$B=\set{g_n(x)}_{n=0}^{\infty}$ igualmente buenas, respecto de las cuales
+\begin{equation}
+  \label{eq:expansion_general}
+  f(x)=\sum_{n=0}^{\infty}\hat{a}_n\,g_n(x).
+\end{equation}
+La Secci\'on~\ref{sec:fourier} explota esta libertad tomando exponenciales
+complejas como base.
+
+\subsection{Producto interno}
+\label{subsec:producto_interno}
+
+\begin{definicion}[Producto interno]
+  \label{def:producto_interno}
+  Un \textbf{producto interno} (o escalar) es una operaci\'on que asocia a dos
+  elementos de $V$ un n\'umero del campo,
+  \begin{equation}
+    \label{eq:producto_interno}
+    g:V\otimes V\longrightarrow\F,
+    \qquad
+    g(\vb{a},\vb{b})=\al\in\F .
+  \end{equation}
+\end{definicion}
+
+\begin{ejemplo}[Representaci\'on en $\R^n$]
+  \label{ej:pi_real}
+  \begin{equation}
+    \label{eq:pi_real}
+    g(\vb{a},\vb{b})=\vb{a}\cdot\vb{b}=\vb{a}^\tp\vb{b}
+      =a_1b_1+a_2b_2+\dots+a_nb_n=a_ib_i .
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[Representaci\'on en $\C^n$]
+  \label{ej:pi_complejo}
+  \begin{equation}
+    \label{eq:pi_complejo}
+    g(\vb{a},\vb{b})=\vb{a}^\dg\vb{b}
+      =\sqty{a_1,a_2,\dots,a_n}^{*}
+      \begin{bmatrix}
+        b_1\\b_2\\\vdots\\b_n
+      \end{bmatrix},
+  \end{equation}
+  donde $*$ denota conjugaci\'on compleja.
+\end{ejemplo}
+
+\begin{observacion}[Par\'entesis complejo]
+  Si $a\in\C$ lo representamos como $a=x+iy$ con $x,y\in\R$ e
+  $i=\sqrt{-1}$, y definimos su \textbf{conjugado} $\bar{a}=a^{*}=x-iy$.
+\end{observacion}
+
+Las propiedades del producto interno complejo son:
+\begin{enumerate}
+  \item \textbf{Hermiticidad}: $g(\vb{a},\vb{b})=g(\vb{b},\vb{a})^{*}$.
+  \item \textbf{Antilinealidad en la primera entrada}:
+        \begin{equation}
+          \label{eq:antilineal}
+          g(\al\vb{a}+\be\vb{b},\vb{c})
+            =\al^{*}g(\vb{a},\vb{c})+\be^{*}g(\vb{b},\vb{c}).
+        \end{equation}
+  \item \textbf{Linealidad en la segunda entrada}:
+        \begin{equation}
+          \label{eq:lineal}
+          g(\vb{a},\de\vb{b}+\ga\vb{c})
+            =\de\, g(\vb{a},\vb{b})+\ga\, g(\vb{a},\vb{c}).
+        \end{equation}
+\end{enumerate}
+
+\begin{observacion}
+  De la hermiticidad se sigue que $g(\vb{a},\vb{a})=g(\vb{a},\vb{a})^{*}$, es
+  decir, $g(\vb{a},\vb{a})\in\R$ aun en el caso complejo. Adem\'as
+  $g(\vb{a},\vb{a})\ge 0$, con igualdad si y s\'olo si $\vb{a}=\vb{0}$.
+\end{observacion}
+
+En el caso real la hermiticidad se reduce a simetr\'ia,
+$g(\vb{a},\vb{b})=g(\vb{b},\vb{a})$, y la operaci\'on es lineal en ambas
+entradas; por ejemplo
+\begin{equation}
+  \label{eq:bilineal_real}
+  (\al\vb{a}+\be\vb{b})\cdot\vb{c}
+    =\al\,\vb{a}\cdot\vb{c}+\be\,\vb{b}\cdot\vb{c}.
+\end{equation}
+
+\subsection{Norma}
+\label{subsec:norma}
+
+\begin{teorema}[Desigualdad de Schwarz]
+  \label{teo:schwarz}
+  Sean $\vb{a},\vb{b}\in V$ con un producto interno definido sobre $V$.
+  Entonces
+  \begin{equation}
+    \label{eq:schwarz}
+    \abs{g(\vb{a},\vb{b})}^2\le\norm{\vb{a}}^2\norm{\vb{b}}^2 .
+  \end{equation}
+\end{teorema}
+
+\begin{definicion}[Norma]
+  \label{def:norma}
+  La \textbf{norma} de un elemento de $V$ con producto interno puede definirse a
+  trav\'es del mismo producto interno, y cumple:
+  \begin{itemize}
+    \item $\norm{\vb{0}}=0$;
+    \item $\norm{\vb{a}}\ge 0$, con $\norm{\vb{a}}=0\iff\vb{a}=\vb{0}$;
+    \item $\norm{\al\vb{a}}=\abs{\al}\norm{\vb{a}}$ para todo $\al\in\C$;
+    \item desigualdad del tri\'angulo,
+          $\norm{\vb{a}+\vb{b}}\le\norm{\vb{a}}+\norm{\vb{b}}$.
+  \end{itemize}
+\end{definicion}
+
+En particular se define la \textbf{norma $p$},
+\begin{equation}
+  \label{eq:norma_p}
+  \norm{\vb{a}}_p=\qty{\sum_{i=1}^{n}\abs{a_i}^{p}}^{1/p},
+\end{equation}
+de la cual los casos relevantes son
+\begin{equation}
+  \label{eq:norma_2}
+  \norm{\vb{a}}_2=\qty{\sum_{i=1}^{n}\abs{a_i}^{2}}^{1/2}
+    =g(\vb{a},\vb{a})^{1/2}=(\vb{a}^\dg\vb{a})^{1/2}
+\end{equation}
+y
+\begin{equation}
+  \label{eq:norma_1}
+  \norm{\vb{a}}_1=\sum_{i=1}^{n}\abs{a_i}.
+\end{equation}
+
+\subsection{Ortonormalizaci\'on de Gram--Schmidt}
+\label{subsec:gram_schmidt}
+
+Dado un conjunto linealmente independiente
+$B=\set{\vb{v}_i}_{i=1}^{n}$ se puede construir a partir de \'el un conjunto
+ortonormal. Se normaliza el primer vector,
+\begin{equation}
+  \label{eq:gs_primero}
+  \vh{u}_1=\frac{\vb{v}_1}{\norm{\vb{v}_1}},
+\end{equation}
+se le resta a $\vb{v}_2$ su proyecci\'on sobre $\vh{u}_1$,
+\begin{equation}
+  \label{eq:gs_proyeccion}
+  \tilde{\vb{v}}_2=\vb{v}_2-\qty{\vb{v}_2\cdot\vh{u}_1}\vh{u}_1,
+\end{equation}
+y se normaliza el resultado,
+\begin{equation}
+  \label{eq:gs_segundo}
+  \vh{u}_2=\frac{\tilde{\vb{v}}_2}{\norm{\tilde{\vb{v}}_2}} .
+\end{equation}
+En general, habiendo construido $\vh{u}_1,\dots,\vh{u}_{k-1}$,
+\begin{equation}
+  \label{eq:gs_general}
+  \tilde{\vb{v}}_k=\vb{v}_k-\sum_{j=1}^{k-1}
+    \qty{\vb{v}_k\cdot\vh{u}_j}\vh{u}_j,
+  \qquad
+  \vh{u}_k=\frac{\tilde{\vb{v}}_k}{\norm{\tilde{\vb{v}}_k}} .
+\end{equation}
+
+\subsection{Producto cu\~na en $\R^3$}
+\label{subsec:producto_cuna_3d}
+
+\begin{definicion}[Producto cu\~na]
+  \label{def:producto_cuna}
+  Sean $\vb{a},\vb{b}\in V\subset\R^3$. Definimos la operaci\'on
+  $\wedge:V\otimes V\rightarrow V$ tal que
+  $\vb{a}\wedge\vb{b}=\vb{c}$, donde $\vb{c}$ es perpendicular a ambos
+  vectores.
+\end{definicion}
+
+Sus propiedades son:
+\begin{enumerate}
+  \item $\vb{a}\wedge\vb{b}=\vb{0}$ si $\vb{b}\parallel\vb{a}$ o
+        $\vb{b}=\vb{0}$;
+  \item $\vb{a}\wedge\vb{b}=-\vb{b}\wedge\vb{a}$ (antisimetr\'ia);
+  \item $\vb{a}\wedge(\al\vb{b}+\be\vb{c})
+         =\al\,\vb{a}\wedge\vb{b}+\be\,\vb{a}\wedge\vb{c}$;
+  \item $(\al\vb{a}+\be\vb{b})\wedge\vb{c}
+         =\al\,\vb{a}\wedge\vb{c}+\be\,\vb{b}\wedge\vb{c}$;
+  \item $(\al\vb{a})\wedge\vb{b}=\al\qty{\vb{a}\wedge\vb{b}}$.
+\end{enumerate}
+El sentido de $\vb{c}$ lo fija la regla de la mano derecha.
+
+\subsubsection{Interpretaci\'on f\'isica}
+\label{subsubsec:torque}
+
+El momento de una fuerza es
+\begin{equation}
+  \label{eq:torque}
+  \boldsymbol{\ta}=\vb{r}\wedge\vb{F},
+\end{equation}
+con magnitud
+\begin{equation}
+  \label{eq:magnitud_torque}
+  \norm{\boldsymbol{\ta}}=\norm{\vb{r}\wedge\vb{F}}
+    =r F_{\perp}=\norm{\vb{r}}\norm{\vb{F}}\sin\theta .
+\end{equation}
+
+En general
+\begin{equation}
+  \label{eq:norma_cuna}
+  \norm{\vb{a}\wedge\vb{b}}=\norm{\vb{a}}\norm{\vb{b}}\sin\theta,
+\end{equation}
+que es dos veces el \'area del tri\'angulo generado por $\vb{a}$ y $\vb{b}$, o
+equivalentemente el \'area del paralelogramo que determinan. Por eso
+$\vb{c}=\vb{a}\wedge\vb{b}=\vb{A}$ se interpreta como el \textbf{vector de
+\'area} de esa caja bidimensional: tiene magnitud igual al \'area y direcci\'on
+normal a ella.
+
+\begin{observacion}
+  Toda superficie tiene entonces un campo de vectores de \'area, uno sobre cada
+  parche, y ese campo dota al espacio de una orientaci\'on. Como consecuencia,
+  para una curva simple cerrada se dice que se recorre en \textbf{sentido
+  positivo} si el interior de la curva queda del lado izquierdo.
+\end{observacion}

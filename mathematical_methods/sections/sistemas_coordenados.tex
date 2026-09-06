@@ -1,0 +1,130 @@
+\section{Sistemas coordenados}
+\label{sec:sistemas_coordenados}
+
+\subsection{Dos dimensiones}
+\label{subsec:coordenadas_2d}
+
+\subsubsection{Cartesianas}
+\label{subsubsec:cartesianas_2d}
+
+\begin{equation}
+  \label{eq:cartesianas_2d}
+  \vb{r}=
+  \begin{pmatrix}
+    x\\y
+  \end{pmatrix}
+  =x\vh{x}+y\vh{y}=x\vh{e}_1+y\vh{e}_2 .
+\end{equation}
+
+\subsubsection{Polares}
+\label{subsubsec:polares}
+
+\begin{equation}
+  \label{eq:polares}
+  \vb{r}=
+  \begin{pmatrix}
+    \rho\\\vph
+  \end{pmatrix}_{\vh{\rho},\vh{\vph}},
+\end{equation}
+con
+\begin{equation}
+  \label{eq:polares_directa}
+  x=\rho\cos\vph,
+  \qquad
+  y=\rho\sin\vph,
+\end{equation}
+\begin{equation}
+  \label{eq:polares_inversa}
+  \rho=\qty{x^2+y^2}^{1/2},
+  \qquad
+  \vph=\arctan\frac{y}{x},
+\end{equation}
+y dominios $\rho\in[0,\infty)$, $\vph\in[0,2\pi)$.
+
+\subsection{Tres dimensiones}
+\label{subsec:coordenadas_3d}
+
+\subsubsection{Cartesianas}
+\label{subsubsec:cartesianas_3d}
+
+\begin{equation}
+  \label{eq:cartesianas_3d}
+  \vb{r}=
+  \begin{pmatrix}
+    x\\y\\z
+  \end{pmatrix}
+  =x\vh{x}+y\vh{y}+z\vh{z}.
+\end{equation}
+
+\subsubsection{Cil\'indricas}
+\label{subsubsec:cilindricas}
+
+\begin{equation}
+  \label{eq:cilindricas}
+  \vb{r}=
+  \begin{pmatrix}
+    \rho\\\vph\\z
+  \end{pmatrix}_{\vh{\rho},\vh{\vph},\vh{z}},
+\end{equation}
+con
+\begin{equation}
+  \label{eq:cilindricas_directa}
+  \left\{
+  \begin{aligned}
+    x&=\rho\cos\vph,\\
+    y&=\rho\sin\vph,\\
+    z&=z,
+  \end{aligned}
+  \right.
+  \qquad
+  \left\{
+  \begin{aligned}
+    \rho&=\qty{x^2+y^2}^{1/2},\\
+    \vph&=\arctan\qty{\frac{y}{x}},\\
+    z&=z,
+  \end{aligned}
+  \right.
+\end{equation}
+y dominios
+\begin{equation}
+  \label{eq:cilindricas_dominios}
+  \rho\in[0,\infty),
+  \qquad
+  \vph\in[0,2\pi),
+  \qquad
+  z\in\R .
+\end{equation}
+
+\subsubsection{Esf\'ericas}
+\label{subsubsec:esfericas}
+
+\begin{equation}
+  \label{eq:esfericas}
+  \vb{r}=
+  \begin{pmatrix}
+    r\\\theta\\\vph
+  \end{pmatrix}_{\vh{r},\vh{\theta},\vh{\vph}},
+\end{equation}
+donde $\rho=r\sin\theta$ es el radio cil\'indrico, de modo que
+\begin{equation}
+  \label{eq:esfericas_directa}
+  \left\{
+  \begin{aligned}
+    x&=\rho\cos\vph=r\sin\theta\cos\vph,\\
+    y&=\rho\sin\vph=r\sin\theta\sin\vph,\\
+    z&=r\cos\theta,
+  \end{aligned}
+  \right.
+\end{equation}
+con la transformaci\'on inversa
+\begin{equation}
+  \label{eq:esfericas_inversa}
+  \left\{
+  \begin{aligned}
+    r&=\qty{x^2+y^2+z^2}^{1/2},\\
+    \theta&=\arccos\frac{z}{r},\\
+    \vph&=\arctan\frac{y}{x},
+  \end{aligned}
+  \right.
+\end{equation}
+y dominios $r\in[0,\infty)$, $\theta\in[0,\pi]$, $\vph\in[0,2\pi)$.

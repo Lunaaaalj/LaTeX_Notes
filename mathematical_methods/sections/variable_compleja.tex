@@ -1,0 +1,398 @@
+\section{Variable compleja}
+\label{sec:variable_compleja}
+
+\subsection{Representaci\'on polar}
+\label{subsec:representacion_polar}
+
+Sea $z=x+iy=(x,y)$, referido a la base $\set{1,i}$ del plano complejo.
+Definimos el valor absoluto de $z$ como
+\begin{equation}
+  \label{eq:modulo}
+  \abs{z}=\qty{z\bar{z}}^{1/2}=\abs{\bar{z}}=\qty{x^2+y^2}^{1/2},
+\end{equation}
+lo que permite la \textbf{representaci\'on polar}
+\begin{equation}
+  \label{eq:polar_compleja}
+  z=\abs{z}\qty{\cos\vph+i\sin\vph},
+  \qquad
+  \Argu(z)=\vph=\arctan\qty{\frac{y}{x}} .
+\end{equation}
+
+\begin{observacion}
+  Bajo esta representaci\'on el argumento no es \'unico:
+  \begin{equation}
+    \label{eq:argumento_multivaluado}
+    z=\abs{z}\qty{\cos(\vph+2\pi n)+i\sin(\vph+2\pi n)},
+    \quad n\in\Z .
+  \end{equation}
+  Se llama \textbf{argumento principal} al que cumple $\vph\in[0,2\pi)$.
+\end{observacion}
+
+\begin{ejemplo}
+  \label{ej:polar}
+  Para $z=2+i$ se tiene
+  $z=\sqrt{5}\qty{\cos\al+i\sin\al}$ con
+  $\al=\arctan\qty{\tfrac{1}{2}}$.
+\end{ejemplo}
+
+\subsection{Potencias}
+\label{subsec:potencias}
+
+Elevando al cuadrado \eqref{eq:polar_compleja} y usando las identidades de
+suma de \'angulos,
+\begin{equation}
+  \label{eq:suma_angulos}
+  \begin{aligned}
+    \cos(\vph+\ps)&=\cos\vph\cos\ps-\sin\vph\sin\ps,\\
+    \sin(\vph+\ps)&=\sin\vph\cos\ps+\sin\ps\cos\vph,
+  \end{aligned}
+\end{equation}
+se obtiene
+\begin{equation}
+  \label{eq:z_cuadrado}
+  \begin{aligned}
+    z^2&=\abs{z}^2\qty{\cos\vph+i\sin\vph}^2\\
+       &=\abs{z}^2\qty{\cos^2\vph-\sin^2\vph
+          +2i\cos\vph\sin\vph}\\
+       &=\abs{z}^2\qty{\cos(2\vph)+i\sin(2\vph)},
+  \end{aligned}
+\end{equation}
+y multiplicando de nuevo por $z$,
+\begin{equation}
+  \label{eq:z_cubo}
+  z^3=z^2z=\abs{z}^3\qty{\cos(3\vph)+i\sin(3\vph)} .
+\end{equation}
+
+\begin{teorema}[De Moivre]
+  \label{teo:moivre}
+  \begin{equation}
+    \label{eq:moivre}
+    z^n=\abs{z}^n\qty{\cos(n\vph)+i\sin(n\vph)}
+    \qquad\forall n\in\N .
+  \end{equation}
+\end{teorema}
+
+\begin{demostracion}[Demostraci\'on por inducci\'on]
+  Se verifica para $n=1,2,3$ por \eqref{eq:polar_compleja},
+  \eqref{eq:z_cuadrado} y \eqref{eq:z_cubo}. Suponi\'endolo v\'alido para
+  $n-1$,
+  \begin{equation}
+    \label{eq:induccion_moivre}
+    \small
+    \begin{aligned}
+      z^n=zz^{n-1}
+        &=\abs{z}\qty{\cos\vph+i\sin\vph}\\
+        &\quad\cdot\abs{z}^{n-1}
+          \qty{\cos((n-1)\vph)+i\sin((n-1)\vph)}\\
+        &=\abs{z}^n\qty{\cos(n\vph)+i\sin(n\vph)},
+    \end{aligned}
+  \end{equation}
+  usando otra vez \eqref{eq:suma_angulos}.
+\end{demostracion}
+
+\begin{ejemplo}
+  \label{ej:potencia_octava}
+  Sea $z=1-i$, de modo que $\abs{z}=\sqrt{2}$ y
+  $\Argu(z)=-\tfrac{\pi}{4}$. Entonces
+  \begin{equation}
+    \label{eq:potencia_octava}
+    \begin{aligned}
+      z^8&=\abs{z}^8\qty{\cos(8\vph)+i\sin(8\vph)}\\
+         &=16\qty{\cos(-2\pi)+i\sin(-2\pi)}=16 .
+    \end{aligned}
+  \end{equation}
+\end{ejemplo}
+
+\subsection{Ra\'ices}
+\label{subsec:raices}
+
+Supongamos $z=\abs{z}\qty{\cos\vph+i\sin\vph}$ y busquemos $z^{1/m}$ con
+$m\in\N$. Es equivalente a encontrar $w=\abs{w}\qty{\cos\ps+i\sin\ps}$ tal que
+$z=w^m$. Usando \eqref{eq:moivre} en el miembro derecho y
+\eqref{eq:argumento_multivaluado} en el izquierdo,
+\begin{equation}
+  \label{eq:raiz_igualdad}
+  \small
+  \abs{z}\qty{\cos(\vph+2n\pi)+i\sin(\vph+2n\pi)}
+    =\abs{w}^m\qty{\cos(m\ps)+i\sin(m\ps)} .
+\end{equation}
+Identificando t\'erminos,
+\begin{equation}
+  \label{eq:raiz_identificacion}
+  \abs{w}=\abs{z}^{1/m},
+  \qquad
+  m\ps=\vph+2n\pi
+  \imp
+  \ps=\frac{\vph}{m}+\frac{2n\pi}{m},
+\end{equation}
+y pedir que $\Argu(w)$ sea principal restringe a
+$n=0,1,2,\dots,m-1$. Es decir, hay exactamente $m$ ra\'ices,
+\begin{equation}
+  \label{eq:raices_m}
+  \small
+  w_{\ell}=\abs{z}^{1/m}
+    \qty{\cos\qty{\frac{\vph}{m}+\frac{2\ell\pi}{m}}
+        +i\sin\qty{\frac{\vph}{m}+\frac{2\ell\pi}{m}}},
+\end{equation}
+con $\ell=0,1,\dots,m-1$, equiespaciadas sobre una circunferencia de radio
+$\abs{z}^{1/m}$.
+
+\begin{ejemplo}
+  \label{ej:raiz_octava}
+  Sea $z=16$, con $\vph=0$. Entonces $\abs{w}=16^{1/8}=\sqrt{2}$ y
+  \begin{equation}
+    \label{eq:raiz_octava}
+    z^{1/8}=\sqrt{2}\qty{\cos\qty{\frac{n\pi}{4}}
+      +i\sin\qty{\frac{n\pi}{4}}},
+    \quad n=0,\dots,7,
+  \end{equation}
+  es decir
+  \begin{equation}
+    \label{eq:raices_16}
+    \small
+    16^{1/8}=\set{\sqrt{2},\,1+i,\,\sqrt{2}i,\,-1+i,\,
+      -\sqrt{2},\,-1-i,\,-\sqrt{2}i,\,1-i} .
+  \end{equation}
+\end{ejemplo}
+
+\begin{observacion}[Punto rama]
+  Escribiendo $z=\abs{z}w$ con $w=\cos\vph+i\sin\vph$, al variar $\vph$ se
+  recorre una circunferencia. La consecuencia fuerte de
+  \eqref{eq:raices_m} es que en $z=0$ la ra\'iz no est\'a bien definida: todas
+  las determinaciones colapsan. Decimos que $z=0$ es un \textbf{punto rama}.
+\end{observacion}
+
+\subsection{El plano complejo extendido}
+\label{subsec:plano_extendido}
+
+En el plano complejo no est\'a definido $\infty$, de modo que hay que
+completarlo:
+\begin{equation}
+  \label{eq:plano_extendido}
+  \bar{\C}=\C\cup\set{\infty},
+\end{equation}
+con las convenciones $a+\infty=\infty$ para todo $a\in\C$ y
+\begin{equation}
+  \label{eq:infinito}
+  \lim_{\ep\rightarrow 0}\frac{a}{\ep}=\infty,
+  \qquad a\neq 0 .
+\end{equation}
+
+\subsubsection{Proyecci\'on estereogr\'afica}
+\label{subsubsec:proyeccion_estereografica}
+
+El plano complejo es isomorfo a $\R^2$, lo que permite representarlo sobre una
+esfera. Con $u,v,w\in\R$ sobre la esfera unitaria $u^2+v^2+w^2=1$ definimos
+\begin{equation}
+  \label{eq:proyeccion_estereografica}
+  z=\frac{u+iv}{1-w} .
+\end{equation}
+El polo $w=1$ corresponde entonces al punto del infinito,
+\begin{equation}
+  \label{eq:polo_infinito}
+  \lim_{w\rightarrow 1}z=\lim_{w\rightarrow 1}\frac{u+iv}{1-w}=\infty .
+\end{equation}
+
+\subsection{L\'imites y continuidad}
+\label{subsec:limites_complejos}
+
+\begin{definicion}[L\'imite]
+  \label{def:limite_complejo}
+  Sea $f(z)$ una funci\'on en el plano complejo, an\'aloga a una
+  $\vb{f}:\R^2\rightarrow\R^2$. Decimos que
+  \begin{equation}
+    \label{eq:limite_complejo}
+    \lim_{z\rightarrow z_0}f(z)=L
+  \end{equation}
+  si $\forall\ep>0$ existe $\de_\ep>0$ tal que
+  $0<\abs{z-z_0}<\de_\ep$ implica $\abs{f(z)-L}<\ep$.
+\end{definicion}
+
+De $\abs{z}=\qty{z\bar{z}}^{1/2}=\abs{\bar{z}}$ se sigue de inmediato
+\begin{equation}
+  \label{eq:limite_conjugado}
+  \lim_{z\rightarrow z_0}\bar{f}(z)=\bar{L},
+\end{equation}
+y como consecuencia
+\begin{equation}
+  \label{eq:limite_partes}
+  \lim_{z\rightarrow z_0}\Real\set{f(z)}=\Real\set{L},
+  \qquad
+  \lim_{z\rightarrow z_0}\Imag\set{f(z)}=\Imag\set{L},
+\end{equation}
+donde, si $z=x+iy$,
+\begin{equation}
+  \label{eq:partes_real_imaginaria}
+  \Real\set{z}=x=\frac{z+\bar{z}}{2},
+  \qquad
+  \Imag\set{z}=y=\frac{z-\bar{z}}{2i} .
+\end{equation}
+
+\begin{definicion}[Continuidad]
+  \label{def:continuidad_compleja}
+  $f(z)$ es continua en $z_0\in\Om$ si
+  $\lim_{z\rightarrow z_0}f(z)=f(z_0)$.
+\end{definicion}
+
+\subsection{Derivada y ecuaciones de Cauchy--Riemann}
+\label{subsec:cauchy_riemann}
+
+\begin{definicion}[Derivada compleja]
+  \label{def:derivada_compleja}
+  $f(z)$ es derivable en $z_0\in\Om$ si existe
+  \begin{equation}
+    \label{eq:derivada_compleja}
+    \dv{}{z}f(z)=\lim_{\al\rightarrow 0}
+      \frac{f(z+\al)-f(z)}{\al},
+    \qquad \al\in\C .
+  \end{equation}
+\end{definicion}
+
+\begin{observacion}
+  La condici\'on no s\'olo se pide en $z_0$ sino en toda una vecindad de
+  $z_0$; \'esa es la diferencia esencial con el caso real, y de ella se sigue
+  todo lo dem\'as.
+\end{observacion}
+
+Lo decisivo es que $\al\in\C$ puede tender a cero por cualquier direcci\'on.
+Consideremos los dos acercamientos particulares
+$\al=h$ (paralelo al eje real) y $\al=ih$ (paralelo al eje imaginario), con
+$h\in\R$. Escribiendo
+\begin{equation}
+  \label{eq:f_u_v}
+  f(z)=f(x,y)=u(x,y)+iv(x,y),
+  \qquad u,v:\R^2\rightarrow\R,
+\end{equation}
+el primero da
+\begin{equation}
+  \label{eq:derivada_x}
+  \dv{}{z}f(z)=\lim_{h\rightarrow 0}\frac{f(x+h,y)-f(x,y)}{h}
+    =\pdv{}{x}f(z),
+\end{equation}
+y el segundo
+\begin{equation}
+  \label{eq:derivada_y}
+  \dv{}{z}f(z)=\lim_{h\rightarrow 0}\frac{f(x,y+h)-f(x,y)}{ih}
+    =-i\pdv{}{y}f(z).
+\end{equation}
+Como $f$ es derivable, ambos l\'imites deben coincidir:
+\begin{equation}
+  \label{eq:condicion_derivada}
+  \dv{}{z}f(z)=\pdv{}{x}f(z)=-i\pdv{}{y}f(z).
+\end{equation}
+
+\begin{ejemplo}
+  \label{ej:z_cuadrado_derivada}
+  Sea $f(z)=z^2=(x+iy)^2=x^2-y^2+2ixy$. Entonces
+  \begin{equation}
+    \label{eq:z2_derivadas}
+    \begin{aligned}
+      \pdv{}{x}f(z)&=2x+2iy=2z,\\
+      -i\pdv{}{y}f(z)&=-i\qty{-2y+2ix}=2x+2iy=2z,
+    \end{aligned}
+  \end{equation}
+  y en efecto $\dv{}{z}z^2=2z$.
+\end{ejemplo}
+
+Separando \eqref{eq:condicion_derivada} en partes real e imaginaria,
+\begin{equation}
+  \label{eq:cr_desarrollo}
+  \begin{aligned}
+    \pdv{}{x}f&=\pdv{u}{x}+i\pdv{v}{x},\\
+    -i\pdv{}{y}f&=\pdv{v}{y}-i\pdv{u}{y},
+  \end{aligned}
+\end{equation}
+e igualando componente a componente obtenemos el resultado central.
+
+\begin{teorema}[Ecuaciones de Cauchy--Riemann]
+  \label{teo:cauchy_riemann}
+  Si $f=u+iv$ es derivable, entonces
+  \begin{equation}
+    \label{eq:cauchy_riemann}
+    \pdv{u}{x}=\pdv{v}{y},
+    \qquad
+    \pdv{u}{y}=-\pdv{v}{x} .
+  \end{equation}
+\end{teorema}
+
+\begin{observacion}[Relaci\'on con el jacobiano]
+  \label{obs:jacobiano_cr}
+  Usando \eqref{eq:cauchy_riemann},
+  \begin{equation}
+    \label{eq:modulo_derivada}
+    \begin{aligned}
+      \abs{\dv{}{z}f(z)}^2
+        &=\qty{\pdv{u}{x}}^2+\qty{\pdv{v}{x}}^2\\
+        &=\pdv{u}{x}\pdv{v}{y}-\pdv{v}{x}\pdv{u}{y}\\
+        &=
+        \begin{vmatrix}
+          \pdv{u}{x} & \pdv{v}{x}\\[3pt]
+          \pdv{u}{y} & \pdv{v}{y}
+        \end{vmatrix}
+        =\abs{\frac{\partial(u,v)}{\partial(x,y)}} ,
+    \end{aligned}
+  \end{equation}
+  el jacobiano de la transformaci\'on. Por el teorema de la funci\'on inversa
+  (Teorema~\ref{teo:funcion_inversa}), si $\dv{}{z}f(z)\neq 0$ existe
+  localmente la transformaci\'on inversa.
+\end{observacion}
+
+\subsection{Funciones arm\'onicas}
+\label{subsec:armonicas}
+
+Si $f(z)$ es diferenciable, sus derivadas sucesivas son continuas. Entonces,
+aplicando dos veces \eqref{eq:cauchy_riemann},
+\begin{equation}
+  \label{eq:laplace_u}
+  \begin{aligned}
+    \pddv{u}{x}+\pddv{u}{y}
+      &=\pdv{}{x}\qty{\pdv{u}{x}}+\pdv{}{y}\qty{\pdv{u}{y}}\\
+      &=\pdv{}{x}\qty{\pdv{v}{y}}+\pdv{}{y}\qty{-\pdv{v}{x}}=0 ,
+  \end{aligned}
+\end{equation}
+y an\'alogamente para $v$. Es decir,
+\begin{equation}
+  \label{eq:laplace}
+  \Lap u=0,
+  \qquad
+  \Lap v=0,
+  \qquad
+  \Lap=\pddv{}{x}+\pddv{}{y},
+\end{equation}
+la \textbf{ecuaci\'on de Laplace}: las partes real e imaginaria de una
+funci\'on anal\'itica son \textbf{arm\'onicas}.
+
+\begin{observacion}
+  Las funciones arm\'onicas alcanzan su m\'aximo y su m\'inimo en la frontera
+  del dominio.
+\end{observacion}
+
+\subsection{Polinomios}
+\label{subsec:polinomios}
+
+Sea $f(z)=P_m(z)=a_0+a_1z+\dots+a_mz^m$ con $a_m\neq 0$. De
+\eqref{eq:condicion_derivada} se sigue
+\begin{equation}
+  \label{eq:derivada_potencia_compleja}
+  \dv{}{z}z^k=\pdv{}{x}z^k=-i\pdv{}{y}z^k=kz^{k-1} .
+\end{equation}
+Derivando repetidamente y evaluando en $z=0$,
+\begin{equation}
+  \label{eq:coeficientes_polinomio}
+  \eval{\dnv{}{z}{k}P_m(z)}_{z=0}=k!\,a_k
+  \imp
+  a_k=\frac{1}{k!}\eval{\dnv{}{z}{k}P_m(z)}_{z=0},
+\end{equation}
+para $k\le m$.
+
+Si $\al_1$ es una ra\'iz, $P_m(\al_1)=0$, entonces
+$P_m(z)=(z-\al_1)P_{m-1}(z)$ con $P_{m-1}(\al_1)\neq 0$. Iterando,
+\begin{equation}
+  \label{eq:factorizacion}
+  P_m(z)=a_m(z-\al_1)(z-\al_2)\dots(z-\al_m),
+\end{equation}
+y desarrollando alrededor de un punto $z_0$ cualquiera,
+\begin{equation}
+  \label{eq:polinomio_centrado}
+  P_m(z)=b_0+b_1(z-z_0)+b_2(z-z_0)^2+\dots+b_m(z-z_0)^m .
+\end{equation}

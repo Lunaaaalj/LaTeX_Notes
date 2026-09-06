@@ -1,0 +1,557 @@
+\section{C\'alculo vectorial}
+\label{sec:calculo_vectorial}
+
+Consideramos ahora funciones
+$\vb{f}:X\subset\R^n\rightarrow\R^m$, con $n,m\in\N$.
+
+\begin{ejemplo}[Campo escalar]
+  \label{ej:campo_escalar}
+  $f:X\subset\R^2\rightarrow\R$ con $f(\vb{x})=z$.
+\end{ejemplo}
+
+\begin{ejemplo}[Transformaci\'on $\R^2\rightarrow\R^2$]
+  \label{ej:transformacion}
+  \begin{equation}
+    \label{eq:transformacion_polar}
+    \vb{T}(\rho,\vph)=
+    \begin{pmatrix}
+      \rho\cos\vph\\
+      \rho\sin\vph
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[Superficie $\R^2\rightarrow\R^3$]
+  \label{ej:superficie_esfera}
+  \begin{equation}
+    \label{eq:esfera_param}
+    \vb{M}(\theta,\vph)=
+    \begin{pmatrix}
+      R\sin\theta\cos\vph\\
+      R\sin\theta\sin\vph\\
+      R\cos\theta
+    \end{pmatrix},
+  \end{equation}
+  cuyas componentes satisfacen $x^2+y^2+z^2=R^2$.
+\end{ejemplo}
+
+\begin{ejemplo}[Curva $\R\rightarrow\R^3$]
+  \label{ej:curva_R3}
+  \begin{equation}
+    \label{eq:curva_R3}
+    \vb{C}(t)=
+    \begin{pmatrix}
+      x(t)\\y(t)\\z(t)
+    \end{pmatrix},
+    \qquad
+    \vb{C}:I\subset\R\rightarrow\R^3 .
+  \end{equation}
+\end{ejemplo}
+
+\begin{definicion}[Curvas y superficies de nivel]
+  \label{def:curvas_nivel}
+  Sea $f:X\subset\R^2\rightarrow\R$ escalar. Sus \textbf{curvas de nivel} son
+  \begin{equation}
+    \label{eq:curva_nivel}
+    N_k=\set{(x,y)\in\R^2\such f(x,y)=k},
+    \qquad k\in\R .
+  \end{equation}
+  An\'alogamente, si $f:X\subset\R^3\rightarrow\R$, las \textbf{superficies de
+  nivel} son $f(x,y,z)=k$ con $k$ constante.
+\end{definicion}
+
+\subsection{L\'imites}
+\label{subsec:limites_vectoriales}
+
+\begin{definicion}[L\'imite vectorial]
+  \label{def:limite_vectorial}
+  Sea $\vb{f}:X\subset\R^n\rightarrow\R^m$. Decimos que
+  \begin{equation}
+    \label{eq:limite_vectorial}
+    \lim_{\vb{x}\rightarrow\vb{a}}\vb{f}(\vb{x})=\vb{L}
+  \end{equation}
+  si dado $\ep>0$ existe $\de_\ep>0$ tal que si $\vb{x}\in X$ y
+  $0<\norm{\vb{x}-\vb{a}}<\de_\ep$, entonces
+  $\norm{\vb{f}(\vb{x})-\vb{L}}<\ep$.
+\end{definicion}
+
+Intuitivamente: para $\norm{\vb{f}-\vb{L}}$ arbitrariamente peque\~no existe
+$\norm{\vb{x}-\vb{a}}$ suficientemente peque\~no. Aqu\'i
+\begin{equation}
+  \label{eq:componentes_f}
+  \vb{f}=
+  \begin{pmatrix}
+    f_1(x_1,\dots,x_n)\\
+    f_2(x_1,\dots,x_n)\\
+    \vdots\\
+    f_m(x_1,\dots,x_n)
+  \end{pmatrix}.
+\end{equation}
+
+\begin{ejemplo}[Un l\'imite que no existe]
+  \label{ej:limite_direccional}
+  Sea $f:\R^2\setminus\set{\vb{0}}\rightarrow\R$ con
+  \begin{equation}
+    \label{eq:f_direccional}
+    f(x,y)=\frac{x^2-y^2}{x^2+y^2}.
+  \end{equation}
+  En coordenadas polares $x=\rho\cos\vph$, $y=\rho\sin\vph$,
+  \begin{equation}
+    \label{eq:limite_direccional}
+    \begin{aligned}
+      \lim_{\vb{x}\rightarrow\vb{0}}f(x,y)
+        &=\lim_{\rho\rightarrow 0}
+          \frac{\rho^2\cos^2\vph-\rho^2\sin^2\vph}{\rho^2}\\
+        &=\cos^2\vph-\sin^2\vph ,
+    \end{aligned}
+  \end{equation}
+  que depende del \'angulo, es decir, de la direcci\'on de acercamiento: vale
+  $1$ sobre $y=0$, $-1$ sobre $x=0$ y $0$ sobre $y=\pm x$. Si supusi\'eramos
+  $L=1$ y buscamos $\abs{f-1}<\ep$, al aproximarnos por la ruta $x=0$
+  obtendr\'iamos $\abs{-1-1}=2$, que no es arbitrariamente peque\~no. El
+  l\'imite no existe.
+\end{ejemplo}
+
+\begin{teorema}[Unicidad]
+  \label{teo:unicidad_limite}
+  Si un l\'imite existe, es \'unico: si
+  $\lim_{\vb{x}\rightarrow\vb{a}}\vb{f}=\vb{L}$ y
+  $\lim_{\vb{x}\rightarrow\vb{a}}\vb{f}=\vb{M}$, entonces $\vb{M}=\vb{L}$.
+\end{teorema}
+
+\begin{teorema}[Propiedades algebraicas]
+  \label{teo:algebra_limites}
+  Sean $\vb{F},\vb{G}:X\subset\R^n\rightarrow\R^m$ vectoriales,
+  $f,g:X\subset\R^n\rightarrow\R$ escalares y $k\in\R$. Si
+  $\lim_{\vb{x}\rightarrow\vb{a}}\vb{F}=\vb{L}$ y
+  $\lim_{\vb{x}\rightarrow\vb{a}}\vb{G}=\vb{M}$, entonces
+  \begin{align}
+    \label{eq:limite_suma}
+    \lim_{\vb{x}\rightarrow\vb{a}}(\vb{F}+\vb{G})&=\vb{L}+\vb{M},\\
+    \label{eq:limite_escalar}
+    \lim_{\vb{x}\rightarrow\vb{a}}k\vb{F}&=k\vb{L}.
+  \end{align}
+  Si adem\'as $\lim_{\vb{x}\rightarrow\vb{a}}f=L$ y
+  $\lim_{\vb{x}\rightarrow\vb{a}}g=M$, entonces
+  $\lim_{\vb{x}\rightarrow\vb{a}}(fg)=LM$, y si $M\neq 0$ y $g$ no se anula
+  cerca de $\vb{a}$,
+  \begin{equation}
+    \label{eq:limite_cociente}
+    \lim_{\vb{x}\rightarrow\vb{a}}\frac{f}{g}=\frac{L}{M}.
+  \end{equation}
+\end{teorema}
+
+\begin{teorema}[L\'imites por componentes]
+  \label{teo:limites_componentes}
+  Sea $\vb{f}:X\subset\R^n\rightarrow\R^m$. Entonces
+  $\lim_{\vb{x}\rightarrow\vb{a}}\vb{f}(\vb{x})=\vb{L}$ con
+  $\vb{L}=(L_1,\dots,L_m)^\tp$ si y s\'olo si
+  $\lim_{\vb{x}\rightarrow\vb{a}}f_i(\vb{x})=L_i$ para cada $i$.
+\end{teorema}
+
+\begin{ejemplo}
+  \label{ej:limite_existe}
+  Sea $f:\R^2\setminus\set{\vb{0}}\rightarrow\R$ con
+  $f(x,y)=\qty{x^3+y^5}/\qty{x^2+y^2}$. En polares,
+  \begin{equation}
+    \label{eq:limite_polares}
+    \begin{aligned}
+      \lim_{\vb{x}\rightarrow\vb{0}}f(x,y)
+        &=\lim_{\rho\rightarrow 0}
+          \frac{\rho^3\cos^3\vph+\rho^5\sin^5\vph}{\rho^2}\\
+        &=\lim_{\rho\rightarrow 0}
+          \qty{\rho\cos^3\vph+\rho^3\sin^5\vph}=0
+    \end{aligned}
+  \end{equation}
+  para todo $\vph$. Aqu\'i el l\'imite s\'i existe, y la cota es uniforme en la
+  direcci\'on: dado $\ep>0$ basta $\rho<\ep/2$, pues
+  $\abs{\rho\cos^3\vph+\rho^3\sin^5\vph}\le\rho+\rho^3$.
+\end{ejemplo}
+
+\subsection{Continuidad}
+\label{subsec:continuidad_vectorial}
+
+\begin{definicion}[Continuidad]
+  \label{def:continuidad_vectorial}
+  Sea $\vb{f}:X\subset\R^n\rightarrow\R^m$ y $\vb{a}\in X$. Entonces $\vb{f}$
+  es \textbf{continua} en $\vb{a}$ si $\vb{a}$ es un punto aislado o si
+  \begin{equation}
+    \label{eq:continuidad_vectorial}
+    \lim_{\vb{x}\rightarrow\vb{a}}\vb{f}(\vb{x})=\vb{f}(\vb{a}).
+  \end{equation}
+  Si esto ocurre en todos los puntos de su dominio, $\vb{f}$ es continua en
+  $X$.
+\end{definicion}
+
+\subsection{Derivadas parciales}
+\label{subsec:derivadas_parciales}
+
+\begin{definicion}[Derivada parcial]
+  \label{def:derivada_parcial}
+  La derivada parcial de $\vb{f}$ respecto de $x_i$ es la derivada de la
+  funci\'on parcial correspondiente:
+  \begin{equation}
+    \label{eq:derivada_parcial}
+    \small
+    \pdv{\vb{f}}{x_i}=\lim_{h\rightarrow 0}
+      \frac{\vb{f}(x_1,\dots,x_i+h,\dots,x_n)
+            -\vb{f}(x_1,\dots,x_i,\dots,x_n)}{h}.
+  \end{equation}
+\end{definicion}
+
+\begin{ejemplo}
+  \label{ej:parcial_escalar}
+  Sea $f:\R^2\rightarrow\R$ con $f(x,y)=x^2y+\cos(x+y)$. Entonces
+  \begin{equation}
+    \label{eq:parcial_escalar}
+    \small
+    \begin{aligned}
+      \pdv{f}{x}
+        &=\lim_{h\rightarrow 0}\frac{f(x+h,y)-f(x,y)}{h}\\
+        &=\lim_{h\rightarrow 0}\frac{(x+h)^2y-x^2y}{h}\\
+        &\quad+\lim_{h\rightarrow 0}
+          \frac{\cos(x+h+y)-\cos(x+y)}{h}\\
+        &=2xy-\sin(x+y).
+    \end{aligned}
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}
+  \label{ej:parcial_vectorial}
+  Sea $\vb{f}:\R^2\rightarrow\R^2$ con
+  \begin{equation}
+    \label{eq:f_vectorial}
+    \vb{f}(x,y)=
+    \begin{pmatrix}
+      2x^2+y\\
+      x^3\sin(xy)
+    \end{pmatrix}.
+  \end{equation}
+  La derivada parcial act\'ua componente a componente,
+  \begin{equation}
+    \label{eq:parcial_vectorial}
+    \pdv{\vb{f}}{y}=
+    \begin{pmatrix}
+      \pdv{}{y}\qty{2x^2+y}\\[2pt]
+      \pdv{}{y}\qty{x^3\sin(xy)}
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+      1\\
+      x^4\cos(xy)
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\subsection{Diferenciabilidad}
+\label{subsec:diferenciabilidad}
+
+Sean $V\subset\R^n$ y $W\subset\R^m$ espacios normados y
+$\vb{f}:V\rightarrow W$. La idea es aproximar $\vb{f}$ por una parte lineal
+m\'as un residuo que se anula m\'as r\'apido que $\norm{\vb{r}}$:
+\begin{equation}
+  \label{eq:aproximacion_lineal}
+  \vb{f}(\vb{r})=\vb{g}(\vb{r})+\lito(\vb{r}),
+\end{equation}
+donde la $\lito$ peque\~na se define por
+\begin{equation}
+  \label{eq:o_pequena}
+  \lim_{\vb{r}\rightarrow\vb{0}}
+    \frac{\lito(\vb{r})}{\norm{\vb{r}}}=\vb{0}\in\R^m .
+\end{equation}
+
+\subsubsection{Analog\'ia en una dimensi\'on}
+\label{subsubsec:analogia_1d}
+
+Para $g:\R\rightarrow\R$, decir que $g$ es diferenciable en $x$ equivale a
+\begin{equation}
+  \label{eq:diferenciable_1d}
+  \lim_{h\rightarrow 0}\frac{1}{h}
+    \qty{g(x+h)-g(x)-h\dv{}{x}g}=0,
+\end{equation}
+o, escrito de otro modo,
+\begin{equation}
+  \label{eq:diferenciable_1d_bis}
+  g(x+h)=g(x)+h\dv{}{x}g(x)+\lito(h).
+\end{equation}
+
+\begin{definicion}[Diferenciabilidad]
+  \label{def:diferenciabilidad}
+  $\vb{f}:V\subset\R^n\rightarrow W\subset\R^m$ es \textbf{diferenciable} si
+  existe una transformaci\'on lineal $D\vb{f}(\vb{r}):V\rightarrow W$ tal que
+  \begin{equation}
+    \label{eq:diferenciabilidad}
+    \vb{f}(\vb{r}+\vb{u})
+      =\vb{f}(\vb{r})+D\vb{f}(\vb{r})[\vb{u}]+\lito(\vb{u}).
+  \end{equation}
+\end{definicion}
+
+\begin{teorema}
+  \label{teo:unicidad_diferencial}
+  Si $\vb{f}$ es diferenciable en $\vb{r}\in\R^n$, hay una \'unica
+  transformaci\'on lineal $D\vb{f}(\vb{r}):\R^n\rightarrow\R^m$ tal que
+  \begin{equation}
+    \label{eq:unicidad_diferencial}
+    \lim_{\xii\rightarrow 0}
+      \abs{\frac{\vb{f}(\vb{r}+\xii\vb{u})-\vb{f}(\vb{r})}
+                {\norm{\xii\vb{u}}}-D\vb{f}(\vb{r})[\vb{u}]}=0 .
+  \end{equation}
+\end{teorema}
+
+De aqu\'i se obtiene la expresi\'on operativa: la \textbf{derivada
+direccional}
+\begin{equation}
+  \label{eq:derivada_direccional}
+  \begin{aligned}
+    D\vb{f}(\vb{r})[\vb{u}]
+      &=\lim_{\xii\rightarrow 0}\frac{1}{\xii\norm{\vb{u}}}
+        \qty{\vb{f}(\vb{r}+\xii\vb{u})-\vb{f}(\vb{r})}\\
+      &=\frac{1}{\norm{\vb{u}}}
+        \eval{\dv{}{\xii}\vb{f}(\vb{r}+\xii\vb{u})}_{\xii=0}.
+  \end{aligned}
+\end{equation}
+
+\begin{ejemplo}[Caso escalar]
+  \label{ej:gradiente_escalar}
+  Sea $f:\R^n\rightarrow\R$. Escribiendo
+  $\et_i=x_i+\xii u_i$ y aplicando la regla de la cadena,
+  \begin{equation}
+    \label{eq:derivada_direccional_escalar}
+    \small
+    \begin{aligned}
+      Df(\vb{r})[\vb{u}]
+        &=\frac{1}{\norm{\vb{u}}}
+          \eval{\dv{}{\xii}f(\et_1,\dots,\et_n)}_{\xii=0}\\
+        &=\frac{1}{\norm{\vb{u}}}
+          \eval{\sum_{i=1}^{n}\pdv{f}{\et_i}\dv{\et_i}{\xii}}_{\xii=0}.
+    \end{aligned}
+  \end{equation}
+  Como $\lim_{\xii\rightarrow 0}\et_i=x_i$ y
+  $\dv{\et_i}{\xii}=u_i$, resulta
+  \begin{equation}
+    \label{eq:gradiente_producto}
+    Df(\vb{r})[\vb{u}]=\frac{1}{\norm{\vb{u}}}
+      \sum_{i=1}^{n}\pdv{f}{x_i}u_i
+      =\nabla f\cdot\vh{u}.
+  \end{equation}
+\end{ejemplo}
+
+\subsection{El gradiente}
+\label{subsec:gradiente}
+
+Generalizando el ejemplo anterior a $\vb{f}:\R^n\rightarrow\R^m$, la regla de
+la cadena da
+\begin{equation}
+  \label{eq:jacobiano}
+  \small
+  D\vb{f}(\vb{r})[\vb{u}]=\frac{1}{\norm{\vb{u}}}
+  \begin{pmatrix}
+    \pdv{f_1}{r_1} & \dots & \pdv{f_1}{r_n}\\
+    \pdv{f_2}{r_1} & \dots & \pdv{f_2}{r_n}\\
+    \vdots & \ddots & \vdots\\
+    \pdv{f_m}{r_1} & \dots & \pdv{f_m}{r_n}
+  \end{pmatrix}
+  \begin{pmatrix}
+    u_1\\u_2\\\vdots\\u_n
+  \end{pmatrix},
+\end{equation}
+es decir
+\begin{equation}
+  \label{eq:gradiente_matriz}
+  D\vb{f}(\vb{r})[\vb{u}]=\grad\vb{f}\;\frac{\vb{u}}{\norm{\vb{u}}}
+    =\grad\vb{f}\,\vh{u},
+\end{equation}
+donde la matriz de \eqref{eq:jacobiano} es el \textbf{gradiente} (o matriz
+jacobiana) de $\vb{f}$.
+
+\begin{ejemplo}
+  \label{ej:gradiente_matriz}
+  Sea $\vb{f}:\R^2\rightarrow\R^3$ con
+  \begin{equation}
+    \label{eq:f_ejemplo_gradiente}
+    \vb{f}(x,y)=
+    \begin{pmatrix}
+      3x^2-y^3\\
+      xy+2\\
+      x-y+xy
+    \end{pmatrix}
+    \imp
+    \grad\vb{f}=
+    \begin{pmatrix}
+      6x & -3y^2\\
+      y & x\\
+      1+y & -1+x
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\begin{teorema}[Direcci\'on de m\'aximo cambio]
+  \label{teo:maximo_cambio}
+  Sea $f:\R^n\rightarrow\R$ con $\nabla f\neq\vb{0}$. Entonces
+  $\nabla f(\vb{r})$ apunta en la direcci\'on en que $f$ tiene mayor cambio.
+\end{teorema}
+
+\begin{ejemplo}
+  \label{ej:gradiente_silla}
+  Sea $f:\R^2\rightarrow\R$ con $f=x^2-y^2$. Su gradiente es
+  \begin{equation}
+    \label{eq:gradiente_silla}
+    \nabla f=
+    \begin{pmatrix}
+      \pdv{}{x}\qty{x^2-y^2}\\[2pt]
+      \pdv{}{y}\qty{x^2-y^2}
+    \end{pmatrix}
+    =2
+    \begin{pmatrix}
+      x\\-y
+    \end{pmatrix},
+  \end{equation}
+  y sobre la recta $y=x$ vale $\nabla f=2x(1,-1)^\tp$.
+\end{ejemplo}
+
+\subsection{Plano tangente}
+\label{subsec:plano_tangente}
+
+\begin{teorema}[El gradiente es normal a la superficie de nivel]
+  \label{teo:gradiente_normal}
+  Sea $f:\R^3\rightarrow\R$ un mapeo de clase $C^1$ y $S$ la superficie de
+  nivel definida por $f(x,y,z)=k$. Si $\vb{v}$ es el vector tangente en
+  $\xii=0$ a una curva $\vb{c}(\xii)$ contenida en $S$ con
+  $\vb{c}(0)=(x_0,y_0,z_0)$, entonces
+  $\eval{\nabla f}_{(x_0,y_0,z_0)}\cdot\vb{v}=0$.
+\end{teorema}
+
+\begin{demostracion}
+  La curva vive sobre $f(x,y,z)=k$, luego
+  $f(x(\xii),y(\xii),z(\xii))=k$ es constante y su derivada se anula. Por la
+  regla de la cadena,
+  \begin{equation}
+    \label{eq:demo_gradiente_normal}
+    \begin{aligned}
+      \dv{}{\xii}f
+        &=\pdv{f}{x}\dv{x}{\xii}+\pdv{f}{y}\dv{y}{\xii}
+          +\pdv{f}{z}\dv{z}{\xii}\\
+        &=\nabla f\cdot\dv{}{\xii}\vb{c}
+         =\nabla f\cdot\vb{v}=0 .
+    \end{aligned}
+  \end{equation}
+\end{demostracion}
+
+\begin{ejemplo}
+  \label{ej:esfera_nivel}
+  Sea $f(x,y,z)=x^2+y^2+z^2$. La superficie de nivel $f=R^2>0$ es la esfera de
+  radio $R$, y
+  \begin{equation}
+    \label{eq:gradiente_esfera}
+    \nabla\qty{x^2+y^2+z^2}=2
+    \begin{pmatrix}
+      x\\y\\z
+    \end{pmatrix},
+  \end{equation}
+  que en cada punto es radial, es decir, normal a la esfera.
+\end{ejemplo}
+
+Si dos curvas $\vb{c}_1$ y $\vb{c}_2$ contenidas en $S$ pasan por
+$\vb{r}_0$ y sus tangentes
+\begin{equation}
+  \label{eq:tangentes_curvas}
+  \vb{v}_1=\eval{\dv{}{\xii}\vb{c}_1}_{\vb{r}_0},
+  \qquad
+  \vb{v}_2=\eval{\dv{}{\xii}\vb{c}_2}_{\vb{r}_0}
+\end{equation}
+no son colineales, entonces son linealmente independientes y generan el
+\textbf{plano tangente} a $S$ en $\vb{r}_0$. Como la ecuaci\'on de un plano de
+normal $\vb{N}$ que pasa por $\vb{r}_0$ es
+$\vb{N}\cdot(\vb{r}-\vb{r}_0)=0$, y por el
+Teorema~\ref{teo:gradiente_normal} la normal es $\nabla f$, el plano tangente
+es
+\begin{equation}
+  \label{eq:plano_tangente}
+  \eval{\nabla f}_{\vb{r}_0}\cdot\qty{\vb{r}-\vb{r}_0}=0 .
+\end{equation}
+
+\subsection{Teorema de la funci\'on impl\'icita}
+\label{subsec:funcion_implicita}
+
+\begin{teorema}[Funci\'on impl\'icita]
+  \label{teo:funcion_implicita}
+  Sea $F:X\subset\R^n\rightarrow\R$ de clase $C^1$ y sea $\vb{a}$ un punto del
+  conjunto de nivel
+  $S=\set{\vb{x}\in\R^n\such F(\vb{x})=k}$. Si
+  $\pdv{F}{x_i}(\vb{a})\neq 0$, entonces existen una vecindad $U$ de
+  $(a_1,\dots,a_{i-1},a_{i+1},\dots,a_n)\in\R^{n-1}$, una vecindad $V$ de
+  $a_i\in\R$ y una funci\'on $f:U\rightarrow V$ de clase $C^1$ tales que si
+  $(x_1,\dots,x_{i-1},x_{i+1},\dots,x_n)\in U$ y $x_i\in V$ satisfacen
+  $F(x_1,\dots,x_n)=k$, entonces
+  $x_i=f(x_1,\dots,x_{i-1},x_{i+1},\dots,x_n)$.
+\end{teorema}
+
+\begin{ejemplo}
+  \label{ej:elipsoide_implicita}
+  Sea
+  \begin{equation}
+    \label{eq:elipsoide_nivel}
+    f(x,y,z)=\frac{x^2}{4}+\frac{y^2}{36}+\frac{z^2}{9}=k .
+  \end{equation}
+  Tomando la superficie de nivel $k=1$ obtenemos un elipsoide. Como
+  \begin{equation}
+    \label{eq:parcial_elipsoide}
+    \pdv{f}{z}=\frac{2z}{9},
+  \end{equation}
+  en el punto $\vb{a}=(0,0,-3)^\tp$, que pertenece al elipsoide, se tiene
+  \begin{equation}
+    \label{eq:parcial_elipsoide_a}
+    \eval{\pdv{f}{z}}_{\vb{x}=\vb{a}}=-\frac{2}{3}\neq 0 .
+  \end{equation}
+  Por el teorema de la funci\'on impl\'icita, alrededor de ese punto podemos
+  despejar
+  \begin{equation}
+    \label{eq:despeje_z}
+    z=-3\sqrt{1-\frac{x^2}{4}-\frac{y^2}{36}} .
+  \end{equation}
+\end{ejemplo}
+
+\begin{teorema}[Funci\'on impl\'icita generalizado]
+  \label{teo:funcion_implicita_gen}
+  Supongamos que $\vb{F}:A\subset\R^{n+m}\rightarrow\R^m$ es de clase $C^1$ y
+  que $(\vb{a},\vb{b})\in A$ satisface $\vb{F}(\vb{a},\vb{b})=\vb{k}$. Si el
+  determinante
+  \begin{equation}
+    \label{eq:determinante_implicita}
+    \small
+    \det
+    \begin{pmatrix}
+      \pdv{F_1}{y_1}(\vb{a},\vb{b}) & \dots & \pdv{F_1}{y_m}(\vb{a},\vb{b})\\
+      \vdots & \ddots & \vdots\\
+      \pdv{F_m}{y_1}(\vb{a},\vb{b}) & \dots & \pdv{F_m}{y_m}(\vb{a},\vb{b})
+    \end{pmatrix}
+    \neq 0,
+  \end{equation}
+  entonces hay una vecindad $U$ de $\vb{a}\in\R^n$ y una \'unica funci\'on
+  $\vb{f}:U\rightarrow\R^m$ de clase $C^1$ tal que
+  \begin{equation}
+    \label{eq:conclusion_implicita}
+    \vb{f}(\vb{a})=\vb{b},
+    \qquad
+    \vb{F}(\vb{x},\vb{f}(\vb{x}))=\vb{k}
+    \quad\forall\vb{x}\in U .
+  \end{equation}
+\end{teorema}
+
+\subsection{Teorema de la funci\'on inversa}
+\label{subsec:funcion_inversa}
+
+\begin{teorema}[Funci\'on inversa]
+  \label{teo:funcion_inversa}
+  Supongamos que $\vb{f}:\R^n\rightarrow\R^n$ es de clase $C^1$ sobre un
+  abierto $A\subset\R^n$ y que en $\vb{a}\in A$ el jacobiano no se anula,
+  \begin{equation}
+    \label{eq:jacobiano_inversa}
+    \abs{\frac{\partial(f_1,f_2,\dots,f_n)}
+              {\partial(x_1,x_2,\dots,x_n)}}\neq 0 .
+  \end{equation}
+  Entonces existe un abierto $U\subset\R^n$ que contiene a $\vb{a}$ tal que
+  $\vb{f}$ es uno a uno sobre $U$, el conjunto $V=\vb{f}(U)$ tambi\'en es
+  abierto y hay una \'unica funci\'on inversa $\vb{g}:V\rightarrow U$ de
+  $\vb{f}$, tambi\'en de clase $C^1$.
+\end{teorema}

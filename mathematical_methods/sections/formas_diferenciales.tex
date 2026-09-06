@@ -1,0 +1,354 @@
+\section{Formas diferenciales y teoremas integrales}
+\label{sec:formas_diferenciales}
+
+\subsection{Teorema de Fubini}
+\label{subsec:fubini}
+
+\begin{teorema}[Fubini]
+  \label{teo:fubini}
+  Sea $f$ una funci\'on acotada en $D=[a,b]\otimes[c,d]$ y supongamos que el
+  conjunto de discontinuidades $\Ga$ tiene \'area cero. Si cada l\'inea
+  paralela a los ejes coordenados alcanza $\Ga$ en un n\'umero finito de
+  puntos, entonces
+  \begin{equation}
+    \label{eq:fubini}
+    \iint_{D}f\dd S
+      =\int_{a}^{b}\!\!\int_{c}^{d}f(x,y)\dd y\dd x
+      =\int_{c}^{d}\!\!\int_{a}^{b}f(x,y)\dd x\dd y .
+  \end{equation}
+\end{teorema}
+
+\subsection{\'Algebra exterior}
+\label{subsec:algebra_exterior}
+
+\begin{definicion}[Cero-forma]
+  \label{def:cero_forma}
+  Una \textbf{cero-forma diferencial} es una funci\'on diferenciable
+  $f:\R^n\rightarrow\R$. Escribimos $f\in\Ext{0}$, donde $\Ext{0}$ es el
+  espacio de funciones sobre el espacio lineal $L$.
+\end{definicion}
+
+\begin{definicion}[Mapeo diferencial]
+  \label{def:mapeo_diferencial}
+  El \textbf{mapeo diferencial} $d$ act\'ua como
+  $d:\Ext{n-1}\rightarrow\Ext{n}$. Sobre una cero-forma,
+  \begin{equation}
+    \label{eq:d_cero_forma}
+    \mathbf{d}f=\pdv{f}{x_1}\dd x_1+\pdv{f}{x_2}\dd x_2
+      +\dots+\pdv{f}{x_n}\dd x_n\in\Ext{1}.
+  \end{equation}
+\end{definicion}
+
+\begin{definicion}[$n$-formas]
+  \label{def:n_formas}
+  Definimos el espacio de $n$-formas diferenciales como
+  \begin{equation}
+    \label{eq:espacio_n_formas}
+    \Ext{n}=\underbrace{\Ext{1}\otimes\Ext{1}\otimes\dots\otimes\Ext{1}}
+      _{n\ \text{factores}} ,
+  \end{equation}
+  cuyos elementos $\om\in\Ext{n}$ son
+  \begin{equation}
+    \label{eq:n_forma}
+    \small
+    \om=\sum_{i_1,\dots,i_n}
+      \om_{i_1\dots i_n}(x_1,\dots,x_m)
+      \dd x_{i_1}\wedge\dd x_{i_2}\wedge\dots\wedge\dd x_{i_n}.
+  \end{equation}
+\end{definicion}
+
+\subsubsection{El producto cu\~na}
+\label{subsubsec:producto_cuna_formas}
+
+\begin{definicion}[Producto cu\~na de formas]
+  \label{def:cuna_formas}
+  \begin{equation}
+    \label{eq:cuna_formas}
+    \wedge:\Ext{p}\otimes\Ext{q}\longrightarrow\Ext{p+q},
+  \end{equation}
+  con las siguientes propiedades, si $\la\in\Ext{p}$ y $\mu\in\Ext{q}$:
+  \begin{itemize}
+    \item $\la\wedge\mu$ es distributivo;
+    \item $\la\wedge(\mu\wedge\nu)=(\la\wedge\mu)\wedge\nu$, es decir, es
+          asociativo;
+    \item $\mu\wedge\la=(-1)^{pq}\la\wedge\mu$.
+  \end{itemize}
+\end{definicion}
+
+De ah\'i se siguen las propiedades del \'algebra exterior:
+\begin{align}
+  \label{eq:exterior_dist_izq}
+  (a_1\al_1+a_2\al_2)\wedge\be
+    &=a_1\al_1\wedge\be+a_2\al_2\wedge\be,\\
+  \label{eq:exterior_dist_der}
+  \al\wedge(b_1\be_1+b_2\be_2)
+    &=b_1\al\wedge\be_1+b_2\al\wedge\be_2,\\
+  \label{eq:exterior_antisim}
+  \al\wedge\be&=-\be\wedge\al .
+\end{align}
+En particular \eqref{eq:exterior_antisim} implica
+$\dd x_i\wedge\dd x_i=0$, y por definici\'on $d(\dd x_i)=0$.
+
+\begin{ejemplo}
+  \label{ej:cuna_descompuesta}
+  Si $\la=\la_1\wedge\dots\wedge\la_p$ y
+  $\mu=\mu_1\wedge\dots\wedge\mu_q$, entonces
+  \begin{equation}
+    \label{eq:cuna_descompuesta}
+    \la\wedge\mu
+      =\la_1\wedge\dots\wedge\la_p\wedge\mu_1\wedge\dots\wedge\mu_q .
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[Una $1$-forma por una $2$-forma]
+  \label{ej:uno_por_dos}
+  Sean $\la\in\Ext{1}$ y $\mu\in\Ext{2}$ en $\R^3$,
+  \begin{equation}
+    \label{eq:lambda_mu}
+    \begin{aligned}
+      \la&=\la_1\dd x+\la_2\dd y+\la_3\dd z,\\
+      \mu&=\mu_1\dd y\wedge\dd z+\mu_2\dd z\wedge\dd x
+          +\mu_3\dd x\wedge\dd y .
+    \end{aligned}
+  \end{equation}
+  Todos los productos con un diferencial repetido se anulan y los tres que
+  sobreviven se reordenan al mismo signo, de modo que
+  \begin{equation}
+    \label{eq:lambda_cuna_mu}
+    \la\wedge\mu=\qty{\la_1\mu_1+\la_2\mu_2+\la_3\mu_3}
+      \dd x\wedge\dd y\wedge\dd z .
+  \end{equation}
+\end{ejemplo}
+
+\subsubsection{F\'ormula general}
+\label{subsubsec:formula_general_cuna}
+
+Para $k$ vectores $\vb{v}_1,\dots,\vb{v}_k\in V$, su producto exterior es
+\begin{equation}
+  \label{eq:cuna_general}
+  \small
+  \vb{v}_1\wedge\dots\wedge\vb{v}_k
+    =\sum_{1\le i_1<\dots<i_k\le n}
+    \begin{vmatrix}
+      v_1^{i_1} & \dots & v_1^{i_k}\\
+      \vdots & \ddots & \vdots\\
+      v_k^{i_1} & \dots & v_k^{i_k}
+    \end{vmatrix}
+    \vh{e}_{i_1}\wedge\dots\wedge\vh{e}_{i_k}.
+\end{equation}
+
+\begin{ejemplo}
+  \label{ej:cuna_general_R3}
+  Calculemos el producto exterior de dos vectores de $\R^3$ en la base
+  can\'onica:
+  \begin{equation}
+    \label{eq:cuna_general_R3}
+    \small
+    \begin{aligned}
+      \vb{v}\wedge\vb{w}
+        &=\sum_{1\le i<j\le 3}
+        \begin{vmatrix}
+          v_i & v_j\\
+          w_i & w_j
+        \end{vmatrix}
+        \vh{e}_i\wedge\vh{e}_j\\
+        &=(v_1w_2-v_2w_1)\,\vh{e}_1\wedge\vh{e}_2\\
+        &\quad+(v_1w_3-v_3w_1)\,\vh{e}_1\wedge\vh{e}_3\\
+        &\quad+(v_2w_3-v_3w_2)\,\vh{e}_2\wedge\vh{e}_3 ,
+    \end{aligned}
+  \end{equation}
+  donde $\vh{e}_i\wedge\vh{e}_j\equiv\vh{e}_{ij}$. Identificando
+  $\vh{e}_{23}\mapsto\vh{e}_1$, $\vh{e}_{31}\mapsto\vh{e}_2$ y
+  $\vh{e}_{12}\mapsto\vh{e}_3$ se recupera el producto cruz
+  \eqref{eq:cuna_3d}.
+\end{ejemplo}
+
+\subsection{La derivada exterior en $\R^3$}
+\label{subsec:derivada_exterior}
+
+Sea $\om\in\Ext{1}$ con $\om_i:\R^3\rightarrow\R$,
+\begin{equation}
+  \label{eq:uno_forma}
+  \om=\om_1\dd x+\om_2\dd y+\om_3\dd z .
+\end{equation}
+Entonces, usando $d(\dd x_i)=0$,
+\begin{equation}
+  \label{eq:d_omega_paso1}
+  d\om=d\om_1\wedge\dd x+d\om_2\wedge\dd y+d\om_3\wedge\dd z,
+\end{equation}
+y desarrollando cada $d\om_i$ con \eqref{eq:d_cero_forma},
+\begin{equation}
+  \label{eq:d_omega_paso2}
+  \small
+  \begin{aligned}
+    d\om&=\qty{\pdv{\om_1}{x}\dd x+\pdv{\om_1}{y}\dd y
+              +\pdv{\om_1}{z}\dd z}\wedge\dd x\\
+        &\quad+\qty{\pdv{\om_2}{x}\dd x+\pdv{\om_2}{y}\dd y
+              +\pdv{\om_2}{z}\dd z}\wedge\dd y\\
+        &\quad+\qty{\pdv{\om_3}{x}\dd x+\pdv{\om_3}{y}\dd y
+              +\pdv{\om_3}{z}\dd z}\wedge\dd z .
+  \end{aligned}
+\end{equation}
+Los t\'erminos con diferencial repetido se anulan y los restantes se agrupan:
+\begin{equation}
+  \label{eq:d_omega_rot}
+  \begin{aligned}
+    d\om&=\qty{\pdv{\om_2}{x}-\pdv{\om_1}{y}}\dd x\wedge\dd y\\
+        &\quad+\qty{\pdv{\om_1}{z}-\pdv{\om_3}{x}}\dd z\wedge\dd x\\
+        &\quad+\qty{\pdv{\om_3}{y}-\pdv{\om_2}{z}}\dd y\wedge\dd z .
+  \end{aligned}
+\end{equation}
+
+Ahora bien, el diferencial de superficie se descompone como
+\begin{equation}
+  \label{eq:dS_componentes}
+  \left\{
+  \begin{aligned}
+    \dd\vb{S}_x&=\vh{x}\dd y\wedge\dd z,\\
+    \dd\vb{S}_y&=\vh{y}\dd z\wedge\dd x,\\
+    \dd\vb{S}_z&=\vh{z}\dd x\wedge\dd y,
+  \end{aligned}
+  \right.
+\end{equation}
+de modo que \eqref{eq:d_omega_rot} se lee como un producto punto:
+\begin{equation}
+  \label{eq:d_omega_producto}
+  d\om=
+  \underbrace{\qty{\nabla\wedge
+    \begin{pmatrix}\om_1\\\om_2\\\om_3\end{pmatrix}}}_{\rot\boldsymbol{\om}}
+  \cdot
+  \underbrace{
+  \begin{pmatrix}
+    \dd y\wedge\dd z\\
+    \dd z\wedge\dd x\\
+    \dd x\wedge\dd y
+  \end{pmatrix}}_{\dd\vb{S}} .
+\end{equation}
+
+\subsection{Teorema de Stokes}
+\label{subsec:stokes}
+
+\begin{teorema}[Stokes generalizado]
+  \label{teo:stokes_general}
+  \begin{equation}
+    \label{eq:stokes_general}
+    \int_{\partial S}\om=\int_{S}d\om .
+  \end{equation}
+\end{teorema}
+
+Recordando que para $\om\in\Ext{1}$ se tiene
+$\om=\boldsymbol{\om}\cdot\dd\vb{r}$, la combinaci\'on de
+\eqref{eq:stokes_general} con \eqref{eq:d_omega_producto} da la forma
+vectorial cl\'asica
+\begin{equation}
+  \label{eq:stokes_vectorial}
+  \int_{C=\partial S}\vb{F}\cdot\dd\vb{r}
+    =\iint_{S}\rot\vb{F}\cdot\dd\vb{S} .
+\end{equation}
+
+\begin{observacion}
+  El teorema s\'olo es v\'alido en superficies \emph{abiertas}: una superficie
+  cerrada no tiene frontera, de modo que el miembro izquierdo no existe.
+\end{observacion}
+
+\begin{observacion}[Invariancia de norma]
+  Supongamos $\vb{G}=\rot\vb{F}$. Como el rotacional de un gradiente es cero,
+  tambi\'en $\vb{G}=\rot\qty{\vb{F}+\nabla g}$ para cualquier campo escalar
+  $g$ de clase $C^2$, y entonces
+  \begin{equation}
+    \label{eq:invariancia_norma}
+    \iint_{S}\vb{G}\cdot\dd\vb{S}
+      =\int_{\partial S}\qty{\vb{F}+\nabla g}\cdot\dd\vb{r},
+  \end{equation}
+  es decir, $\vb{F}$ est\'a determinado s\'olo salvo un gradiente.
+\end{observacion}
+
+\subsubsection{Ley de Amp\`ere}
+\label{subsubsec:ampere}
+
+En su forma integral,
+\begin{equation}
+  \label{eq:ampere_integral}
+  \int_{C=\partial S}\vb{B}\cdot\dd\vb{r}=\mu_0 I .
+\end{equation}
+Escribiendo la corriente como el flujo de la densidad de corriente
+$\vb{J}$ y aplicando \eqref{eq:stokes_vectorial} al miembro izquierdo,
+\begin{equation}
+  \label{eq:ampere_paso}
+  \iint_{S}\rot\vb{B}\cdot\dd\vb{S}
+    =\mu_0\iint_{S}\vb{J}\cdot\dd\vb{S},
+\end{equation}
+de donde
+\begin{equation}
+  \label{eq:ampere_diferencial}
+  \iint_{S}\qty{\rot\vb{B}-\mu_0\vb{J}}\cdot\dd\vb{S}=0
+  \quad\forall S .
+\end{equation}
+Como esto vale para \emph{toda} superficie, el integrando debe anularse:
+\begin{equation}
+  \label{eq:ampere_local}
+  \rot\vb{B}=\mu_0\vb{J},
+  \qquad\text{es decir}\qquad
+  \nabla\wedge\vb{B}=\mu_0\vb{J} .
+\end{equation}
+Aqu\'i $\vb{B}=\rot\vb{A}$, con $\vb{A}$ el \textbf{potencial vectorial};
+por la observaci\'on anterior, $\vb{A}$ y $\vb{A}+\nabla\la$ producen el mismo
+campo, que es la libertad de norma del electromagnetismo.
+
+\subsection{Teorema de Gauss}
+\label{subsec:gauss}
+
+Sea ahora $\om\in\Ext{2}$,
+\begin{equation}
+  \label{eq:dos_forma}
+  \om=\om_1\dd y\wedge\dd z+\om_2\dd z\wedge\dd x
+    +\om_3\dd x\wedge\dd y .
+\end{equation}
+Repitiendo el c\'alculo de \eqref{eq:d_omega_paso2}, ahora sobreviven
+\'unicamente los t\'erminos que completan las tres coordenadas:
+\begin{equation}
+  \label{eq:d_omega_div}
+  \begin{aligned}
+    d\om&=\qty{\pdv{\om_1}{x}+\pdv{\om_2}{y}+\pdv{\om_3}{z}}
+          \dd x\wedge\dd y\wedge\dd z\\
+        &=\qty{\nabla\cdot\boldsymbol{\om}}\dd V .
+  \end{aligned}
+\end{equation}
+
+\begin{teorema}[Divergencia]
+  \label{teo:divergencia}
+  \begin{equation}
+    \label{eq:divergencia}
+    \iint_{S=\partial V}\vb{F}\cdot\dd\vb{S}
+      =\iiint_{V}\dive\vb{F}\dd V .
+  \end{equation}
+  Si la superficie no es cerrada, el teorema no aplica.
+\end{teorema}
+
+\begin{ejemplo}
+  \label{ej:divergencia}
+  Sea
+  \begin{equation}
+    \label{eq:F_divergencia}
+    \vb{F}=
+    \begin{pmatrix}
+      3xy^2\\3yx^2\\z^3
+    \end{pmatrix}
+  \end{equation}
+  y busquemos su flujo sobre la esfera unitaria. Al ser una superficie cerrada
+  conviene el teorema de la divergencia:
+  \begin{equation}
+    \label{eq:div_F}
+    \dive\vb{F}=\nabla\cdot\vb{F}=3y^2+3x^2+3z^2=3\qty{x^2+y^2+z^2},
+  \end{equation}
+  que en esf\'ericas es simplemente $\dive\vb{F}=3r^2$. Entonces
+  \begin{equation}
+    \label{eq:flujo_esfera}
+    \begin{aligned}
+      \iint_{S=\partial V}\vb{F}\cdot\dd\vb{S}
+        &=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}\!\!\int_{0}^{1}
+          \qty{3r^2}r^2\sin\theta\dd r\dd\theta\dd\vph\\
+        &=3(4\pi)\int_{0}^{1}r^4\dd r=\frac{12}{5}\pi .
+    \end{aligned}
+  \end{equation}
+\end{ejemplo}

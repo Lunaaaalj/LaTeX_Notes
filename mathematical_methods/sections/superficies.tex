@@ -1,0 +1,281 @@
+\section{Superficies parametrizadas}
+\label{sec:superficies}
+
+\begin{definicion}[Superficie parametrizada]
+  \label{def:superficie}
+  Una \textbf{superficie parametrizada} es un mapeo
+  \begin{equation}
+    \label{eq:superficie}
+    \vb{M}:\Om\subset\R^2\longrightarrow\R^m,
+    \qquad m=2,3,\dots
+  \end{equation}
+  En el caso $m=3$,
+  \begin{equation}
+    \label{eq:superficie_3d}
+    \vb{M}(\xii,\et)=
+    \begin{pmatrix}
+      M_1(\xii,\et)\\
+      M_2(\xii,\et)\\
+      M_3(\xii,\et)
+    \end{pmatrix}.
+  \end{equation}
+\end{definicion}
+
+\begin{ejemplo}[Esfera]
+  \label{ej:esfera_superficie}
+  \begin{equation}
+    \label{eq:esfera_superficie}
+    \vb{M}(\theta,\vph)=
+    \begin{pmatrix}
+      R\sin\theta\cos\vph\\
+      R\sin\theta\sin\vph\\
+      R\cos\theta
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[Cilindro]
+  \label{ej:cilindro}
+  \begin{equation}
+    \label{eq:cilindro}
+    \vb{M}(\vph,z)=
+    \begin{pmatrix}
+      R\cos\vph\\
+      R\sin\vph\\
+      z
+    \end{pmatrix},
+    \quad \vph\in[0,2\pi),\ z\in[-h,h].
+  \end{equation}
+\end{ejemplo}
+
+\subsection{Diferencial de superficie}
+\label{subsec:diferencial_superficie}
+
+Sea $\vb{M}:\Om\subset\R^2\rightarrow\R^3$, de modo que
+$\vb{M}=\vb{M}(\xii,\et)$. Si fijamos $\et=\et_0$ y tomamos el mapeo como
+funci\'on de $\xii$, obtenemos
+\begin{equation}
+  \label{eq:curva_xi}
+  \vb{M}_{\xii}=\vb{M}(\xii,\et_0),
+\end{equation}
+que es una curva sobre la superficie. An\'alogamente,
+\begin{equation}
+  \label{eq:curva_eta}
+  \vb{M}_{\et}=\vb{M}(\xii_0,\et)
+\end{equation}
+es otra curva sobre $M$ en la direcci\'on $\et$. Los vectores tangentes a esas
+curvas son
+\begin{equation}
+  \label{eq:tangentes_superficie}
+  \vb{T}_{\xii}=\pdv{}{\xii}\vb{M}(\xii,\et_0),
+  \qquad
+  \vb{T}_{\et}=\pdv{}{\et}\vb{M}(\xii_0,\et),
+\end{equation}
+y la normal al plano tangente es su producto cu\~na,
+\begin{equation}
+  \label{eq:normal_superficie}
+  \vb{N}=\eval{\pdv{}{\xii}\vb{M}\wedge\pdv{}{\et}\vb{M}}
+    _{(\xii_0,\et_0)},
+\end{equation}
+de modo que el plano tangente en $\vb{M}_0$ es
+$\vb{N}\cdot\qty{\vb{r}-\vb{M}_0}=0$.
+
+La consecuencia importante es que las diferenciales de esas curvas, que viven
+en el plano tangente, aproximan localmente a la superficie. En efecto, para
+$\vb{M}(\xii(t),\et_0)$ y $\vb{M}(\xii_0,\et(t))$ la regla de la cadena da
+\begin{equation}
+  \label{eq:derivadas_curvas_superficie}
+  \dv{}{t}\vb{M}_{\xii}=\pdv{}{\xii}\vb{M}\dv{\xii}{t},
+  \qquad
+  \dv{}{t}\vb{M}_{\et}=\pdv{}{\et}\vb{M}\dv{\et}{t},
+\end{equation}
+y por lo tanto
+\begin{equation}
+  \label{eq:diferenciales_curvas}
+  \dd\vb{M}_{\xii}=\pdv{}{\xii}\vb{M}\dd\xii,
+  \qquad
+  \dd\vb{M}_{\et}=\pdv{}{\et}\vb{M}\dd\et .
+\end{equation}
+
+\begin{definicion}[Diferencial de superficie]
+  \label{def:dS}
+  \begin{equation}
+    \label{eq:dS}
+    \dd\vb{S}=\pdv{}{\xii}\vb{M}\wedge\pdv{}{\et}\vb{M}
+      \dd\xii\dd\et ,
+  \end{equation}
+  y el \textbf{elemento de \'area} es su norma,
+  \begin{equation}
+    \label{eq:dS_norma}
+    \dd S=\norm{\dd\vb{S}}
+      =\norm{\pdv{}{\xii}\vb{M}\wedge\pdv{}{\et}\vb{M}}
+       \abs{\dd\xii\dd\et} .
+  \end{equation}
+\end{definicion}
+
+\subsection{Ejemplo: el elipsoide de revoluci\'on}
+\label{subsec:elipsoide}
+
+Sea $\vb{M}:\R^2\rightarrow\R^3$ con
+\begin{equation}
+  \label{eq:elipsoide_param}
+  \vb{M}(\theta,\vph)=
+  \begin{pmatrix}
+    a\sin\theta\cos\vph\\
+    a\sin\theta\sin\vph\\
+    b\cos\theta
+  \end{pmatrix}.
+\end{equation}
+Entonces
+\begin{equation}
+  \label{eq:dS_elipsoide}
+  \small
+  \begin{aligned}
+    \dd\vb{S}
+      &=\pdv{\vb{M}}{\theta}\wedge\pdv{\vb{M}}{\vph}
+        \dd\theta\dd\vph\\
+      &=
+      \begin{pmatrix}
+        a\cos\theta\cos\vph\\
+        a\cos\theta\sin\vph\\
+        -b\sin\theta
+      \end{pmatrix}
+      \wedge
+      \begin{pmatrix}
+        -a\sin\theta\sin\vph\\
+        a\sin\theta\cos\vph\\
+        0
+      \end{pmatrix}
+      \dd\theta\dd\vph\\
+      &=
+      \begin{pmatrix}
+        ab\sin^2\theta\cos\vph\\
+        ab\sin^2\theta\sin\vph\\
+        a^2\sin\theta\cos\theta
+      \end{pmatrix}
+      \dd\theta\dd\vph\\
+      &=a\sin\theta
+      \begin{pmatrix}
+        b\sin\theta\cos\vph\\
+        b\sin\theta\sin\vph\\
+        a\cos\theta
+      \end{pmatrix}
+      \dd\theta\dd\vph .
+  \end{aligned}
+\end{equation}
+
+En particular, si $b=a$ recuperamos la esfera:
+\begin{equation}
+  \label{eq:dS_esfera}
+  \dd\vb{S}=\vh{r}\,a^2\sin\theta\dd\theta\dd\vph,
+  \qquad
+  \vh{r}=
+  \begin{pmatrix}
+    \sin\theta\cos\vph\\
+    \sin\theta\sin\vph\\
+    \cos\theta
+  \end{pmatrix}.
+\end{equation}
+
+\subsubsection{Integraci\'on del vector de \'area}
+\label{subsubsec:integral_dS}
+
+Integrando \eqref{eq:dS_elipsoide} sobre toda la superficie, las integrales en
+$\vph$ de $\cos\vph$ y $\sin\vph$ se anulan y queda
+\begin{equation}
+  \label{eq:integral_dS}
+  \begin{aligned}
+    \iint\dd\vb{S}
+      &=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}
+        \begin{pmatrix}
+          b\sin\theta\cos\vph\\
+          b\sin\theta\sin\vph\\
+          a\cos\theta
+        \end{pmatrix}
+        a\sin\theta\dd\theta\dd\vph\\
+      &=2\pi a^2\vh{z}\int_{0}^{\pi}\sin\theta\cos\theta\dd\theta
+       =\vb{0},
+  \end{aligned}
+\end{equation}
+como debe ser para toda superficie cerrada.
+
+\subsubsection{Integral de \'area}
+\label{subsubsec:integral_area}
+
+\begin{equation}
+  \label{eq:area_elipsoide}
+  \begin{aligned}
+    A&=\iint\norm{\dd\vb{S}}=\iint\dd S\\
+     &=\int_{0}^{2\pi}\!\!\int_{0}^{\pi}
+       a\sqrt{b^2\sin^2\theta+a^2\cos^2\theta}\,
+       \sin\theta\dd\theta\dd\vph\\
+     &=2\pi a\int_{0}^{\pi}
+       \sqrt{b^2+(a^2-b^2)\cos^2\theta}\,\sin\theta\dd\theta .
+  \end{aligned}
+\end{equation}
+En particular, si $a=b$,
+\begin{equation}
+  \label{eq:area_esfera}
+  A=2\pi a^2\int_{0}^{\pi}\sin\theta\dd\theta=4\pi a^2,
+\end{equation}
+el \'area de la esfera.
+
+\subsection{Diferencial de volumen}
+\label{subsec:diferencial_volumen}
+
+Supongamos ahora un mapeo $\vb{M}:\R^3\rightarrow\R^3$ con par\'ametros
+$u,v,w$. Los vectores tangentes a las curvas coordenadas son
+\begin{equation}
+  \label{eq:tangentes_volumen}
+  \vb{M}_u=\pdv{}{u}\vb{M},
+  \qquad
+  \vb{M}_v=\pdv{}{v}\vb{M},
+  \qquad
+  \vb{M}_w=\pdv{}{w}\vb{M} .
+\end{equation}
+Como el volumen de la caja que generan tres vectores es
+$(\vb{a}\wedge\vb{b})\cdot\vb{c}$, el elemento de volumen es
+\begin{equation}
+  \label{eq:dV}
+  \dd V=\qty{\vb{M}_u\wedge\vb{M}_v}\cdot\vb{M}_w
+    \dd u\dd v\dd w .
+\end{equation}
+
+\begin{ejemplo}[Volumen del elipsoide]
+  \label{ej:volumen_elipsoide}
+  Tomemos el mapeo de la caja al elipsoide
+  $\vb{M}=\vb{M}(\xii,\theta,\vph)$ con
+  \begin{equation}
+    \label{eq:mapeo_elipsoide}
+    \vb{M}=
+    \begin{pmatrix}
+      a\xii\sin\theta\cos\vph\\
+      b\xii\sin\theta\sin\vph\\
+      c\xii\cos\theta
+    \end{pmatrix},
+    \qquad a<b<c .
+  \end{equation}
+  Un c\'alculo directo del triple producto da
+  \begin{equation}
+    \label{eq:dV_elipsoide}
+    \dd V=\qty{\pdv{\vb{M}}{\xii}\wedge\pdv{\vb{M}}{\theta}}
+      \cdot\pdv{\vb{M}}{\vph}\dd\xii\dd\theta\dd\vph
+      =abc\,\xii^2\sin\theta\dd\xii\dd\theta\dd\vph ,
+  \end{equation}
+  de modo que
+  \begin{equation}
+    \label{eq:volumen_elipsoide}
+    \begin{aligned}
+      \mathrm{Vol}&=abc\int_{0}^{2\pi}\!\!\int_{0}^{\pi}\!\!\int_{0}^{1}
+        \xii^2\sin\theta\dd\xii\dd\theta\dd\vph\\
+        &=abc\,(2\pi)(2)\qty{\tfrac{1}{3}}=\frac{4\pi}{3}abc .
+    \end{aligned}
+  \end{equation}
+  Si $a=b=c$ se recupera $\mathrm{Vol}=\tfrac{4}{3}\pi a^3$.
+\end{ejemplo}
+
+\begin{observacion}[Sistema positivo]
+  Al construir $\dd\vb{S}$ o $\dd V$ hay que \emph{preservar el orden de las
+  variables}: el signo del producto cu\~na y del triple producto depende de
+  \'el, y con ello la orientaci\'on de la normal o el signo del volumen.
+\end{observacion}

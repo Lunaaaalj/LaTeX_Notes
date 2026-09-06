@@ -1,0 +1,149 @@
+\section{Series de Fourier}
+\label{sec:fourier}
+
+Supongamos que $f$ es continua por pedazos en $x\in[a,b]$ y suave, es decir,
+que $\dv{}{x}f(x)$ es continua por pedazos en $(a,b)$, y pidamos adem\'as que
+existan $\eval{\dv{}{x}f(x)}_{a^{+}}$ y $\eval{\dv{}{x}f(x)}_{b^{-}}$. De ese
+universo de funciones nos interesan las peri\'odicas de periodo $2\pi$.
+
+Si $f$ admite una expansi\'on en alguna base $\set{g_k}$ como en
+\eqref{eq:expansion_general}, $f(x)=\sum_k C_kg_k(x)$, la elecci\'on
+\begin{equation}
+  \label{eq:base_fourier}
+  g_k(x)=\qty{e^{ix}}^{k}=e^{ikx}
+\end{equation}
+produce la \textbf{serie de Fourier}
+\begin{equation}
+  \label{eq:serie_fourier}
+  f(x)=\sum_{k=-\infty}^{\infty}C_ke^{ikx} .
+\end{equation}
+
+\begin{teorema}[Convergencia]
+  \label{teo:convergencia_fourier}
+  Si $f$ es peri\'odica de periodo $2\pi$, continua y suave por pedazos,
+  entonces su serie de Fourier converge absoluta y uniformemente a $f$.
+\end{teorema}
+
+\subsection{Par\'entesis: producto interno de funciones}
+\label{subsec:producto_interno_funciones}
+
+Para vectores, el producto interno es
+$\braket{\vb{u}}{\vb{v}}=\vb{u}^\dg\vb{v}$. Para funciones se define de
+manera an\'aloga sustituyendo la suma sobre componentes por una integral,
+\begin{equation}
+  \label{eq:pi_funciones}
+  \braket{g}{f}=\frac{1}{N}\int_{a}^{b}g^{*}(x)f(x)\dd x,
+\end{equation}
+donde $N$ es una constante de normalizaci\'on. Apliqu\'emoslo a la base
+\eqref{eq:base_fourier}:
+\begin{equation}
+  \label{eq:pi_exponenciales}
+  \braket{e^{ik'x}}{e^{ikx}}
+    =\frac{1}{N}\int_{-\pi}^{\pi}e^{-ik'x}e^{ikx}\dd x .
+\end{equation}
+La integral se calcula directamente,
+\begin{equation}
+  \label{eq:integral_ortogonalidad}
+  \int_{-\pi}^{\pi}e^{i(k-k')x}\dd x=
+  \begin{cases}
+    2\pi, & k=k',\\
+    0, & k\neq k',
+  \end{cases}
+  =2\pi\de_{kk'},
+\end{equation}
+de modo que la normalizaci\'on adecuada es $N=2\pi$ y
+\begin{equation}
+  \label{eq:ortonormalidad_fourier}
+  \braket{e^{ik'x}}{e^{ikx}}
+    =\frac{1}{2\pi}\int_{-\pi}^{\pi}e^{-ik'x}e^{ikx}\dd x=\de_{kk'} .
+\end{equation}
+Es decir, respecto del producto interno
+\begin{equation}
+  \label{eq:pi_fourier}
+  \braket{f}{g}=\frac{1}{2\pi}\int_{-\pi}^{\pi}f^{*}(x)g(x)\dd x,
+\end{equation}
+la familia $\set{e^{ikx}}_{k=-\infty}^{\infty}$ es una \textbf{base
+ortonormal}.
+
+\subsection{Los coeficientes}
+\label{subsec:coeficientes_fourier}
+
+La ortonormalidad permite extraer los coeficientes proyectando, exactamente
+como en \eqref{eq:contraccion_kronecker}:
+\begin{equation}
+  \label{eq:extraccion_coeficientes}
+  \begin{aligned}
+    \braket{e^{ik'x}}{f(x)}
+      &=\frac{1}{2\pi}\int_{-\pi}^{\pi}e^{-ik'x}
+        \sum_{k=-\infty}^{\infty}C_ke^{ikx}\dd x\\
+      &=\sum_{k=-\infty}^{\infty}C_k\,
+        \frac{1}{2\pi}\int_{-\pi}^{\pi}e^{-ik'x}e^{ikx}\dd x\\
+      &=\sum_{k=-\infty}^{\infty}C_k\de_{kk'}=C_{k'} ,
+  \end{aligned}
+\end{equation}
+es decir
+\begin{equation}
+  \label{eq:coeficientes_fourier}
+  C_k=\braket{e^{ikx}}{f(x)}
+    =\frac{1}{2\pi}\int_{-\pi}^{\pi}e^{-ikx}f(x)\dd x .
+\end{equation}
+
+\subsection{Forma real}
+\label{subsec:fourier_real}
+
+Agrupando en \eqref{eq:serie_fourier} los t\'erminos $\pm k$ y usando la
+f\'ormula de Euler \eqref{eq:euler},
+\begin{equation}
+  \label{eq:fourier_real_desarrollo}
+  \small
+  \begin{aligned}
+    f(x)&=\dots+C_{-1}e^{-ix}+C_0+C_1e^{ix}+\dots\\
+        &=C_0+\dots+C_{-1}\qty{\cos x-i\sin x}\\
+        &\qquad\quad+C_{1}\qty{\cos x+i\sin x}+\dots\\
+        &=C_0+\dots+(C_{1}+C_{-1})\cos x\\
+        &\qquad\quad+i(C_{1}-C_{-1})\sin x+\dots
+  \end{aligned}
+\end{equation}
+Definiendo $a_k=C_k+C_{-k}$ y $b_k=i(C_k-C_{-k})$ se obtiene la
+\textbf{forma real} de la serie,
+\begin{equation}
+  \label{eq:fourier_real}
+  f(x)=\frac{a_0}{2}+\sum_{k=1}^{\infty}a_k\cos(kx)
+    +\sum_{k=1}^{\infty}b_k\sin(kx).
+\end{equation}
+
+Las familias $\set{\cos(kx)}_{k=0}^{\infty}$ y
+$\set{\sin(kx)}_{k=1}^{\infty}$ son tambi\'en ortonormales, ahora respecto de
+la normalizaci\'on $N=\pi$. En efecto, usando la identidad producto-suma,
+\begin{equation}
+  \label{eq:ortonormalidad_senos}
+  \small
+  \begin{aligned}
+    \braket{\sin(k'x)}{\sin(kx)}
+      &=\frac{1}{\pi}\int_{-\pi}^{\pi}\sin(k'x)\sin(kx)\dd x\\
+      &=\frac{1}{2\pi}\int_{-\pi}^{\pi}
+        \big(\cos((k-k')x)-\cos((k+k')x)\big)\dd x\\
+      &=\de_{kk'},
+  \end{aligned}
+\end{equation}
+y an\'alogamente
+\begin{equation}
+  \label{eq:ortonormalidad_cosenos}
+  \braket{\cos(k'x)}{\cos(kx)}=\de_{kk'},
+  \qquad
+  \braket{\cos(k'x)}{\sin(kx)}=0
+\end{equation}
+para todos $k,k'\ge 1$. Por lo tanto, proyectando igual que en
+\eqref{eq:extraccion_coeficientes},
+\begin{equation}
+  \label{eq:coeficientes_reales}
+  \begin{aligned}
+    a_k&=\braket{\cos(kx)}{f(x)}
+        =\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\cos(kx)\dd x,\\
+    b_k&=\braket{\sin(kx)}{f(x)}
+        =\frac{1}{\pi}\int_{-\pi}^{\pi}f(x)\sin(kx)\dd x,\\
+    \frac{a_0}{2}&=\frac{1}{2\pi}\int_{-\pi}^{\pi}f(x)\dd x ,
+  \end{aligned}
+\end{equation}
+donde el \'ultimo t\'ermino es simplemente el valor medio de $f$ sobre el
+periodo.

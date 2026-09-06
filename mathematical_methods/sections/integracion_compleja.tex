@@ -1,0 +1,515 @@
+\section{Integraci\'on compleja}
+\label{sec:integracion_compleja}
+
+La integral \eqref{eq:integral_ortogonalidad} se separa en parte real e
+imaginaria,
+\begin{equation}
+  \label{eq:separacion_integral}
+  \small
+  \int_{-\pi}^{\pi}e^{i(k-k')x}\dd x
+    =\int_{-\pi}^{\pi}\cos((k-k')x)\dd x
+    +i\int_{-\pi}^{\pi}\sin((k-k')x)\dd x,
+\end{equation}
+lo que da la pauta para definir la integral en el plano complejo.
+
+\begin{definicion}[Integral compleja]
+  \label{def:integral_compleja}
+  Sea $f(z)$ bien definida en $D\subset\C$ y $\ga:\R\rightarrow\C$ una curva
+  parametrizada contenida en $D$. Definimos
+  \begin{equation}
+    \label{eq:integral_compleja}
+    \int_{\ga}f(z)\dd z=\int_{a}^{b}f(z(t))\dv{z}{t}\dd t .
+  \end{equation}
+\end{definicion}
+
+La integral compleja es entonces una integral de l\'inea en el plano. Si
+$z=x+iy$,
+\begin{equation}
+  \label{eq:dz}
+  \dd z=\dv{z}{t}\dd t=\dv{}{t}(x+iy)\dd t
+    =(\dot{x}+i\dot{y})\dd t=\dd x+i\dd y,
+\end{equation}
+de modo que la forma m\'as general posible es
+\begin{equation}
+  \label{eq:forma_general_integral}
+  \int_{\ga}\qty{p\dd x+q\dd y},
+  \qquad p,q\in\C .
+\end{equation}
+
+\subsection{Acotamiento}
+\label{subsec:acotamiento_integral}
+
+Se cumple
+\begin{equation}
+  \label{eq:cota_integral}
+  \abs{\int_{\ga}f(z)\dd z}
+    \le\int_{\ga}\abs{f(z)}\abs{\dv{z}{t}}\abs{\dd t} .
+\end{equation}
+Notando que si $z(t)=x(t)+iy(t)$,
+\begin{equation}
+  \label{eq:diferencial_arco_complejo}
+  \abs{\dv{z}{t}}
+    =\qty{\qty{\dv{x}{t}}^2+\qty{\dv{y}{t}}^2}^{1/2},
+\end{equation}
+que es el diferencial de longitud de arco, resulta en particular
+\begin{equation}
+  \label{eq:cota_longitud}
+  \abs{\int_{\ga}\dd z}\le\int_{\ga}\abs{\dd z}
+    =\text{longitud de arco de }\ga .
+\end{equation}
+Si $\ga$ es una circunferencia de radio $\rho$, entonces
+\begin{equation}
+  \label{eq:cota_circulo}
+  \abs{\int_{\ga}\dd z}\le 2\pi\rho .
+\end{equation}
+
+\subsection{Independencia de la trayectoria}
+\label{subsec:independencia_trayectoria}
+
+Retomando \eqref{eq:forma_general_integral} con $p(z)$ y $q(z)$ complejas,
+supongamos que existe $U(z)$ tal que
+\begin{equation}
+  \label{eq:potencial_U}
+  \pdv{U}{x}=p,
+  \qquad
+  \pdv{U}{y}=q .
+\end{equation}
+Entonces, por la regla de la cadena,
+\begin{equation}
+  \label{eq:integral_exacta}
+  \begin{aligned}
+    \int_{\ga}\qty{p\dd x+q\dd y}
+      &=\int_{a}^{b}\qty{\pdv{U}{x}\dv{x}{t}
+        +\pdv{U}{y}\dv{y}{t}}\dd t\\
+      &=\int_{a}^{b}\dv{}{t}U\dd t=U(b)-U(a).
+  \end{aligned}
+\end{equation}
+
+\begin{teorema}
+  \label{teo:independencia}
+  La integral de l\'inea $\int_{\ga}\qty{p\dd x+q\dd y}$ definida sobre un
+  dominio $D$ depende s\'olo de los puntos extremos de $\ga$ si y s\'olo si
+  existe una funci\'on $U(z)=U(x,y)$ en $D$ con derivadas parciales
+  \eqref{eq:potencial_U}.
+\end{teorema}
+
+\subsubsection{Consecuencias}
+\label{subsubsec:consecuencias_independencia}
+
+Tenemos una diferencial exacta si
+\begin{equation}
+  \label{eq:diferencial_exacta}
+  f(z)\dd z=f(z)\dd x+if(z)\dd y
+\end{equation}
+proviene de una $F(z)$ en $D$ con
+\begin{equation}
+  \label{eq:F_parciales}
+  \pdv{F}{x}=f(z),
+  \qquad
+  -i\pdv{F}{y}=f(z),
+\end{equation}
+es decir, con $\pdv{F}{x}=-i\pdv{F}{y}$, que por
+\eqref{eq:condicion_derivada} es justamente la condici\'on de
+Cauchy--Riemann. En otras palabras, $F(z)$ debe ser anal\'itica en $D$.
+
+\begin{observacion}[Consecuencia fuerte]
+  La integral de una funci\'on continua depende \'unicamente de los extremos
+  de $\ga$ si y s\'olo si $f$ es la derivada de una funci\'on anal\'itica en
+  $D$. En particular, si $\ga$ es cerrada,
+  \begin{equation}
+    \label{eq:integral_cerrada_nula}
+    \oint_{\ga}f(z)\dd z=0
+  \end{equation}
+  siempre que $f(z)$ sea anal\'itica en el dominio encerrado por $\ga$. \'Este
+  es el \textbf{teorema de Cauchy}.
+\end{observacion}
+
+\begin{ejemplo}
+  \label{ej:potencias_cerrada}
+  \begin{equation}
+    \label{eq:potencias_cerrada}
+    \oint_{\ga}(z-a)^n\dd z=0
+    \qquad\forall n\ge 0,
+  \end{equation}
+  ya que la primitiva $F(z)=\dfrac{(z-a)^{n+1}}{n+1}$ es anal\'itica.
+\end{ejemplo}
+
+\begin{ejemplo}[El caso $n=-1$]
+  \label{ej:integral_fundamental}
+  Sea $\ga$ la circunferencia de radio $\rho$ centrada en $a$, parametrizada
+  por
+  \begin{equation}
+    \label{eq:parametrizacion_circulo}
+    z(\vph)=a+\rho e^{i\vph}
+      =a+\rho\qty{\cos\vph+i\sin\vph},
+    \quad\vph\in[0,2\pi],
+  \end{equation}
+  de modo que $\dd z=i\rho e^{i\vph}\dd\vph$. Entonces
+  \begin{equation}
+    \label{eq:integral_fundamental}
+    \oint_{\abs{z-a}=\rho}\frac{\dd z}{z-a}
+      =\int_{0}^{2\pi}\frac{i\rho e^{i\vph}}{\rho e^{i\vph}}\dd\vph
+      =2\pi i ,
+  \end{equation}
+  resultado independiente de $\rho$ y central en todo lo que sigue.
+\end{ejemplo}
+
+\begin{ejemplo}
+  \label{ej:integral_recta}
+  Sea $\ga(t)=(1+i)t$ con $t\in[0,1]$, de modo que sobre $\ga$ se tiene
+  $x=\Real\set{z}=t$ y $\dd z=(1+i)\dd t$. Entonces
+  \begin{equation}
+    \label{eq:integral_recta}
+    \int_{\ga}x\dd z=\int_{0}^{1}t\,(1+i)\dd t
+      =\eval{\frac{1}{2}(1+i)t^2}_{0}^{1}=\frac{1}{2}(1+i).
+  \end{equation}
+  N\'otese que el integrando $x$ no es anal\'itico, de modo que aqu\'i no
+  aplica \eqref{eq:integral_cerrada_nula}.
+\end{ejemplo}
+
+\subsection{Deformaci\'on de contornos}
+\label{subsec:deformacion_contornos}
+
+Supongamos que $f(z)$ es anal\'itica en $D$ excepto en un punto $z=a$.
+Consideremos dos curvas: $C_1$, deformable hasta $\ga$, y $C_2$, contenida en
+el interior de $\ga$ y que encierra a $z=a$. Unimos ambas por un corte de
+anchura $\ep$ para formar un contorno $C_3(\ep)$ que \emph{no} encierra a
+$z=a$; entonces $f$ es anal\'itica sobre y dentro de $C_3$ y
+\begin{equation}
+  \label{eq:contorno_C3}
+  \oint_{C_3}f(z)\dd z=0 .
+\end{equation}
+Al hacer $\ep\rightarrow 0$ las contribuciones del corte se cancelan y queda
+\begin{equation}
+  \label{eq:deformacion}
+  \oint_{C_1}f(z)\dd z+\oint_{-C_2}f(z)\dd z=0
+  \imp
+  \oint_{\ga}f(z)\dd z=\oint_{C_2}f(z)\dd z .
+\end{equation}
+En particular podemos pedir que $C_2$ sea una circunferencia de radio $\rho$
+centrada en la singularidad.
+
+\begin{ejemplo}
+  \label{ej:fracciones_parciales}
+  \begin{equation}
+    \label{eq:fracciones_parciales}
+    \small
+    \begin{aligned}
+      \oint_{\abs{z}=2}\frac{\dd z}{z^2-1}
+        &=\frac{1}{2}\oint_{\abs{z}=2}\frac{\dd z}{z-1}
+         -\frac{1}{2}\oint_{\abs{z}=2}\frac{\dd z}{z+1}\\
+        &=\frac{1}{2}\oint_{\abs{z-1}=\rho}\frac{\dd z}{z-1}
+         -\frac{1}{2}\oint_{\abs{z+1}=\rho}\frac{\dd z}{z+1}\\
+        &=\frac{1}{2}(2\pi i)-\frac{1}{2}(2\pi i)=0 ,
+    \end{aligned}
+  \end{equation}
+  donde en el segundo paso se deform\'o cada contorno a un c\'irculo peque\~no
+  alrededor de su polo y en el tercero se us\'o
+  \eqref{eq:integral_fundamental}.
+\end{ejemplo}
+
+Generalizando: si $f(z)$ es anal\'itica en $D$ salvo en un conjunto finito de
+puntos aislados $\set{z_j}_{j=1}^{n}$, entonces
+\begin{equation}
+  \label{eq:deformacion_general}
+  \oint_{\ga}f(z)\dd z
+    =\sum_{j=1}^{n}\oint_{B_\rho(z_j)}f(z)\dd z .
+\end{equation}
+
+\subsection{F\'ormula integral de Cauchy}
+\label{subsec:formula_cauchy}
+
+Sea $f(z)$ anal\'itica en $D$ y construyamos
+\begin{equation}
+  \label{eq:F_cociente}
+  F(z)=\frac{f(z)-f(a)}{z-a} .
+\end{equation}
+Al ser $f$ anal\'itica, su desarrollo de Taylor alrededor de $z=a$ es
+\begin{equation}
+  \label{eq:taylor_en_a}
+  f(z)=f(a)+\eval{\dv{}{z}f(z)}_{z=a}(z-a)+\dots,
+\end{equation}
+de modo que en \eqref{eq:F_cociente} el factor $(z-a)$ se cancela y
+\begin{equation}
+  \label{eq:F_analitica}
+  F(z)=a_1+a_2(z-a)+\dots
+\end{equation}
+es anal\'itica en todo $D$, incluido $z=a$. Por el teorema de Cauchy
+\eqref{eq:integral_cerrada_nula} su integral sobre un contorno cerrado se
+anula:
+\begin{equation}
+  \label{eq:derivacion_fic}
+  \begin{aligned}
+    0&=\oint_{\ga}\frac{f(z)-f(a)}{z-a}\dd z\\
+     &=\oint_{\ga}\frac{f(z)}{z-a}\dd z
+       -f(a)\oint_{\ga}\frac{\dd z}{z-a}\\
+     &=\oint_{\ga}\frac{f(z)}{z-a}\dd z-2\pi i f(a),
+  \end{aligned}
+\end{equation}
+usando \eqref{eq:integral_fundamental} en el \'ultimo paso.
+
+\begin{teorema}[F\'ormula integral de Cauchy]
+  \label{teo:fic}
+  \begin{equation}
+    \label{eq:fic}
+    f(a)=\frac{1}{2\pi i}\oint_{\ga}\frac{f(z)}{z-a}\dd z,
+  \end{equation}
+  o, escribiendo la variable de integraci\'on como $\xii$,
+  \begin{equation}
+    \label{eq:fic_xi}
+    f(z)=\frac{1}{2\pi i}\oint_{\ga}\frac{f(\xii)}{\xii-z}\dd\xii .
+  \end{equation}
+\end{teorema}
+
+Es decir, los valores de una funci\'on anal\'itica en el interior de $\ga$
+quedan determinados por sus valores sobre $\ga$.
+
+\begin{ejemplo}
+  \label{ej:fic_aplicada}
+  Si $g(z)=e^{2z^2}-\cos^3\qty{z^{1/2}+3z^{1/3}}$ es anal\'itica dentro de
+  $\ga$ y $z=2$ est\'a en el interior, entonces
+  \begin{equation}
+    \label{eq:fic_aplicada}
+    \oint_{\ga}\frac{g(z)}{z-2}\dd z=2\pi i\,g(2),
+  \end{equation}
+  sin necesidad de evaluar ninguna integral.
+\end{ejemplo}
+
+\begin{definicion}[\'Indice]
+  \label{def:indice}
+  \begin{equation}
+    \label{eq:indice}
+    I=\frac{1}{2\pi i}\oint_{\ga}\frac{\dd z}{z-a}\in\Z,
+  \end{equation}
+  el n\'umero de vueltas que $\ga$ da alrededor de $a$.
+\end{definicion}
+
+\subsection{F\'ormula de Cauchy generalizada}
+\label{subsec:cauchy_generalizada}
+
+Derivando \eqref{eq:fic_xi} bajo el signo integral,
+\begin{equation}
+  \label{eq:fic_derivada}
+  \dv{}{z}f(z)=\dv{}{z}\set{\frac{1}{2\pi i}
+    \oint_{\ga}\frac{f(\xii)}{\xii-z}\dd\xii}
+    =\frac{1}{2\pi i}\oint_{\ga}\frac{f(\xii)}{(\xii-z)^2}\dd\xii,
+\end{equation}
+y en general
+\begin{equation}
+  \label{eq:fic_general}
+  \dnv{}{z}{n}f(z)
+    =\frac{n!}{2\pi i}\oint_{\ga}
+      \frac{f(\xii)}{(\xii-z)^{n+1}}\dd\xii .
+\end{equation}
+
+\subsection{Desigualdad de Cauchy y teorema de Liouville}
+\label{subsec:liouville}
+
+Combinando Taylor \eqref{eq:taylor_complejo} con \eqref{eq:fic_general}, los
+coeficientes del desarrollo $f(z)=\sum_n C_n(z-a)^n$ son
+\begin{equation}
+  \label{eq:coeficientes_fic}
+  C_n=\frac{1}{2\pi i}\oint_{\ga}
+    \frac{f(\xii)}{(\xii-a)^{n+1}}\dd\xii .
+\end{equation}
+Acotando con \eqref{eq:cota_integral} y deformando $\ga$ a la circunferencia
+$\xii=a+\rho e^{i\vph}$, para la cual $\abs{\dd\xii}=\rho\dd\vph$,
+\begin{equation}
+  \label{eq:cota_coeficientes}
+  \begin{aligned}
+    \abs{C_n}
+      &\le\frac{1}{2\pi}\oint_{\ga}
+        \frac{\abs{f(\xii)}\abs{\dd\xii}}{\abs{\xii-a}^{n+1}}
+       =\frac{1}{2\pi}\int_{0}^{2\pi}
+        \frac{\abs{f(\vph)}\rho\dd\vph}{\rho^{n+1}}\\
+      &=\frac{1}{2\pi}\int_{0}^{2\pi}
+        \frac{\abs{f(\vph)}}{\rho^{n}}\dd\vph .
+  \end{aligned}
+\end{equation}
+Si $f$ est\'a acotada, $\abs{f}\le M$, se obtiene la
+\textbf{desigualdad de Cauchy}
+\begin{equation}
+  \label{eq:desigualdad_cauchy}
+  \abs{C_n}\le\frac{M}{\rho^{n}} .
+\end{equation}
+Como $0\le\rho<R$ con $R$ el radio de convergencia, $1/R\le 1/\rho$ y el
+supremo se alcanza en
+\begin{equation}
+  \label{eq:supremo_coeficientes}
+  \abs{C_n}\le\frac{M}{R^{n}} .
+\end{equation}
+
+\begin{teorema}[Liouville]
+  \label{teo:liouville}
+  Toda funci\'on anal\'itica y acotada en todo el plano debe ser constante.
+\end{teorema}
+
+\begin{demostracion}
+  Si $f$ es entera y acotada, $R$ puede tomarse arbitrariamente grande en
+  \eqref{eq:supremo_coeficientes}, de modo que $C_n=0$ para todo $n\ge 1$ y
+  s\'olo sobrevive $C_0$.
+\end{demostracion}
+
+\subsection{Singularidades removibles}
+\label{subsec:singularidades_removibles}
+
+\begin{teorema}
+  \label{teo:singularidad_removible}
+  Supongamos $f(z)$ anal\'itica en $D$ excepto en un punto aislado $z=a$. Una
+  condici\'on necesaria y suficiente para que exista una extensi\'on
+  anal\'itica de $f$ a todo $D$, incluido $z=a$, es
+  \begin{equation}
+    \label{eq:singularidad_removible}
+    \lim_{z\rightarrow a}(z-a)f(z)=0 .
+  \end{equation}
+  Adem\'as, la funci\'on extendida es \'unica.
+\end{teorema}
+
+\begin{ejemplo}
+  \label{ej:sinc}
+  Sea $f(z)=\dfrac{\sin z}{z}$. Como
+  $\lim_{z\rightarrow 0}\dfrac{\sin z}{z}=1$, se tiene
+  \begin{equation}
+    \label{eq:sinc}
+    \lim_{z\rightarrow 0}zf(z)
+      =\lim_{z\rightarrow 0}\sin z=0,
+  \end{equation}
+  y la singularidad en $z=0$ es removible.
+\end{ejemplo}
+
+\subsubsection{Construcci\'on iterativa de Taylor}
+\label{subsubsec:construccion_taylor}
+
+La idea anterior se puede iterar. Partiendo de
+\begin{equation}
+  \label{eq:F0}
+  F_0(z)=F(z)=\frac{f(z)-f(a)}{z-a},
+\end{equation}
+que cumple $\lim_{z\rightarrow a}F(z)=\eval{\dv{}{z}f(z)}_{z=a}$ y por lo
+tanto $\lim_{z\rightarrow a}(z-a)F(z)=0$, definimos recursivamente
+\begin{equation}
+  \label{eq:Fn_recursion}
+  F_n(z)=\frac{F_{n-1}(z)-F_{n-1}(a)}{z-a},
+\end{equation}
+de modo que
+\begin{equation}
+  \label{eq:limite_Fn}
+  \lim_{z\rightarrow a}F_1(z)
+    =\eval{\dv{}{z}F(z)}_{z=a}
+    =\frac{1}{2}\eval{\ddv{}{z}f(z)}_{z=a},
+\end{equation}
+y en general
+\begin{equation}
+  \label{eq:Fn_derivada}
+  F_n(a)=\frac{1}{n!}\eval{\dnv{}{z}{n}f(z)}_{z=a} .
+\end{equation}
+Despejando hacia atr\'as la recursi\'on \eqref{eq:Fn_recursion} se reconstruye
+el desarrollo de Taylor con residuo.
+
+\begin{teorema}
+  \label{teo:taylor_residuo}
+  Si $f(z)$ es anal\'itica en una regi\'on $D$ que contiene a $z=a$, entonces
+  \begin{equation}
+    \label{eq:taylor_residuo}
+    \small
+    \begin{aligned}
+      f(z)&=f(a)+\frac{1}{1!}f'(a)(z-a)
+        +\frac{1}{2!}f''(a)(z-a)^2+\dots\\
+        &\quad+\frac{f^{(n)}(a)}{n!}(z-a)^n
+        +F_{n+1}(z)(z-a)^{n+1},
+    \end{aligned}
+  \end{equation}
+  con $F_{n+1}(z)$ anal\'itica en $D$.
+\end{teorema}
+
+\subsection{Ceros}
+\label{subsec:ceros}
+
+Supongamos que $f(z)$ es anal\'itica en $D$ y que $f(a)=0$. Si adem\'as
+\begin{equation}
+  \label{eq:cero_orden_n}
+  \eval{\dnv{}{z}{\ka}f(z)}_{z=a}=0
+  \quad\forall\,0\le\ka\le n-1,
+  \qquad
+  \eval{\dnv{}{z}{n}f(z)}_{z=a}\neq 0,
+\end{equation}
+decimos que $z=a$ es un \textbf{cero de orden $n$}. En tal caso el desarrollo
+de Taylor empieza en la potencia $n$ y podemos factorizar
+\begin{equation}
+  \label{eq:factorizacion_cero}
+  f(z)=(z-a)^n\tilde{f}(z),
+  \qquad \tilde{f}(a)\neq 0,
+\end{equation}
+con $\tilde{f}$ anal\'itica. Si hay varios ceros $\set{z_j}$ en $D$,
+\begin{equation}
+  \label{eq:factorizacion_multiple}
+  f(z)=(z-z_1)^{m_1}(z-z_2)^{m_2}\dots(z-z_r)^{m_r}\tilde{f}(z),
+\end{equation}
+donde $m_k$ es la \textbf{multiplicidad} de cada cero y
+$\sum_{k=1}^{r}m_k=m$ es el orden total.
+
+\subsection{Polos y series de Laurent}
+\label{subsec:polos_laurent}
+
+Sea $f(z)$ anal\'itica en $D$ excepto en un conjunto de puntos aislados. En
+cada uno de ellos se distinguen dos casos:
+\begin{itemize}
+  \item si $\lim_{z\rightarrow a}(z-a)f(z)=0$, la singularidad es
+        \textbf{removible};
+  \item si $\lim_{z\rightarrow a}f(z)=\infty$, tenemos un \textbf{polo}.
+\end{itemize}
+
+Supongamos que $a$ es un polo y tomemos un disco de radio $\tilde{R}<R$ donde
+$f(z)\neq 0$ para $0<\abs{z-a}<\tilde{R}$. Definimos
+\begin{equation}
+  \label{eq:g_reciproca}
+  g(z)=\frac{1}{f(z)},
+\end{equation}
+anal\'itica salvo en $z=a$ y con $\lim_{z\rightarrow a}g(z)=0$; por el
+Teorema~\ref{teo:singularidad_removible} se extiende anal\'iticamente al
+disco. Entonces $z=a$ es un cero de orden $n$ de $g$, y por
+\eqref{eq:factorizacion_cero}
+\begin{equation}
+  \label{eq:g_factorizada}
+  g(z)=(z-a)^n\tilde{g}(z),
+  \qquad \tilde{g}(a)\neq 0 .
+\end{equation}
+En consecuencia
+\begin{equation}
+  \label{eq:f_polo}
+  f(z)=\frac{1}{(z-a)^n}\tilde{f}(z),
+  \qquad
+  \tilde{f}(z)=\frac{1}{\tilde{g}(z)} .
+\end{equation}
+Como $\tilde{f}$ es anal\'itica, admite desarrollo de Taylor, y sustituyendo
+\begin{equation}
+  \label{eq:laurent_desarrollo}
+  \begin{aligned}
+    f(z)&=\frac{1}{(z-a)^n}\sum_{k=0}^{\infty}C_k(z-a)^k\\
+        &=\frac{B_n}{(z-a)^n}+\dots+\frac{B_1}{(z-a)}
+          +B_0+B_1'(z-a)+\dots
+  \end{aligned}
+\end{equation}
+
+\begin{definicion}[Serie de Laurent]
+  \label{def:laurent}
+  En general, alrededor de una singularidad de $f(z)$ escribimos
+  \begin{equation}
+    \label{eq:laurent}
+    f(z)=\sum_{k=-\infty}^{\infty}C_k(z-a)^k,
+  \end{equation}
+  que se separa en
+  \begin{equation}
+    \label{eq:laurent_partes}
+    f(z)=\underbrace{\sum_{k=-\infty}^{-1}C_k(z-a)^k}
+           _{\text{parte principal o singular}}
+      +\underbrace{\sum_{k=0}^{\infty}C_k(z-a)^k}
+           _{\text{parte anal\'itica}} .
+  \end{equation}
+\end{definicion}
+
+Seg\'un cu\'antos t\'erminos tenga la parte principal:
+\begin{itemize}
+  \item \textbf{polo de orden $n$} si tiene exactamente $n$ t\'erminos;
+  \item \textbf{singularidad esencial} si tiene infinitos t\'erminos.
+\end{itemize}

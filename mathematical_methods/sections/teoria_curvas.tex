@@ -1,0 +1,350 @@
+\section{Teor\'ia de curvas}
+\label{sec:teoria_curvas}
+
+\begin{definicion}[Curva]
+  \label{def:curva}
+  Una \textbf{curva} en $\R^n$ es una funci\'on
+  $\vb{r}:I\subset\R\rightarrow\R^n$. Si $I=[a,b]$ con $a<b$, entonces
+  $\vb{r}(a)$ y $\vb{r}(b)$ son los extremos de la curva.
+\end{definicion}
+
+\begin{ejemplo}[Recta]
+  \label{ej:recta}
+  \begin{equation}
+    \label{eq:recta}
+    \boldsymbol{\ell}(t)=\vb{r}_0+\vh{u}\,t,
+    \qquad t\in\R .
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[Elipse]
+  \label{ej:elipse}
+  Con $I=[0,2\pi]$,
+  \begin{equation}
+    \label{eq:elipse}
+    \vb{r}(\vph)=
+    \begin{pmatrix}
+      a\cos\vph\\
+      b\sin\vph
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[H\'elice]
+  \label{ej:helice}
+  \begin{equation}
+    \label{eq:helice}
+    \vb{r}(t)=
+    \begin{pmatrix}
+      R\cos(\om t)\\
+      R\sin(\om t)\\
+      a t
+    \end{pmatrix},
+    \qquad t\in\R .
+  \end{equation}
+\end{ejemplo}
+
+\begin{observacion}
+  Una parametrizaci\'on arbitraria no siempre genera una curva
+  \emph{decente}. Cuando la parametrizaci\'on s\'i produce una curva regular
+  hablamos de un \textbf{mapeo}.
+\end{observacion}
+
+\subsection{Vector tangente}
+\label{subsec:vector_tangente}
+
+Definimos el vector tangente a $\vb{r}(t)$ como la velocidad instant\'anea
+\begin{equation}
+  \label{eq:velocidad}
+  \vb{V}=\lim_{\De t\rightarrow 0}
+    \frac{\vb{r}(t+\De t)-\vb{r}(t)}{\De t}=\dv{}{t}\vb{r}(t),
+\end{equation}
+y la rapidez instant\'anea como su norma,
+\begin{equation}
+  \label{eq:rapidez}
+  V(t)=\norm{\vb{V}}=\norm{\dv{}{t}\vb{r}(t)} .
+\end{equation}
+Si $\vb{V}(t)$ es diferenciable, la aceleraci\'on es
+\begin{equation}
+  \label{eq:aceleracion}
+  \vb{a}=\dv{}{t}\vb{V}=\ddv{}{t}\vb{r}(t).
+\end{equation}
+
+\subsection{Longitud de arco}
+\label{subsec:longitud_arco}
+
+Podemos aproximar la longitud de una curva por rectas que unen puntos
+sucesivos. Partiendo $t\in[t_0,t_f]$ en $N$ trozos
+$t_0,t_1,\dots,t_f$ con $\De t_i=t_{i+1}-t_i$,
+\begin{equation}
+  \label{eq:longitud_aproximada}
+  S\approx\sum_{i=1}^{N}\norm{\vb{r}(t_i+\De t_i)-\vb{r}(t_i)} .
+\end{equation}
+Tomando $N\rightarrow\infty$, equivalentemente $\De t_i\rightarrow 0$,
+\begin{equation}
+  \label{eq:longitud_limite}
+  S=\lim_{N\rightarrow\infty}\sum_{i=1}^{N}
+    \norm{\frac{\vb{r}(t_i+\De t_i)-\vb{r}(t_i)}{\De t_i}}\De t_i,
+\end{equation}
+que en el l\'imite es la integral
+\begin{equation}
+  \label{eq:longitud_arco}
+  S(t)=\int_{t_0}^{t}\norm{\dv{}{t'}\vb{r}(t')}\dd t' .
+\end{equation}
+
+Por el teorema fundamental del c\'alculo,
+\begin{equation}
+  \label{eq:derivada_arco}
+  \dv{}{t}S(t)=\norm{\dv{}{t}\vb{r}(t)}>0
+  \qquad\text{para}\quad t>t_0,
+\end{equation}
+de modo que $S$ es mon\'otonamente creciente. Vale entonces el teorema de la
+funci\'on inversa y podemos escribir $t=t(s)$, es decir,
+\textbf{parametrizar por longitud de arco}. Derivando la identidad
+$t(s(t))=t$ por la regla de la cadena,
+\begin{equation}
+  \label{eq:inversa_arco}
+  \dv{}{s}t=\frac{1}{\dv{}{t}s} .
+\end{equation}
+
+\begin{ejemplo}[Circunferencia]
+  \label{ej:arco_circulo}
+  Para $\vb{r}(\vph)=(R\cos\vph,\,R\sin\vph)^\tp$ con
+  $\vph\in[0,\vph_1]$,
+  \begin{equation}
+    \label{eq:arco_circulo}
+    \begin{aligned}
+      S&=\int_{0}^{\vph_1}\norm{\dv{}{\vph}\vb{r}}\dd\vph\\
+       &=\int_{0}^{\vph_1}\sqrt{\qty{\dv{x}{\vph}}^2
+          +\qty{\dv{y}{\vph}}^2}\dd\vph=R\vph_1 .
+    \end{aligned}
+  \end{equation}
+\end{ejemplo}
+
+\begin{ejemplo}[H\'elice]
+  \label{ej:arco_helice}
+  Para \eqref{eq:helice},
+  \begin{equation}
+    \label{eq:arco_helice}
+    \begin{aligned}
+      \dv{}{t}\vb{r}(t)&=
+      \begin{pmatrix}
+        -R\om\sin(\om t)\\
+        R\om\cos(\om t)\\
+        a
+      \end{pmatrix},\\
+      S(t)&=\int_{0}^{t}\sqrt{R^2\om^2+a^2}\dd t'
+           =\sqrt{R^2\om^2+a^2}\;t,
+    \end{aligned}
+  \end{equation}
+  Escribamos $\La=\sqrt{R^2\om^2+a^2}$ para abreviar; entonces
+  \begin{equation}
+    \label{eq:t_de_s_helice}
+    t=\frac{s}{\La},
+  \end{equation}
+  que describe la din\'amica de la curva. Claramente
+  \begin{equation}
+    \label{eq:derivadas_arco_helice}
+    \dv{}{t}s=\La>0
+    \imp
+    \dv{}{s}t=\frac{1}{\La}>0 .
+  \end{equation}
+  Sustituyendo \eqref{eq:t_de_s_helice} en \eqref{eq:helice}, y con
+  $\vph(s)=s\om/\La$, se obtiene la h\'elice parametrizada por longitud de
+  arco,
+  \begin{equation}
+    \label{eq:helice_arco}
+    \vb{r}(s)=
+    \begin{pmatrix}
+      R\cos\vph(s)\\
+      R\sin\vph(s)\\
+      a s/\La
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+\subsection{La triada de Fr\'enet--Serret}
+\label{subsec:frenet_serret}
+
+La parametrizaci\'on por longitud de arco permite construir una teor\'ia
+robusta de curvas. Por la regla de la cadena,
+\begin{equation}
+  \label{eq:tangente_unitario}
+  \dv{}{s}\vb{r}(s)=\dv{}{t}\vb{r}\,\dv{}{s}t
+    =\frac{\vb{V}}{\norm{\vb{V}}}=\vb{T}(s),
+\end{equation}
+el \textbf{vector tangente unitario}, que cumple $\norm{\vb{T}}=1$.
+
+De ah\'i se sigue una consecuencia inmediata: como
+$\vb{T}\cdot\vb{T}=1$ es constante,
+\begin{equation}
+  \label{eq:T_perp_Tprima}
+  \dv{}{s}\qty{\vb{T}\cdot\vb{T}}
+    =\vb{T}'\cdot\vb{T}+\vb{T}\cdot\vb{T}'
+    =2\,\vb{T}'\cdot\vb{T}=0
+  \imp \vb{T}'\perp\vb{T},
+\end{equation}
+donde la prima denota derivada respecto de $s$.
+
+\begin{definicion}[Normal y curvatura]
+  \label{def:normal_curvatura}
+  El \textbf{vector normal} $\vb{N}$ es el unitario perpendicular a $\vb{T}$
+  definido por
+  \begin{equation}
+    \label{eq:normal}
+    \vb{T}'=\ka(s)\vb{N},
+    \qquad
+    \ka(s)=\norm{\vb{T}'},
+  \end{equation}
+  y $\ka(s)$ es la \textbf{curvatura} de la curva.
+\end{definicion}
+
+\begin{definicion}[Binormal]
+  \label{def:binormal}
+  El \textbf{vector binormal} se define como
+  \begin{equation}
+    \label{eq:binormal}
+    \vb{B}=\vb{T}\wedge\vb{N}.
+  \end{equation}
+  La terna $\set{\vb{T},\vb{N},\vb{B}}$ es el \textbf{marco de
+  Fr\'enet--Serret}, local en cada punto de la curva.
+\end{definicion}
+
+Los tres vectores son unitarios,
+$\norm{\vb{T}}=\norm{\vb{N}}=\norm{\vb{B}}=1$, y mutuamente ortogonales.
+
+\subsection{Torsi\'on}
+\label{subsec:torsion}
+
+De $\vb{B}\cdot\vb{B}=1$ se obtiene, igual que en \eqref{eq:T_perp_Tprima},
+\begin{equation}
+  \label{eq:B_perp_Bprima}
+  \dv{}{s}\qty{\vb{B}\cdot\vb{B}}=0
+  \imp \vb{B}'\cdot\vb{B}=0
+  \imp \vb{B}'\perp\vb{B}.
+\end{equation}
+Por otro lado, $\vb{B}\cdot\vb{T}=0$, de modo que
+\begin{equation}
+  \label{eq:B_perp_T}
+  \begin{aligned}
+    \dv{}{s}\qty{\vb{B}\cdot\vb{T}}&=0\\
+    \imp \vb{B}'\cdot\vb{T}+\vb{B}\cdot\vb{T}'&=0 .
+  \end{aligned}
+\end{equation}
+Pero $\vb{T}'=\ka(s)\vb{N}$ y $\vb{N}\perp\vb{B}$, luego el segundo t\'ermino
+se anula y $\vb{B}'\cdot\vb{T}=0$, es decir $\vb{B}'\perp\vb{T}$. Siendo
+$\vb{B}'$ perpendicular tanto a $\vb{B}$ como a $\vb{T}$, debe ser paralelo a
+$\vb{N}$.
+
+\begin{definicion}[Torsi\'on]
+  \label{def:torsion}
+  La \textbf{torsi\'on} $\ta(s)$ se define por
+  \begin{equation}
+    \label{eq:torsion}
+    \vb{B}'=\ta(s)\vb{N},
+    \qquad
+    \abs{\ta(s)}=\norm{\vb{B}'} .
+  \end{equation}
+\end{definicion}
+
+Falta la derivada de $\vb{N}$. Como $\vb{N}'\perp\vb{N}$, vive en el plano
+generado por $\vb{T}$ y $\vb{B}$, es decir
+$\vb{N}'=N_1\vb{T}+N_2\vb{B}$. Los coeficientes se obtienen derivando las
+relaciones de ortogonalidad:
+\begin{equation}
+  \label{eq:coeficientes_Nprima}
+  \begin{aligned}
+    \vb{N}\cdot\vb{T}=0
+      &\imp \vb{N}'\cdot\vb{T}+\vb{N}\cdot\vb{T}'=0\\
+      &\imp \vb{N}'\cdot\vb{T}=-\ka(s),\\
+    \vb{N}\cdot\vb{B}=0
+      &\imp \vb{N}'\cdot\vb{B}+\vb{N}\cdot\vb{B}'=0\\
+      &\imp \vb{N}'\cdot\vb{B}=-\ta(s).
+  \end{aligned}
+\end{equation}
+
+\subsection{Recetario}
+\label{subsec:recetario_frenet}
+
+Reuniendo \eqref{eq:normal}, \eqref{eq:coeficientes_Nprima} y
+\eqref{eq:torsion}, las \textbf{ecuaciones de Fr\'enet--Serret} son
+\begin{equation}
+  \label{eq:frenet_serret}
+  \left\{
+  \begin{aligned}
+    \vb{T}'&=\ka(s)\vb{N},\\
+    \vb{N}'&=-\ka(s)\vb{T}-\ta(s)\vb{B},\\
+    \vb{B}'&=\ta(s)\vb{N}.
+  \end{aligned}
+  \right.
+\end{equation}
+
+Por el teorema de la funci\'on inversa se puede escribir la triada en
+t\'erminos del par\'ametro original $t$, y entonces
+\begin{align}
+  \label{eq:curvatura_t}
+  \ka(t)&=\frac{\norm{\dot{\vb{r}}(t)\wedge\ddot{\vb{r}}(t)}}
+               {\norm{\dot{\vb{r}}(t)}^{3}},\\
+  \label{eq:torsion_t}
+  \ta(t)&=\frac{\dot{\vb{r}}(t)\cdot
+                \qty{\ddot{\vb{r}}(t)\wedge\dddot{\vb{r}}(t)}}
+               {\norm{\dot{\vb{r}}(t)\wedge\ddot{\vb{r}}(t)}^{2}},
+\end{align}
+donde
+\begin{equation}
+  \label{eq:puntos_derivadas}
+  \dot{\vb{r}}=\dv{}{t}\vb{r}(t),
+  \quad
+  \ddot{\vb{r}}=\ddv{}{t}\vb{r}(t),
+  \quad
+  \dddot{\vb{r}}=\dnv{\vb{r}}{t}{3}(t).
+\end{equation}
+
+\begin{ejemplo}[Triada de la h\'elice]
+  \label{ej:triada_helice}
+  Con la notaci\'on de \eqref{eq:helice_arco}, derivando,
+  \begin{equation}
+    \label{eq:T_helice}
+    \vb{T}=\dv{}{s}\vb{r}(s)=\frac{1}{\La}
+    \begin{pmatrix}
+      -R\om\sin\vph(s)\\
+      R\om\cos\vph(s)\\
+      a
+    \end{pmatrix}.
+  \end{equation}
+  Derivando otra vez,
+  \begin{equation}
+    \label{eq:Tprima_helice}
+    \vb{T}'=\underbrace{\frac{R\om^2}{R^2\om^2+a^2}}_{\ka(s)}
+    \underbrace{
+    \begin{pmatrix}
+      -\cos\vph(s)\\
+      -\sin\vph(s)\\
+      0
+    \end{pmatrix}}_{\vb{N}},
+  \end{equation}
+  de modo que la curvatura de la h\'elice es constante,
+  $\ka=R\om^2/(R^2\om^2+a^2)$. El binormal resulta
+  \begin{equation}
+    \label{eq:B_helice}
+    \vb{B}=\vb{T}\wedge\vb{N}=\frac{1}{\La}
+    \begin{pmatrix}
+      a\sin\vph(s)\\
+      -a\cos\vph(s)\\
+      R\om
+    \end{pmatrix},
+  \end{equation}
+  y derivando,
+  \begin{equation}
+    \label{eq:Bprima_helice}
+    \vb{B}'=\frac{a\om}{R^2\om^2+a^2}
+    \begin{pmatrix}
+      \cos\vph(s)\\
+      \sin\vph(s)\\
+      0
+    \end{pmatrix}
+    =-\frac{a\om}{R^2\om^2+a^2}\,\vb{N},
+  \end{equation}
+  es decir, la torsi\'on tambi\'en es constante,
+  $\ta=-a\om/(R^2\om^2+a^2)$.
+\end{ejemplo}

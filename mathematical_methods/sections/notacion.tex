@@ -1,0 +1,138 @@
+\section{Notaci\'on y convenciones}
+\label{sec:notacion}
+
+Estos apuntes cubren dos bloques: c\'alculo vectorial y geometr\'ia diferencial
+(Secciones \ref{sec:espacios_vectoriales}--\ref{sec:formas_diferenciales}) y
+variable compleja, series y an\'alisis de Fourier
+(Secciones \ref{sec:variable_compleja}--\ref{sec:integracion_compleja}).
+
+\begin{itemize}
+  \item $V$ denota un espacio vectorial sobre el campo $\F$, con
+        $\F=\R$ o $\F=\C$; $\Ee^n$ denota el espacio eucl\'ideo de
+        dimensi\'on $n$.
+  \item $\vb{a},\vb{b},\vb{c}$ son vectores y $\vh{e}_i$ los elementos de una
+        base ortonormal. La transposici\'on se escribe $\vb{a}^\tp$ y la
+        transpuesta conjugada $\vb{a}^\dg$.
+  \item $\wedge$ es el \textbf{producto cu\~na} o exterior; en $\R^3$ coincide
+        con el producto cruz. El producto punto se escribe $\vb{a}\cdot\vb{b}$
+        y el producto interno abstracto $g(\vb{a},\vb{b})$ o
+        $\braket{\vb{a}}{\vb{b}}$.
+  \item $\otimes$ es el producto directo y $\oplus$ la suma directa.
+  \item $\vb{r}(t)$ denota una curva y $s$ su longitud de arco; la prima
+        $\vb{T}'$ siempre significa derivada respecto de $s$.
+  \item $\vb{M}(\xi,\et)$ denota una superficie parametrizada y
+        $\vb{M}(\xi,\et,\zeta)$ un mapeo de volumen.
+  \item En la parte compleja, $z=x+iy$, $\bar z$ es el conjugado,
+        $\abs{z}=(z\bar z)^{1/2}$ y $\vph=\Argu(z)$ el argumento principal.
+        $\Om$ y $D$ denotan dominios abiertos de $\C$ y $\ga$ una curva
+        parametrizada contenida en ellos.
+  \item $\lito(\vb{u})$ es la $\lito$ peque\~na de Landau, definida por
+        $\lim_{\vb{u}\rightarrow\vb{0}}\norm{\lito(\vb{u})}/\norm{\vb{u}}=0$.
+\end{itemize}
+
+\subsection{Notaci\'on de Einstein}
+\label{subsec:einstein}
+
+Un \'indice repetido dentro de un mismo t\'ermino indica suma sobre todo su
+rango:
+\begin{equation}
+  \label{eq:einstein}
+  \sum_{i=1}^{n}a_ib_i=a_1b_1+a_2b_2+\dots+a_nb_n=a_ib_i .
+\end{equation}
+As\'i, la serie de Taylor $f(x)=\sum_{n=0}^{\infty}a_n(x-x_0)^n$ se abrevia
+$f(x)=a_n(x-x_0)^n$.
+
+\subsection{Delta de Kronecker}
+\label{subsec:kronecker}
+
+Sea $\set{\vh{e}_i}_{i=1}^{n}$ una base ortonormal de $\Ee^n$, es decir,
+$\vh{e}_k$ tiene un $1$ en la entrada $k$-\'esima y ceros en las dem\'as.
+
+\begin{definicion}[Delta de Kronecker]
+  \label{def:kronecker}
+  \begin{equation}
+    \label{eq:kronecker}
+    \de_{ij}=g(\vh{e}_i,\vh{e}_j)=\pdv{x_j}{x_i}=
+    \begin{cases}
+      0, & i\neq j,\\
+      1, & i=j .
+    \end{cases}
+  \end{equation}
+\end{definicion}
+
+Su utilidad es \emph{contraer} sumas. Si $\vb{a}=\sum_{i=1}^{n}a_i\vh{e}_i$,
+entonces
+\begin{equation}
+  \label{eq:contraccion_kronecker}
+  \begin{aligned}
+    g(\vb{a},\vh{e}_j)
+      &=\qty{\sum_{i=1}^{n}a_i\vh{e}_i}\cdot\vh{e}_j
+       =\sum_{i=1}^{n}a_i\,\vh{e}_i\cdot\vh{e}_j\\
+      &=\sum_{i=1}^{n}a_i\de_{ij}=a_j ,
+  \end{aligned}
+\end{equation}
+ya que todos los sumandos con $i\neq j$ se anulan.
+
+\subsection{S\'imbolos de Levi-Civita}
+\label{subsec:levi_civita}
+
+Tres vectores linealmente independientes generan una caja de volumen
+\begin{equation}
+  \label{eq:volumen_caja}
+  \mathrm{Vol}=(\text{\'area de la base})(\text{altura})
+    =(\vb{a}\wedge\vb{b})\cdot\vb{c},
+\end{equation}
+cuyo signo define la \textbf{orientaci\'on} del sistema: es positiva si
+$(\vb{a}\wedge\vb{b})\cdot\vb{c}>0$ y negativa en caso contrario.
+
+\begin{definicion}[S\'imbolo de Levi-Civita]
+  \label{def:levi_civita}
+  Sea $\set{\vh{e}_i}_{i=1}^{3}$ la base can\'onica de $\Ee^3$. Entonces
+  \begin{equation}
+    \label{eq:levi_civita}
+    \ep_{ijk}=(\vh{e}_i\wedge\vh{e}_j)\cdot\vh{e}_k=
+    \begin{cases}
+      0, & \text{si se repite alg\'un \'indice},\\
+      -1, & \text{si la permutaci\'on es impar},\\
+      1, & \text{si la permutaci\'on es par}.
+    \end{cases}
+  \end{equation}
+\end{definicion}
+
+Con \'el, la componente $i$-\'esima del producto cu\~na en $\R^3$ se escribe en
+una sola l\'inea:
+\begin{equation}
+  \label{eq:cuna_levicivita}
+  (\vb{a}\wedge\vb{b})_i=\ep_{ijk}a_jb_k .
+\end{equation}
+
+\begin{ejemplo}
+  \label{ej:cuna_componentes}
+  Para $i=1$ los \'unicos t\'erminos no nulos son $\ep_{123}$ y $\ep_{132}$:
+  \begin{equation}
+    \label{eq:cuna_primera_componente}
+    \begin{aligned}
+      (\vb{a}\wedge\vb{b})_1
+        &=\ep_{123}a_2b_3+\ep_{132}a_3b_2\\
+        &=a_2b_3-a_3b_2 ,
+    \end{aligned}
+  \end{equation}
+  y an\'alogamente para las otras dos, de modo que
+  \begin{equation}
+    \label{eq:cuna_3d}
+    \vb{a}\wedge\vb{b}=
+    \begin{pmatrix}
+      a_2b_3-a_3b_2\\
+      a_3b_1-a_1b_3\\
+      a_1b_2-a_2b_1
+    \end{pmatrix}.
+  \end{equation}
+\end{ejemplo}
+
+El triple producto y el rotacional admiten la misma abreviatura:
+\begin{equation}
+  \label{eq:triple_producto}
+  (\vb{a}\wedge\vb{b})\cdot\vb{c}=\ep_{ijk}c_ia_jb_k,
+  \qquad
+  (\rot\vb{f})_i=\ep_{ijk}\partial_jf_k .
+\end{equation}
