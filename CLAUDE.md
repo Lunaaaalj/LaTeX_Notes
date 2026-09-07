@@ -41,6 +41,7 @@ explicitly un-ignored because it is a source asset, not output.
 | `multivariate_methods/` | `multivariate_methods.tex` | dense two-column `article`, five `sections/*.tex` |
 | `math_self_study/` | `self_study.tex` | dense two-column `article`, three `sections/*.tex` |
 | `mathematical_methods/` | `AMMF.tex` | dense two-column `article`, **Spanish**, twelve `sections/*.tex` |
+| `razonamiento_incertidumbre/` | `razonamiento_incertidumbre.tex` | dense two-column `article`, **Spanish**, two `sections/*.tex` |
 | `cryptography/` | *(none yet)* | preamble fragment + reference PDF only |
 
 `cryptography/` and `mathematical_methods/` both contain a file named
@@ -58,7 +59,7 @@ run, not a separate document.
 ## The two preamble families
 
 **Dense two-column family** (`multivariate_methods`, `math_self_study`,
-`mathematical_methods`) — 10pt,
+`mathematical_methods`, `razonamiento_incertidumbre`) — 10pt,
 `twocolumn`, `a4paper`, tight `geometry`, `titlesec`/`enumitem`/`tocloft` for
 compact headings and lists, `fancyhdr` running head, `\numberwithin{equation}{subsection}`.
 Theorem-likes are **hand-rolled** with `\newenvironment` over a single shared
@@ -97,6 +98,23 @@ Extra macros here that the other two lack: `\Ext{n}` (the space of `n`-forms
 of functions), `\lito` (Landau little-o), `\dnv` (n-th derivative), `\Ee`,
 `\dg`. It does *not* define `\E`, `\Var`, `\normal` or the bold-Greek
 statistics macros of `multivariate_methods`.
+
+`razonamiento_incertidumbre/razonamiento_incertidumbre.tex` is the **second
+Spanish variant** of this family. It uses the same Spanish environment names as
+`AMMF.tex` and likewise keeps `\tableofcontents` outside the `\twocolumn[...]`
+block, and adds one environment the others do not have — `supuesto` (numbered
+off the same `thm` counter, used for the Markov/stationarity/sensor
+assumptions). Its own macros are probabilistic: `\Prob` (bold — a *distribution*
+over a variable's domain) vs `\prob` (plain — a single number), `\given`,
+`\argmax`/`\argmin`, the state/evidence shorthands `\X{k}`, `\Xr{m}{n}`,
+`\Ev{k}`, `\Evr{m}{n}`, `\ev{k}`, `\evr{m}{n}`, plus `\Tm`, `\Verd`, `\Fal`.
+It carries none of the vector-calculus or complex-analysis macros of `AMMF.tex`
+(`\Ext`, `\rot`, `\Real`, `\braket`, …). Its TikZ load is
+`arrows.meta, positioning, fit, calc, shapes.geometric` — `shapes.geometric` is
+required for the `ellipse` node shape of the dynamic Bayesian network figure,
+and omitting it fails with a `pgfkeys` "I do not know the key '/tikz/ellipse'"
+error, not a missing-shape one. The DBN figure is a `figure*` (spans both
+columns).
 
 **Boxed-theorem family** (`cryptography`, and the orphaned
 `mathematical_methods/differential_geometry.tex`) — `report`
