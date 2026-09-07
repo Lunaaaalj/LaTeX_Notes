@@ -1,0 +1,233 @@
+\section{Modelos ocultos de Markov}
+\label{sec:modelos_ocultos_markov}
+
+\subsection{Modelado del tiempo}
+\label{subsec:modelado_tiempo}
+
+Asumamos que vemos el mundo de forma discreta: tomamos ``fotos'' de la
+realidad cada cierto tiempo $\Tm$, conocido como \emph{tiempo de muestreo}, y
+observamos lo que hay en esas fotos. Algunas cosas se pueden observar,
+mientras que otras permanecen ocultas.
+
+\begin{definicion}[Estado y evidencia]
+  \label{def:estado_evidencia}
+  Sea $t_k=k\,\Tm$ con $k=1,2,\dots$ Denotamos por $\X{k}$ el
+  \emph{estado} del sistema en el tiempo $t_k$, el cual es un conjunto de
+  variables \textbf{no observables}, y por $\Ev{k}$ la \emph{evidencia} en
+  $t_k$, la cual es un conjunto de variables que \textbf{s\'i} podemos
+  observar.
+\end{definicion}
+
+La notaci\'on de secuencias es la de \eqref{eq:notacion_secuencia}:
+$\Xr{m}{n}=\X{m},\dots,\X{n}$ con $m\le n$. El \'indice $0$ se reserva para
+el estado inicial, anterior a cualquier observaci\'on.
+
+\subsection{Razonamiento probabil\'istico en el tiempo}
+\label{subsec:razonamiento_temporal}
+
+Cuando incorporamos el tiempo a nuestros modelos, el objeto de inter\'es es
+la distribuci\'on de probabilidad de $\X{k}$ dados los estados anteriores
+$\Xr{0}{k-1}$, es decir
+\begin{equation}
+  \label{eq:modelo_transicion_general}
+  \Prob(\X{k}\given \Xr{0}{k-1}),
+\end{equation}
+llamada \emph{modelo de transici\'on}.
+
+Escribir $\Xr{0}{k-1}$ dice que el estado actual depende de \emph{todos} los
+anteriores: el n\'umero de padres del nodo $\X{k}$ crece sin l\'imite con
+$k$, y con \'el el tama\~no de la tabla de probabilidad condicional. Un
+supuesto que evita esto es pedir que $\X{k}$ dependa s\'olo de un n\'umero
+finito de estados anteriores.
+
+\begin{supuesto}[Markov de primer orden]
+  \label{sup:markov}
+  El estado actual depende \'unicamente del estado inmediatamente anterior:
+  \begin{equation}
+    \label{eq:supuesto_markov}
+    \Prob(\X{k}\given \Xr{0}{k-1}) = \Prob(\X{k}\given \X{k-1}).
+  \end{equation}
+\end{supuesto}
+
+\begin{supuesto}[Proceso estacionario]
+  \label{sup:estacionario}
+  La \emph{forma} de la distribuci\'on de probabilidad no cambia con $t_k$:
+  la tabla $\Prob(\X{k}\given \X{k-1})$ es la misma para todo $k$.
+\end{supuesto}
+
+\begin{observacion}
+  Los dos supuestos son independientes entre s\'i. El de Markov limita
+  \emph{de cu\'antas} variables depende el estado; el de estacionariedad dice
+  que los n\'umeros de esa dependencia no se reindexan con el tiempo. Juntos
+  hacen que el modelo completo se especifique con una sola tabla finita,
+  sin importar cu\'antos pasos de tiempo se observen.
+\end{observacion}
+
+La evidencia $\Ev{k}$ se relaciona con el estado mediante el
+\emph{modelo del sensor}, para el cual se hace un supuesto an\'alogo.
+
+\begin{supuesto}[Markov del sensor]
+  \label{sup:markov_sensor}
+  La evidencia en $t_k$ depende s\'olo del estado en $t_k$:
+  \begin{equation}
+    \label{eq:supuesto_sensor}
+    \Prob(\Ev{k}\given \Xr{0}{k},\Evr{1}{k-1}) = \Prob(\Ev{k}\given \X{k}).
+  \end{equation}
+\end{supuesto}
+
+A $\Prob(\Ev{k}\given \X{k})$ se le llama modelo del sensor (o modelo de
+observaci\'on). N\'otese que el \'indice de la evidencia empieza en $1$: se
+asume que \textbf{no hay evidencia para el tiempo $t_0$}.
+
+\subsection{Distribuci\'on conjunta}
+\label{subsec:distribucion_conjunta}
+
+La distribuci\'on de probabilidad del estado inicial se denota
+$\Prob(\X{0})$. Con ella y con los tres supuestos anteriores, la
+distribuci\'on conjunta de los estados $\Xr{0}{k}$ y las evidencias
+$\Evr{1}{k}$ queda completamente determinada:
+\begin{equation}
+  \label{eq:conjunta}
+  \Prob(\Xr{0}{k},\Evr{1}{k})
+  = \Prob(\X{0})\prod_{i=1}^{k}
+    \Prob(\X{i}\given \X{i-1})\,\Prob(\Ev{i}\given \X{i}).
+\end{equation}
+
+\begin{observacion}
+  El modelo entero se especifica entonces con tres piezas: la distribuci\'on
+  inicial $\Prob(\X{0})$, el modelo de transici\'on
+  $\Prob(\X{i}\given \X{i-1})$ y el modelo del sensor
+  $\Prob(\Ev{i}\given \X{i})$. Los dos productos dentro de la sumatoria de
+  \eqref{eq:conjunta} son justamente los que se leen de la red bayesiana
+  din\'amica de la Figura~\ref{fig:red_sombrilla}.
+\end{observacion}
+
+\begin{figure*}[t]
+  \centering
+  \begin{tikzpicture}[
+      >={Stealth[round]},
+      nodo/.style={ellipse, draw=black!70, fill=blue!8, minimum width=22mm,
+                   minimum height=7mm, inner sep=2pt, font=\small},
+      tabla/.style={font=\scriptsize, inner sep=2pt},
+      every path/.style={->, thick, draw=black!70}
+    ]
+    % --- estados ocultos ---
+    \node[nodo] (r0) {$\mathit{Lluvia}_{k-1}$};
+    \node[nodo, right=26mm of r0] (r1) {$\mathit{Lluvia}_{k}$};
+    \node[nodo, right=26mm of r1] (r2) {$\mathit{Lluvia}_{k+1}$};
+
+    % --- evidencia ---
+    \node[nodo, below=14mm of r0] (u0) {$\mathit{Sombrilla}_{k-1}$};
+    \node[nodo, below=14mm of r1] (u1) {$\mathit{Sombrilla}_{k}$};
+    \node[nodo, below=14mm of r2] (u2) {$\mathit{Sombrilla}_{k+1}$};
+
+    % --- transiciones ---
+    \draw ($(r0)+(-16mm,0)$) -- (r0);
+    \draw (r0) -- (r1);
+    \draw (r1) -- (r2);
+    \draw (r2) -- ($(r2)+(16mm,0)$);
+
+    % --- sensores ---
+    \draw (r0) -- (u0);
+    \draw (r1) -- (u1);
+    \draw (r2) -- (u2);
+
+    % --- tablas de probabilidad condicional ---
+    \node[tabla, above=5mm of r1, draw=black!40] (tt) {%
+      \begin{tabular}{c|c}
+        $\mathit{Ll}_{k-1}$ & $\prob(\mathit{Ll}_{k}\given \mathit{Ll}_{k-1})$\\\hline
+        $\Verd$ & $0.7$\\
+        $\Fal$  & $0.3$
+      \end{tabular}};
+
+    \node[tabla, right=6mm of u1, draw=black!40] (ts) {%
+      \begin{tabular}{c|c}
+        $\mathit{Ll}_{k}$ & $\prob(\mathit{So}_{k}\given \mathit{Ll}_{k})$\\\hline
+        $\Verd$ & $0.9$\\
+        $\Fal$  & $0.2$
+      \end{tabular}};
+  \end{tikzpicture}
+  \caption{Estructura de la red bayesiana y de las distribuciones de
+    probabilidad condicional del ejemplo de la sombrilla. El modelo de
+    transici\'on es $\Prob(\mathit{Lluvia}_k\given \mathit{Lluvia}_{k-1})$ y
+    el modelo del sensor es
+    $\Prob(\mathit{Sombrilla}_k\given \mathit{Lluvia}_k)$. Adaptada
+    de \cite{russell}.}
+  \label{fig:red_sombrilla}
+\end{figure*}
+
+\subsection{Tipos de inferencia}
+\label{subsec:tipos_inferencia}
+
+Hay cuatro tipos de inferencias b\'asicas sobre estos modelos:
+
+\begin{itemize}
+  \item \textbf{Filtrado} (estimaci\'on de estado): obtener la
+    distribuci\'on de probabilidad del estado \emph{actual} dada toda la
+    evidencia hasta ahora,
+    \begin{equation}
+      \label{eq:filtrado}
+      \Prob(\X{k}\given \Evr{1}{k}=\evr{1}{k}).
+    \end{equation}
+
+  \item \textbf{Predicci\'on}: calcular la distribuci\'on de probabilidad de
+    un estado \emph{futuro} dada la evidencia disponible,
+    \begin{equation}
+      \label{eq:prediccion}
+      \Prob(\X{k+j}\given \Evr{1}{k}=\evr{1}{k}),\qquad j>0.
+    \end{equation}
+
+  \item \textbf{Suavizado}: calcular la distribuci\'on de probabilidad de un
+    estado \emph{pasado} $\X{j}$,
+    \begin{equation}
+      \label{eq:suavizado}
+      \Prob(\X{j}\given \Evr{1}{k}=\evr{1}{k}),\qquad 0\le j\le k.
+    \end{equation}
+
+  \item \textbf{Explicaci\'on m\'as probable}: obtener la secuencia de
+    estados m\'as probable que haya generado las observaciones,
+    \begin{equation}
+      \label{eq:explicacion}
+      \argmax_{\Xr{1}{k}} \prob(\Xr{1}{k}\given \Evr{1}{k}=\evr{1}{k}).
+    \end{equation}
+\end{itemize}
+
+\begin{observacion}
+  Filtrado, predicci\'on y suavizado se distinguen s\'olo por la posici\'on
+  del estado consultado respecto al final de la evidencia: igual, posterior o
+  anterior. La explicaci\'on m\'as probable es de naturaleza distinta: no
+  devuelve una distribuci\'on sino una secuencia completa, y en general
+  \emph{no} coincide con encadenar los estados individualmente m\'as
+  probables obtenidos por suavizado.
+\end{observacion}
+
+\subsection{Ejemplo: c\'alculo directo}
+\label{subsec:ejemplo_calculo}
+
+\begin{ejemplo}[Filtrado por enumeraci\'on en el modelo de la sombrilla]
+  \label{ej:sombrilla_filtrado}
+  Digamos que queremos calcular
+  $\Prob(R_2\given M_{1:2}=[\Verd,\Verd])$, donde $R_k$ abrevia
+  $\mathit{Lluvia}_k$ y $M_k$ abrevia $\mathit{Sombrilla}_k$, usando
+  directamente la conjunta \eqref{eq:conjunta}.
+
+  Marginalizando sobre las variables ocultas $R_0$ y $R_1$ y fijando la
+  evidencia observada:
+  \begin{align}
+    \label{eq:sombrilla_enumeracion}
+    \Prob(R_2\given M_{1:2}&=[\Verd,\Verd]) = \nonumber\\
+    \al \sum_{R_1}\sum_{R_0}
+      &\prob(M_2=\Verd\given R_2)\,\prob(R_2\given R_1)\nonumber\\
+      &\cdot\, \prob(M_1=\Verd\given R_1)\,\prob(R_1\given R_0)\,\prob(R_0),
+  \end{align}
+  donde $\al$ es una constante de normalizaci\'on, elegida de modo que las
+  entradas de la distribuci\'on resultante sumen $1$.
+\end{ejemplo}
+
+\begin{observacion}
+  Este c\'alculo por enumeraci\'on es correcto pero no escala: el n\'umero de
+  t\'erminos de la suma crece exponencialmente con $k$, pues se marginaliza
+  sobre $R_0,\dots,R_{k-1}$. El algoritmo de filtrado recursivo
+  (\emph{forward}) reutiliza el resultado del paso anterior y hace el trabajo
+  constante por paso de tiempo.
+\end{observacion}

@@ -1,0 +1,42 @@
+\section{Notaci\'on}
+\label{sec:notacion}
+
+Este documento usa la convenci\'on de \cite{russell} para distinguir
+distribuciones de probabilidades puntuales:
+
+\begin{itemize}
+  \item $\prob(a)$ es un \emph{n\'umero}: la probabilidad de que la variable
+    tome el valor $a$.
+  \item $\Prob(A)$ es un \emph{vector} de n\'umeros: la distribuci\'on de
+    probabilidad sobre todos los valores del dominio de $A$. As\'i,
+    $\Prob(A\given B)$ denota la tabla completa de probabilidades
+    condicionales.
+\end{itemize}
+
+Para secuencias temporales se escribe
+\begin{equation}
+  \label{eq:notacion_secuencia}
+  \begin{gathered}
+    \Xr{m}{n} = \X{m},\,\X{m+1},\,\dots,\,\X{n},\\
+    m,n\in\set{0,1,2,\dots},\quad m\le n .
+  \end{gathered}
+\end{equation}
+
+S\'imbolos recurrentes:
+
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+  \toprule
+  S\'imbolo & Significado \\
+  \midrule
+  $\Tm$        & tiempo de muestreo \\
+  $t_k=k\,\Tm$ & instante discreto $k$-\'esimo \\
+  $\X{k}$      & estado (no observable) en $t_k$ \\
+  $\Ev{k}$     & evidencia (observable) en $t_k$ \\
+  $\ev{k}$     & valor concreto observado de $\Ev{k}$ \\
+  $\al$        & constante de normalizaci\'on \\
+  $\Verd,\Fal$ & valores verdadero y falso \\
+  \bottomrule
+\end{tabular}
+\end{center}
