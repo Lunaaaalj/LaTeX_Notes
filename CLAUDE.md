@@ -8,12 +8,16 @@ A collection of independent LaTeX lecture-note / self-study documents. There is 
 build script, no Makefile, and no shared root preamble — each top-level
 directory is a self-contained document with its own preamble and its own macro set.
 
+`README.md` is the public-facing showcase (the repo is linked from the author's
+LinkedIn profile); `assets/` holds the page-preview PNGs it embeds. See
+"Keeping the README in sync" below.
+
 ## Building
 
 Always compile from *inside* the document's directory — every main file uses
 relative `\input{sections/...}` paths, and running `pdflatex` from the repo root
-fails with "Emergency stop / file error" (this is what `texput.log` at the root is a
-leftover of; it is a stray artifact, not a build product of any document).
+fails with "Emergency stop / file error" and leaves a stray `texput.log` at the
+root (gitignored; delete it, it is not a build product of any document).
 
 ```bash
 cd multivariate_methods && latexmk -pdf multivariate_methods.tex   # resolves TOC/refs in one go
@@ -30,9 +34,12 @@ file, force a rebuild with `latexmk -pdf -g`.
 To inspect output without a PDF viewer: `pdftotext multivariate_methods.pdf -`.
 Toolchain is TeX Live 2025 (`pdflatex`, `latexmk`, `pdftotext` all on PATH).
 
-Build artifacts (`.aux .log .fls .fdb_latexmk .synctex.gz .toc .out`) and the compiled
-PDFs are ignored by the root `.gitignore`; reference material under `resources/` is
-explicitly un-ignored because it is a source asset, not output.
+Build artifacts (`.aux .log .fls .fdb_latexmk .synctex.gz .toc .out`) are ignored
+by the root `.gitignore`. The compiled PDFs are **tracked on purpose** (since
+`35435f9`) so they can be read on GitHub — after editing any `.tex`, rebuild and
+commit the PDF alongside the source, otherwise the published PDF silently lags.
+The `!**/resources/*.pdf` line in `.gitignore` is vestigial: no `resources/`
+directory exists any more.
 
 ## Documents
 
@@ -42,19 +49,18 @@ explicitly un-ignored because it is a source asset, not output.
 | `math_self_study/` | `self_study.tex` | dense two-column `article`, three `sections/*.tex` |
 | `mathematical_methods/` | `AMMF.tex` | dense two-column `article`, **Spanish**, twelve `sections/*.tex` |
 | `razonamiento_incertidumbre/` | `razonamiento_incertidumbre.tex` | dense two-column `article`, **Spanish**, two `sections/*.tex` |
-| `cryptography/` | *(none yet)* | preamble fragment + reference PDF only |
 
-`cryptography/` and `mathematical_methods/` both contain a file named
-`differential_geometry.tex`. Despite the name it is **not a chapter** — it is a
-byte-identical *preamble fragment* (no `\documentclass`, no `\begin{document}`)
-of the boxed-theorem family. `mathematical_methods/differential_geometry.tex` is
-now **orphaned**: `AMMF.tex` was rewritten onto the dense two-column family and
-no longer `\input`s it. It is kept only because `cryptography/` — which has no
-main file at all and therefore does not build — would need such a wrapper around
-its own copy.
+`math_self_study/` is still **untracked** in git (it has never been committed);
+`git add` it deliberately when it is ready to publish, since the README already
+links to its PDF.
 
-`mathematical_methods/preview.*` are the artifacts of a partial-compile preview
-run, not a separate document.
+`mathematical_methods/differential_geometry.tex` is **not a chapter** despite
+the name — it is a *preamble fragment* (no `\documentclass`, no
+`\begin{document}`) of the boxed-theorem family, and it is **orphaned**:
+`AMMF.tex` was rewritten onto the dense two-column family and no longer
+`\input`s it. The `cryptography/` directory that once held a twin copy has been
+removed, so this file is now the only surviving example of that family. It can
+be deleted, or reused as the base of a new boxed-style document.
 
 ## The two preamble families
 
@@ -116,7 +122,7 @@ and omitting it fails with a `pgfkeys` "I do not know the key '/tikz/ellipse'"
 error, not a missing-shape one. The DBN figure is a `figure*` (spans both
 columns).
 
-**Boxed-theorem family** (`cryptography`, and the orphaned
+**Boxed-theorem family** (only the orphaned
 `mathematical_methods/differential_geometry.tex`) — `report`
 class, `thmtools` + `mdframed` (`framemethod=TikZ`) with named styles
 (`thmgreenbox`, `thmredbox`, `thmbluebox`, `thmblueline`, `thmproofbox`,
@@ -165,3 +171,22 @@ missing macro to the target preamble rather than rewriting the math.
   only) and is already `\input`; content goes into that file.
 - VS Code spell/grammar check is set to `en-US` (`math_self_study/.vscode/settings.json`),
   which flags the Spanish passages as errors — expected, not a defect.
+
+## Keeping the README in sync
+
+`README.md` hard-codes facts that drift as the notes grow. When a document or
+section is added, update:
+
+- the **Documents** table (page count, topics) and the `typeset pages` badge
+  (sum of all PDF page counts; `pdfinfo x.pdf | grep Pages`);
+- the per-document bullet lists under **What's inside** and the section counts
+  in the headings and in the **Layout** tree;
+- the preview PNGs in `assets/` if the showcased page moved. They are single
+  pages rendered at 110 dpi with poppler, e.g.
+  `pdftoppm -png -r 110 -f 8 -l 8 multivariate_methods/multivariate_methods.pdf assets/preview_multivariate_methods`
+  (poppler appends `-8`/`-08` to the name; rename afterwards). Pick a page with
+  equations and a figure, not a TOC page.
+
+The README is written for recruiters and fellow students, in English, and
+deliberately says nothing about macro drift, preamble families or build
+pitfalls — that is what this file is for.
